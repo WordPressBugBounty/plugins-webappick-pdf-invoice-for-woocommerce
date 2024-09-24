@@ -1,0 +1,370 @@
+= 2.3.5 (2020-09-17) =
+* Added: Option to download missing fonts.
+
+= 2.3.4 (2020-09-13) =
+* Fixed: Packing slip column space fixed.
+
+= 2.3.3 (2020-09-13) =
+* Added: Hebrew Language compatibility added.
+
+= 2.3.2 (2020-09-10) =
+* Fixed: Text domain updated according to plugin slug.
+
+= 2.3.1 (2020-09-9) =
+* Added: Pdf custom name filter added in email attachment : woo_invoice_file_name.
+
+= 2.3.0 (2020-09-8) =
+* Fixed: Disabled download invoice button from woocommerce order confirmation page for guest users.
+
+= 2.2.20 (2020-09-6) =
+* Fixed: Video button removed from settings page header.
+* Fixed: Documentation url updated.
+
+= 2.2.19 (2020-09-6) =
+* Added: Documentation button and video tutorial button added
+* Fixed: Packing Slip total border.
+
+= 2.2.18 (2020-09-3) =
+* Fixed: WordPress coding standard issue fixed
+
+= 2.2.17 (2020-09-2) =
+* Fixed: Packing slip total border fixed & css added
+* Added: Bulk download validation added
+
+= 2.2.16 (2020-09-1) =
+* Fixed: Download invoice button redirect to new tab fixed
+* Fixed: Text domain mismatch fixed
+
+= 2.2.15 (2020-08-31) =
+* Added: Packing total quantity
+* Added: Packing total weight
+* Added: Packing total Filter added : woo_invoice_packing_total
+
+= 2.2.14 (2020-08-25) =
+* Added: PDF name filter added : woo_invoice_file_name
+* Added: MPDF settings filter added : woo_invoice_mpdf_settings
+* Fixed: PDF Paper size Fixed
+
+= 2.2.13 (2020-08-25) =
+* Fixed: Items subtotal currency symbol fixed
+* Fixed: Invoice Template Dropdown changes to modal dropdown
+* Added: Option to enable or disable mPDF debug mode
+* Added: Email type filter added: woo_invoice_email_type
+* Added: PDF Paper size filter added: woo_invoice_paper_size
+
+= 2.2.12 (2020-08-24) =
+* Added: new filter added to change order number: woo_invoice_order_number
+* Added: new filter added to change order date: woo_invoice_order_date
+* Added: new filter added to change invoice number: woo_invoice_invoice_number
+
+= 2.2.11 (2020-08-23) =
+* Fix: Discount total issue fixed.
+
+= 2.2.10 (2020-08-22) =
+* Added: Action Hooks added to modify template.
+
+= 2.2.9 (2020-08-19) =
+* Fix: Mismatched domain & security output escaping fixed.
+
+= 2.2.8 (2020-08-17) =
+* Added: Pdf Invoice temporary directory protected from public access.
+
+= 2.2.7 (2020-08-16) =
+* Fix: Api Library Updated and Plugin Settings URL Fixed.
+
+= 2.2.6 (2020-08-16) =
+* Fix: Deactivation issue fixed.
+
+= 2.2.5 (2020-08-16) =
+* Fix: FreeSerif.ttf font file missing issue fixed.
+
+= 2.2.4 (2020-07-25) =
+* Tweak: shipping and tax row will be removed if value shipping is free and tax is 0 from order total.
+
+= 2.2.3 (2020-07-14) =
+* Add: new filter hooks added to modify template content.
+
+= 2.2.2 (2020-07-13) =
+* Tweak: WC 4.3 compatibility checked.
+
+= 2.2.1 (2020-07-09) =
+ * Fix: After shipping address action hook issue fixed
+
+= 2.2.0 (2020-07-08) =
+ * Fix: Shop Manager permission added to download invoice.
+
+= 2.1.9 (2020-06-26) =
+ * Fix: Bulk export issue at order list page.
+ * Fix: Custom font changing filter hook added.
+
+= 2.1.8 (2020-06-02) =
+ * Fix: Filter hook added for Footer 1 and 2.
+
+= 2.1.7 (2020-05-28) =
+ * Fix: admin review request notice issue fixed.
+
+= 2.1.6 (2020-05-22) =
+ * Fix: Visual Composer and Gutenberg conflict issue fixed.
+
+= 2.1.5 (2020-05-20) =
+ * Fix: CSS and JS file will only load on plugin page to prevent conflict with other plugin.
+ * Fix: Template change preview issue fixed.
+ * Tweak: enqueue script.
+
+= 2.1.4 (2020-05-15) =
+ * Fix: attached invoice file name now contain invoice number instead of order number.
+ * Fix: Items Total replaced with Items Subtotal.
+ * Tweak: Translation file updated.
+ * Tweak: Anyone with manage_woocommerce capability now can print invoice and packing slip.
+ * Added: Show customer order note into invoice.
+ * Added: Show refunded & Net Total amount into invoice.
+
+= 2.1.3 (2020-05-04) =
+ * Fix: order number assigned as invoice number
+
+= 2.1.2 (2020-04-29) =
+ * Tweak: Invoice & Packing slip icon changed
+ * Tweak: settings page font changed
+
+= 2.1.1 (2020-04-27) =
+ * Tweak: Auto translation from language file
+ * Tweak: WordPress Code Standard
+
+= 2.1.0 (2020-04-23) =
+ * Fixed: Invoice file attachment failed issue fixed
+ * Tweak: WordPress Code Standard
+
+= 2.0.2 (2020-04-18) =
+ * Fixed: Invalid server error at checkout page fixed
+
+= 2.0.1 (2020-04-18) =
+ * Fixed: Empty invoice with order email attachment issue fixed
+
+= 2.0.0 (2020-04-18) =
+ * Added: Arabic RTL option added
+ * Added: Thai language support
+
+= 1.3.10 (2020-40-07) =
+ * Fixed: Arabic & Chines language loading issue fixed
+
+= 1.3.9 (2020-03-27) =
+ * Tweak: Invoice footer message structure changed
+
+= 1.3.8 (2020-03-08) =
+ * Tweak: Block title label renamed
+ * Added: Plugin recommendation code added
+
+= 1.3.7 (2020-03-02) =
+ * Tweak: Menu slug changed for security purpose
+
+= 1.3.6 (2020-02-26) =
+ * Fixed: Empty line from buyer address fixed
+ * Tweak: Invoice file name translation added
+
+= 1.3.5 (2020-02-25) =
+ * Fixed: Invoice download security issue fixed
+ * Tweak: code improvement
+
+= 1.3.4 (2020-02-04) =
+ * Translation issue fixed
+ * French translation added
+
+= 1.3.3 (2020-02-04) =
+ * Translation issue fixed
+ * French translation added
+
+= 1.3.3 (2020-01-27) =
+ * Remove empty line from customer address
+ * Css issue fixed
+ * public js and css file removed from frontend
+ * price format issue fixed
+
+= 1.3.1 (2020-01-13) =
+ * savePDF error fix
+
+= 1.3.0 (2020-01-09) =
+ * Invoice theme customization hooks added
+
+= 1.2.1 (2019-10-30) =
+ * Billing State and Country label issue fixed
+
+= 1.2.0 (2019-10-30) =
+ * Product Price issue fixed
+
+= 1.1.38 (2019-10-06) =
+ * Variation title issue fixed
+ * Invoice template 2 design issue fixed
+
+= 1.1.37 (2019-09-24) =
+ * Adding TO & FROM section in packingslip.
+
+= 1.1.36 (2019-09-08) =
+ * Remove readonly attribute from next invoice no field.
+ * Remove reset button of next invoice no field.
+
+= 1.1.35 (2019-09-05) =
+ * Added: Close button in template selection modal added.
+
+= 1.1.34 (2019-08-26) =
+ * Added: Option for showing order note in invoice added.
+
+= 1.1.33 (2019-08-22) =
+ * Fixed: Minor CSS bug Fixed.
+
+= 1.1.32 (2019-08-22) =
+ * Fixed: Tax label renamed in Localization tab.
+ * Fixed: Line break problem in invoice billing address fixed.
+
+= 1.1.31 (2019-08-08) =
+ * Added: Reset button for Next Invoice No added.
+ * Make Next Invoice No field readonly.
+
+= 1.1.30 (2019-07-29) =
+ * Save Changes button in a convenient position.
+ * Fixed: Minor CSS bug Fixed.
+
+= 1.1.29 (2019-07-25) =
+ * Added: Invoice title in browser translation functionality added.
+
+= 1.1.28 (2019-07-21) =
+ * Added: Site logo as company logo if logo is not uploaded upon activation.
+ * Added: Site name as company name if cname is not set upon activation.
+ * Added: Woocommerce store address as company address if company details is not set upon activation.
+
+= 1.1.27 (2019-07-17) =
+ * Fixed: Minor CSS bug fixed.
+
+= 1.1.26 (2019-07-16) =
+ * Fixed: invoice & packingslip logo issue fixed.
+ * Removed: Remove tinymce from textarea field.
+ * update option if not exists upon activation
+
+= 1.1.25 (2019-07-15) =
+ * Added: Option added to limit product title length.
+
+= 1.1.24 (2019-07-14) =
+ * Fixed: invoice logo issue fixed.
+
+= 1.1.22 (2019-07-14) =
+ * Fixed: invoice template issue fixed.
+
+= 1.1.21 (2019-07-11) =
+ * Fixed: Template image preview issue fixed.
+
+= 1.1.20 (2019-07-11) =
+ * Loaded template image from Amazon S3.
+
+= 1.1.19 (2019-07-08) =
+ * Added: Template selection functionality added.
+
+= 1.1.18 (2019-07-07) =
+ * Added: Shipping total translation field added.
+ * Fixed: Email attachment issue fixed.
+
+= 1.1.17 (2019-06-18) =
+ * Bulk packing slip download issue fixed
+
+= 1.1.16 (2019-05-16) =
+ * number format issue for product price fixed
+
+= 1.1.14 (2019-05-09) =
+ * Tweak: Invoice date will not display until the order is paid
+
+= 1.1.13 (2019-04-25) =
+ * Fixed: Currency code right or left display issue fixed
+ * Fixed: Customer can not download invoice from my account until the order is paid
+ * Fixed: Invoice will not be attached with order email until the order is paid
+
+= 1.1.12 (2019-04-11) =
+ * Fixed: Footer content will appear at the last page of an Invoice
+
+= 1.1.11 (2019-04-10) =
+ * Invoice and Packing slip template font size reduced
+
+= 1.1.10 (2019-04-08) =
+ * Translation functions removed from localization input field labels
+
+= 1.1.9 (2019-04-03) =
+ * Settings info added by tooltip
+ * Free vs Pro version comparison added
+
+= 1.1.8 (2019-03-31) =
+ * Fixed: Invoice date will be the order completed date
+
+= 1.1.7 (2019-03-28) =
+ * Dutch & French Translation added
+
+= 1.1.6 (2019-03-26) =
+ * Minor bug fixing
+
+= 1.1.5 (2019-03-24) =
+ * Added: Pot file added
+ * Fixed: Tooltip class issue fixed
+
+= 1.1.4 (2019-03-15) =
+ * Fixed: When save the invoice from browser, the invoice file name will be set according to invoice no. setting.
+ * Add: Nonce verification added to settings form.
+
+= 1.1.3 (2019-03-10) =
+ * Setting link added to plugin action link
+
+= 1.1.2 (2019-03-07) =
+ * Review request notice will show after 15 days of installation
+
+= 1.1.1 (2019-03-05) =
+ * Minor bug fixed
+
+= 1.1.0 (2019-03-03) =
+ * Plugin UI bug fix
+ * new invoice page at the end bug fix
+
+= 1.0.13 (2019-02-28) =
+ * Added: Auto page break added if a order contain more than 6 products
+
+= 1.0.12 (2019-02-25) =
+ * Fixed: logo upload issue
+
+= 1.0.11 (2019-02-24) =
+ * Minor css issue fixed
+
+= 1.0.10 (2019-02-20) =
+ * Minor UI issue fixed and plugin icon added
+ * Support button added
+
+= 1.0.9 (2019-02-19) =
+ * New UI added
+ * Currency symbol issue fixed.
+
+= 1.0.7 (2019-01-30) =
+ * Invoice download link added to customer email.
+
+= 1.0.6 (2018-07-01) =
+ * The text "Invoice" added as a prefix of attached PDF invoice.
+
+= 1.0.5 (2018-03-31) =
+ * Added: Payment Method option added
+
+= 1.0.4 (2018-03-20) =
+ * Added: Option to resize logo
+ * Added: Footer Information Section Added
+
+= 1.0.3 (2018-02-20) =
+ * Fixed: Tab ui issue fixed
+
+= 1.0.2 =
+ * Added: Download link with order email
+ * Fixed: Invoice attachment issue
+ * Fixed: UI Improved
+
+= 1.0.1 =
+ * Invoice packing slip button created
+ * Template contents created for generating multiples template files
+ * Bulk packing slip made
+ * Added template Localization tab into Plugin setting page and process localization
+ * Bulk Pdf and Packing slip now can generate by selecting two dates
+
+
+== Upgrade Notice ==
+
+= 1.0 =
+Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
