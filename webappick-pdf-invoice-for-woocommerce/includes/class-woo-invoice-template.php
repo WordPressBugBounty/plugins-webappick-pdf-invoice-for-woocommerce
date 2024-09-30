@@ -487,7 +487,7 @@ public function get_html_start( $page_break = '' ) {
 
                     foreach ($selected_option as  $column) {
                         if(array_key_exists( $column, $options)){ ?>
-                            <th class="<?php echo $column.'-column'?>"><?php echo $options[$column]; ?></th>
+                            <th class="<?php echo esc_attr( $column . '-column' ); ?>"><?php echo esc_html( $options[ $column ] ); ?></th>
                         <?php }
                     } ?>
 				<?php elseif ( 'packing_slip' === $this->template_type ) :
