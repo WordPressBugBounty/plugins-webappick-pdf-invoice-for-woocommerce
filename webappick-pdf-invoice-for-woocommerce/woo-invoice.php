@@ -6,7 +6,7 @@
  * Plugin Name:  Challan - PDF Invoice & Packing Slip for WooCommerce
  * Plugin URI:   https://webappick.com
  * Description:  Automatic Generate PDF Invoice and attach  with order email for WooCommerce.
- * Version:      3.7.10
+ * Version:      3.7.11
  * Author:       WebAppick
  * Author URI:   https://webappick.com
  * License:      GPLv2
@@ -239,7 +239,10 @@ function woo_invoice_docs(){
                 <div id="<?php echo esc_attr( $boxId ); ?>" class="postbox <?php echo esc_attr( postbox_classes( $boxId, $current_screen->id ) ); ?>">
                     <button type="button" class="handlediv" aria-expanded="true">
                         <span class="screen-reader-text">
-                            <?php printf( esc_html__( 'Toggle panel: %s', 'webappick-pdf-invoice-for-woocommerce' ), esc_html( $post->title->rendered ) ); ?>
+                            <?php
+                            // Translators: %s is the title of the post.
+                            printf( esc_html__( 'Toggle panel: %s', 'webappick-pdf-invoice-for-woocommerce' ), esc_html( $post->title->rendered ) );
+                            ?>
                         </span>
                         <span class="toggle-indicator" aria-hidden="true"></span>
                     </button>
