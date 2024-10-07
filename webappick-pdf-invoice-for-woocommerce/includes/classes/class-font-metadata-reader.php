@@ -74,7 +74,7 @@ class Challan_FontMetadataReader
      */
     function __construct( $fileName = '' ) {
         if ( ! $fileName || ! is_readable($fileName) ) {
-            throw new Exception('File ' . $fileName . ' is not readable');
+            throw new Exception( esc_html('File ' . $fileName . ' is not readable') );
         }
 
         $this->fileName = $fileName;
@@ -121,7 +121,7 @@ class Challan_FontMetadataReader
         //  Check is this is a true type font and the version is 1.0
         if ( 1 != $uMajorVersion || 0 != $uMinorVersion ) {
             fclose($fontHandle);
-            throw new Exception($this->fileName . ' is not a Truetype font file');
+            throw new Exception( esc_html($this->fileName . ' is not a Truetype font file'));
         }
 
         //  Look for details of the name table
@@ -138,7 +138,7 @@ class Challan_FontMetadataReader
 
         if ( ! $nameTableFound ) {
             fclose($fontHandle);
-            throw new Exception('Can\'t find name table in ' . $this->fileName);
+            throw new Exception( esc_html('Can\'t find name table in ' . $this->fileName) );
         }
 
         //  Set offset to the start of the name table
