@@ -413,15 +413,15 @@ class Woo_Invoice_Hooks
                         <td class="wpifw_button-text"><?php echo esc_html($button_text); ?></td>
                         <td class="wpifw_order_buttons">
                             <a href="<?php echo esc_url($button_url); ?>" target="_blank">
-                                <button type="button" class="wpifw_button_invoice button button-default _winvoice-info-<?php echo sanitize_title($button_text); ?>" title="Download <?php echo ucwords( str_replace( '-', ' ', sanitize_title( $button_text ) ) ); ?>">
-                                    <span class="dashicons dashicons-download"></span> <!-- Dashicon for Download -->
+                                <button type="button" class="wpifw_button_invoice button button-default _winvoice-info-<?php echo esc_attr( sanitize_title( $button_text ) ); ?>" title="Download <?php echo esc_attr( ucwords( str_replace( '-', ' ', sanitize_title( $button_text ) ) ) ); ?>">
+                                <span class="dashicons dashicons-download"></span> <!-- Dashicon for Download -->
                                 </button>
                             </a>
                         </td>
                         <!-- Add the Print button for each link -->
                         <td class="wpifw_order_buttons">
-                            <button type="button" class="wpifw_button_invoice_print button button-default _winvoice-info-print" onclick="printButton('<?php echo esc_url($button_url); ?>')" title="Print <?php echo ucwords( str_replace( '-', ' ', sanitize_title( $button_text ) ) ); ?>">
-                                <span class="dashicons dashicons-printer"></span> <!-- Dashicon for Print -->
+                            <button type="button" class="wpifw_button_invoice_print button button-default _winvoice-info-print" onclick="printButton('<?php echo esc_js( esc_url( $button_url ) ); ?>')" title="Print <?php echo esc_attr( ucwords( str_replace( '-', ' ', sanitize_title( $button_text ) ) ) ); ?>">
+                            <span class="dashicons dashicons-printer"></span> <!-- Dashicon for Print -->
                             </button>
                         </td>
                     </tr>
