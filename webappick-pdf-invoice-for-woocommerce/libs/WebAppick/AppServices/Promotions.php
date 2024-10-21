@@ -372,22 +372,26 @@ class Promotions {
 	 *
 	 * @return void
 	 */
-	public function __webappick_dismiss_promo() {
-		if (
-				isset( $_REQUEST['dismissed'], $_REQUEST['hash'], $_REQUEST['_wpnonce'] ) &&
-				$_REQUEST['dismissed'] == 'true' &&
-				! empty( $_REQUEST['hash'] ) &&
-				wp_verify_nonce( $_REQUEST['_wpnonce'], 'wapk-dismiss-promo' )
-		) {
-			$this->hiddenPromotions = array_merge( $this->hiddenPromotions, array( sanitize_text_field( $_REQUEST['hash'] ) ) );
-			update_user_option( $this->currentUser, $this->client->getSlug() . '_hidden_promos', $this->hiddenPromotions );
-			wp_send_json_success( __( 'Promo hidden', 'webappick-pdf-invoice-for-woocommerce' ) );
-		}
-		wp_send_json_error( __( 'Invalid Request', 'webappick-pdf-invoice-for-woocommerce' ) );
-		die();
-	}
+    public function __webappick_dismiss_promo() {
+        if (
+            isset( $_REQUEST['dismissed'], $_REQUEST['hash'], $_REQUEST['_wpnonce'] ) &&
+            'true' === sanitize_text_field( wp_unslash( $_REQUEST['dismissed'] ) ) && // Unslash and sanitize 'dismissed'
+            ! empty( $_REQUEST['hash'] ) &&
+            wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ), 'wapk-dismiss-promo' ) // Unslash and sanitize nonce
+        ) {
+            // Unslash and sanitize the 'hash'
+            $hash = sanitize_text_field( wp_unslash( $_REQUEST['hash'] ) );
+            $this->hiddenPromotions = array_merge( $this->hiddenPromotions, array( $hash ) );
+            update_user_option( $this->currentUser, $this->client->getSlug() . '_hidden_promos', $this->hiddenPromotions );
 
-	/**
+            wp_send_json_success( __( 'Promo hidden', 'webappick-pdf-invoice-for-woocommerce' ) );
+        }
+
+        wp_send_json_error( __( 'Invalid Request', 'webappick-pdf-invoice-for-woocommerce' ) );
+        die();
+    }
+
+    /**
 	 * @noinspection PhpUnused
 	 * Clear Hidden Promotion preference for User
 	 * @return bool
