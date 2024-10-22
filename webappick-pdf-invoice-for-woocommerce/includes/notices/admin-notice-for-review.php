@@ -40,6 +40,9 @@ class Challan_Notifications {
         if (in_array($store_country, $target_countries) || in_array($site_language, $target_languages)) {
             add_action('admin_notices', [$this, 'woo_invoice_free_gst_notice']);
         }
+        if ( isset($_GET['page'] ) && preg_match( '/^webappick([a-zA-Z-]+)/', $_GET['page'] ) ) {//phpcs:ignore
+            add_action( 'admin_notices', [ $this, 'woo_invoice_free_promotion_notice' ] );
+        }
 
 		add_action('wp_ajax_woo_invoice_save_review_notice', [ $this, 'woo_invoice_save_review_notice' ] );
 		add_action('wp_ajax_woo_invoice_hide_notice', [ $this, 'woo_invoice_hide_notice' ] );
@@ -340,7 +343,7 @@ class Challan_Notifications {
 
 //        delete_user_meta( 1, 'woo_invoice_promotion_notice_dismissed');
 
-		$image_url = CHALLAN_FREE_PLUGIN_URL . 'admin/images/halloween-banner-22.png';
+		$image_url = CHALLAN_FREE_PLUGIN_URL . 'admin/images/hw-banner-challan-24.png';
 		$pluginName    = sprintf( '<b>%s</b>', esc_html( 'Challan' ) );
 		$user_id       = get_current_user_id();
 		$review_notice_dismissed = get_user_meta($user_id, 'woo_invoice_promotion_notice_dismissed', true);
@@ -354,7 +357,7 @@ class Challan_Notifications {
 
 		if ( $show_notice ) {
 			?>
-            <div class="woo-invoice-notice notice notice-info is-dismissible price_update" style="line-height:1.5;" data-which="promotion_2022_close" data-nonce="<?php echo esc_attr( $nonce ); ?>">
+            <div class="woo-invoice-notice notice notice-info is-dismissible price_update" style="line-height:1.5;" data-which="promotion_2024_close" data-nonce="<?php echo esc_attr( $nonce ); ?>">
                 <p><?php
 					printf(
 					/* translators: 1: plugin name,2: Slightly Smiling Face (Emoji), 3: line break 'br' tag */
@@ -366,6 +369,12 @@ class Challan_Notifications {
 					);
 					?></p>
             </div>
+            <style>
+                /* Custom CSS to change the dismiss button color */
+                .woo-invoice-notice .notice-dismiss:before {
+                    color: #fff !important;
+                }
+            </style>
 			<?php
 
 			if ( $show_notice ) {
@@ -431,7 +440,7 @@ class Challan_Notifications {
 	 */
 	public function woo_invoice_hide_notice() {
 		check_ajax_referer( 'woo_invoice_notice_nonce' );
-		$notices = [ 'rp-wcdpd', 'wpml', 'rating', 'product_limit', 'promotion_2022_close', 'zatca_close','gst_close', 'translate' ];
+		$notices = [ 'rp-wcdpd', 'wpml', 'rating', 'product_limit', 'promotion_2024_close', 'zatca_close','gst_close', 'translate' ];
 		if ( isset( $_REQUEST['which'] ) && ! empty( $_REQUEST['which'] ) && in_array( $_REQUEST['which'], $notices ) ) {
 			$user_id = get_current_user_id();
 
@@ -442,7 +451,7 @@ class Challan_Notifications {
                 update_option( 'woo_invoice_free_saudi_zatca_notice', 'showen_zatca_banner' );
             }elseif ( 'gst_close' == $_REQUEST['which'] ) {
                 update_option( 'woo_invoice_free_gst_notice', 'shown_gst_banner' );
-            }elseif ( 'promotion_2022_close' == $_REQUEST['which'] ) {
+            }elseif ( 'promotion_2024_close' == $_REQUEST['which'] ) {
 				add_user_meta($user_id, 'woo_invoice_promotion_notice_dismissed', true, true);
 			}elseif ( 'translate' == $_REQUEST['which'] ) {
 				update_option( 'woo_invoice_translation_notice_next_show_time', time() + ( DAY_IN_SECONDS * 30 )  );

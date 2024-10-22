@@ -15,26 +15,30 @@ if ( ! defined('ABSPATH') ) {
 
 if ( ! function_exists("challan_admin_notice_woocommerce_is_not_installed__error") ) {
     /**
-     * Show an admin notice if WooCommerce is not installed.
+     * Show an admin notice if WooCommerce is not installed or not activated.
      *
      * @return void
      */
     function challan_admin_notice_woocommerce_is_not_installed__error() {
-        $plugins = get_plugins();
-        $woocommerce = isset($plugins["woocommerce/woocommerce.php"]) && is_plugin_active("woocommerce/woocommerce.php") ? $plugins["woocommerce/woocommerce.php"] : [];
-        if ( empty($woocommerce) ) {
+        // Check if WooCommerce is installed and activated
+        if ( ! class_exists( 'WooCommerce' ) ) {
             $class = 'notice notice-error';
             $woocommercePluginLink = '<a target="_blank" href="https://wordpress.org/plugins/woocommerce/">WooCommerce</a>';
-			$message = __("<b>Challan</b> plugin has a peer dependency of $woocommercePluginLink plugin but $woocommercePluginLink plugin is not installed. Please install $woocommercePluginLink plugin to enjoy the awesome features of the <b>Challan</b> plugin.", 'webappick-pdf-invoice-for-woocommerce'); //phpcs:ignore
 
-			if ( isset($plugins["woocommerce/woocommerce.php"]) && ! is_plugin_active("woocommerce/woocommerce.php") ) {
-				$message = __("<b>Challan</b> plugin has a peer dependency of $woocommercePluginLink plugin but $woocommercePluginLink plugin is not activated. Please active $woocommercePluginLink plugin to enjoy the awesome features of the <b>Challan</b> plugin.", 'webappick-pdf-invoice-for-woocommerce'); //phpcs:ignore
-			}
+            // Check if WooCommerce plugin is installed but not activated
+            $plugins = get_plugins();
+            $woocommerce_installed = isset( $plugins["woocommerce/woocommerce.php"] );
 
-            printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($class), esc_html( $message ) );
+            if ( $woocommerce_installed ) {
+                $message = __("<b>Challan</b> plugin has a peer dependency of $woocommercePluginLink plugin but it is not activated. Please activate $woocommercePluginLink plugin to enjoy the awesome features of the <b>Challan</b> plugin.", 'webappick-pdf-invoice-for-woocommerce');
+            } else {
+                // WooCommerce is neither installed nor activated
+                $message = __("<b>Challan</b> plugin has a peer dependency of $woocommercePluginLink plugin but it is not installed. Please install $woocommercePluginLink plugin to enjoy the awesome features of the <b>Challan</b> plugin.", 'webappick-pdf-invoice-for-woocommerce');
+            }
+
+            printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($class), $message );
         }
     }
 
     add_action('admin_notices', 'challan_admin_notice_woocommerce_is_not_installed__error');
-
 }
