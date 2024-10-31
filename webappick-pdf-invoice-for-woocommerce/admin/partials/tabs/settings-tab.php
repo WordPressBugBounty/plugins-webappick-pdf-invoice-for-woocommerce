@@ -548,7 +548,6 @@ $challan_item_meta_query = challan_item_meta_query();
                             End Add Product meta for invoice.
                          ================================== -->
 
-
                         <!-- ===============================
                             Add order item meta for invoice.
                          =============================== -->
