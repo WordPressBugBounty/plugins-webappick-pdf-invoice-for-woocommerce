@@ -40,9 +40,9 @@ class Challan_Notifications {
         if (in_array($store_country, $target_countries) || in_array($site_language, $target_languages)) {
             add_action('admin_notices', [$this, 'woo_invoice_free_gst_notice']);
         }
-        if ( isset($_GET['page'] ) && preg_match( '/^webappick([a-zA-Z-]+)/', $_GET['page'] ) ) {//phpcs:ignore
-            add_action( 'admin_notices', [ $this, 'woo_invoice_free_promotion_notice' ] );
-        }
+//        if ( isset($_GET['page'] ) && preg_match( '/^webappick([a-zA-Z-]+)/', $_GET['page'] ) ) {//phpcs:ignore
+//            add_action( 'admin_notices', [ $this, 'woo_invoice_free_promotion_notice' ] );
+//        }
 
 		add_action('wp_ajax_woo_invoice_save_review_notice', [ $this, 'woo_invoice_save_review_notice' ] );
 		add_action('wp_ajax_woo_invoice_hide_notice', [ $this, 'woo_invoice_hide_notice' ] );
