@@ -21,7 +21,7 @@ if ( ! function_exists("challan_admin_notice_invoice_dir_is_not_writeable__error
      */
     function challan_admin_notice_invoice_dir_is_not_writeable__error() {
 
-        if ( ! is_writeable(WP_CONTENT_DIR ) ) {
+        if ( ! wp_is_writable(WP_CONTENT_DIR ) ) {
             $class = 'notice notice-error';
             $wpFilePermissionLink = '<a target="_blank" href="https://wordpress.org/support/article/changing-file-permissions/">WordPress file permission click here</a>';
             $message = sprintf(
@@ -32,8 +32,7 @@ if ( ! function_exists("challan_admin_notice_invoice_dir_is_not_writeable__error
                 $wpFilePermissionLink, //phpcs:ignore
                 'Please contact with your system admin or server admin.'
             );
-
-            printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($class), wp_kses( $message , [ '<a></a>', '<strong></strong>' ] ) ); //phpcs:ignore
+            printf('<div class="%1$s"><p>%2$s</p></div>', esc_attr($class), wp_kses( $message , [ 'a' => [ 'href' => [], 'target' => [] ], 'strong' => [] ] ) ); //phpcs:ignore
         }
     }
 
