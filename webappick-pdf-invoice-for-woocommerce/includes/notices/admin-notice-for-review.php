@@ -40,9 +40,9 @@ class Challan_Notifications {
         if (in_array($store_country, $target_countries) || in_array($site_language, $target_languages)) {
             add_action('admin_notices', [$this, 'woo_invoice_free_gst_notice']);
         }
-//        if ( isset($_GET['page'] ) && preg_match( '/^webappick([a-zA-Z-]+)/', $_GET['page'] ) ) {//phpcs:ignore
-//            add_action( 'admin_notices', [ $this, 'woo_invoice_free_promotion_notice' ] );
-//        }
+        if ( isset($_GET['page'] ) && preg_match( '/^webappick([a-zA-Z-]+)/', $_GET['page'] ) ) {//phpcs:ignore
+            add_action( 'admin_notices', [ $this, 'woo_invoice_free_promotion_notice_bfcm' ] );
+        }
 
 		add_action('wp_ajax_woo_invoice_save_review_notice', [ $this, 'woo_invoice_save_review_notice' ] );
 		add_action('wp_ajax_woo_invoice_hide_notice', [ $this, 'woo_invoice_hide_notice' ] );
@@ -339,14 +339,14 @@ class Challan_Notifications {
     /**
 	 * Black friday implementation.
 	 */
-	public function woo_invoice_free_promotion_notice() {
+	public function woo_invoice_free_promotion_notice_bfcm() {
 
 //        delete_user_meta( 1, 'woo_invoice_promotion_notice_dismissed');
 
-		$image_url = CHALLAN_FREE_PLUGIN_URL . 'admin/images/hw-banner-challan-24.png';
+		$image_url = CHALLAN_FREE_PLUGIN_URL . 'admin/images/bfcm-banner-24.png';
 		$pluginName    = sprintf( '<b>%s</b>', esc_html( 'Challan' ) );
 		$user_id       = get_current_user_id();
-		$review_notice_dismissed = get_user_meta($user_id, 'woo_invoice_promotion_notice_dismissed', true);
+		$review_notice_dismissed = get_user_meta($user_id, 'woo_invoice_promotion_notice_dismissed1', true);
 		$nonce         = wp_create_nonce( 'woo_invoice_notice_nonce' );
 
         if ( isset($review_notice_dismissed) && ! empty($review_notice_dismissed) ) {
@@ -452,7 +452,7 @@ class Challan_Notifications {
             }elseif ( 'gst_close' == $_REQUEST['which'] ) {
                 update_option( 'woo_invoice_free_gst_notice', 'shown_gst_banner' );
             }elseif ( 'promotion_2024_close' == $_REQUEST['which'] ) {
-				add_user_meta($user_id, 'woo_invoice_promotion_notice_dismissed', true, true);
+				add_user_meta($user_id, 'woo_invoice_promotion_notice_dismissed1', true, true);
 			}elseif ( 'translate' == $_REQUEST['which'] ) {
 				update_option( 'woo_invoice_translation_notice_next_show_time', time() + ( DAY_IN_SECONDS * 30 )  );
 				add_user_meta($user_id, 'woo_invoice_translation_notice_dismissed', true, true);

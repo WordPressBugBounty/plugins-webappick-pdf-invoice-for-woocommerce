@@ -222,7 +222,8 @@ class Client {
 			if ( ! function_exists( 'get_plugin_data' ) ) {
 				require_once ABSPATH . 'wp-admin/includes/plugin.php';
 			}
-			$plugin_data           = get_plugin_data( $this->file );
+			//$plugin_data           = get_plugin_data( $this->file );
+            $plugin_data = get_plugin_data( __FILE__, false, false );
 			$this->project_version = $plugin_data['Version'];
 			$this->type            = 'plugin';
 		} else {

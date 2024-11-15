@@ -6,7 +6,7 @@
  * Plugin Name:  Challan - PDF Invoice & Packing Slip for WooCommerce
  * Plugin URI:   https://webappick.com
  * Description:  Automatic Generate PDF Invoice and attach  with order email for WooCommerce.
- * Version:      3.7.20
+ * Version:      3.7.21
  * Author:       WebAppick
  * Author URI:   https://webappick.com
  * License:      GPLv2
@@ -16,10 +16,10 @@
  * Requires Plugins: woocommerce
  * WP Requirement & Test
  * Requires at least: 4.4
- * Tested up to: 6.6
+ * Tested up to: 6.7
  * Requires PHP: 7.4
  * WC requires at least: 3.2
- * WC tested up to: 9.3
+ * WC tested up to: 9.4
  **/
 
 // If this file is called directly, abort.
@@ -107,18 +107,27 @@ if ( ! defined( 'CHALLAN_FREE_ROOT_FILE_PATH' ) ) {
 }
 
 
+/**
+ * Defer file loading until WordPress initializes.
+ */
+function challan_free_load_files()
+{
 // Load files
-require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/constants.php';
-require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/config.php';
-require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/settings.php';
-require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/functions.php';
-require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/classes.php';
-require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/activator.php';
-require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/deactivator.php';
-require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/uninstaller.php';
-require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/upgrader.php';
-require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/notices.php';
-require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/filters.php';
+    require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/constants.php';
+    require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/config.php';
+    require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/settings.php';
+    require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/functions.php';
+    require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/classes.php';
+    require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/activator.php';
+    require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/deactivator.php';
+    require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/uninstaller.php';
+    require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/upgrader.php';
+    require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/notices.php';
+    require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/filters.php';
+}
+
+// Hook into `init` to ensure files are only loaded after WordPress initialization.
+add_action('init', 'challan_free_load_files');
 
 //Load MPDF library
 
@@ -184,18 +193,26 @@ require CHALLAN_FREE_ROOT_FILE_PATH . 'includes/class-woo-invoice.php';
  * @since    1.0.0
  */
 function woo_invoice_run() {
-	$plugin = new Woo_Invoice();
-	$plugin->run();
-	Woo_Invoice_WebAppickAPI::get_instance();
+    $plugin = new Woo_Invoice();
+    $plugin->run();
 
-	//HPOS compatibility
-	if( is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
-		add_action( 'before_woocommerce_init', function () {
-			if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-				\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
-			}
-		} );
-	}
+    // Initialize your API instance during 'init' action.
+    add_action('init', function() {
+        Woo_Invoice_WebAppickAPI::get_instance();
+    });
+
+    // Use 'plugins_loaded' to ensure WordPress has loaded plugin functions.
+    add_action('plugins_loaded', function() {
+        // Check if WooCommerce is active before proceeding.
+        if (function_exists('is_plugin_active') && is_plugin_active('woocommerce/woocommerce.php')) {
+            // Hook for HPOS compatibility
+            add_action('before_woocommerce_init', function () {
+                if (class_exists(\Automattic\WooCommerce\Utilities\FeaturesUtil::class)) {
+                    \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', __FILE__, true);
+                }
+            });
+        }
+    });
 }
 
 woo_invoice_run();
