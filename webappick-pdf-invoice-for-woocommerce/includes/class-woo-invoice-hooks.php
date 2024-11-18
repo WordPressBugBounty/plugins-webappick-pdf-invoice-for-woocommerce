@@ -201,7 +201,7 @@ class Woo_Invoice_Hooks
 				    if ( $zip->open( CHALLAN_FREE_FONT_DIR . $file_name ) === true ) {
 					    $zip->extractTo( CHALLAN_FREE_FONT_DIR );
 					    $zip->close();
-					    unlink( CHALLAN_FREE_FONT_DIR . $file_name );
+                        wp_delete_file( CHALLAN_FREE_FONT_DIR . $file_name );
 					    $response = array(
 						    'font_name' => $file_name,
 					    );

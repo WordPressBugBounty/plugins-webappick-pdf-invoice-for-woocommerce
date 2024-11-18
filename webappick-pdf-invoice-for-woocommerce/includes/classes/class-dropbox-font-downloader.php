@@ -107,7 +107,7 @@ class Challan_DropBoxFontDownloader
             $zip->extractTo($extractTo);
             $zip->close();
             if ( file_exists( $zipFile ) ) {
-                unlink( $zipFile );
+                wp_delete_file( $zipFile );
             }
             return true;
         } else {

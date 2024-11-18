@@ -53,7 +53,7 @@ class Challan_MpdfLibDownloader {
             if ( TRUE === $res ) {
                 $zip->extractTo($extractTo);
                 $zip->close();
-                unlink( $zipFile );
+                wp_delete_file( $zipFile );
                 return true;
             } else {
                 return false;
