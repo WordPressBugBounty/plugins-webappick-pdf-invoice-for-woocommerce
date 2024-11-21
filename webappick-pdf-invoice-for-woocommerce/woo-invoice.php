@@ -6,7 +6,7 @@
  * Plugin Name:  Challan - PDF Invoice & Packing Slip for WooCommerce
  * Plugin URI:   https://webappick.com
  * Description:  Automatic Generate PDF Invoice and attach  with order email for WooCommerce.
- * Version:      3.7.23
+ * Version:      3.7.24
  * Author:       WebAppick
  * Author URI:   https://webappick.com
  * License:      GPLv2
