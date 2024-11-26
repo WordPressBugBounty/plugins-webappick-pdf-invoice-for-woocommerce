@@ -69,14 +69,25 @@ class Challan_DropBoxFontDownloader
         if ( ! woo_invoice_is_uploads_folder_writable() ) {
             return;
         }
+
+        // Load WordPress Filesystem API
+        global $wp_filesystem;
+
+        if ( ! function_exists( 'WP_Filesystem' ) ) {
+            require_once ABSPATH . 'wp-admin/includes/file.php';
+        }
+
+        WP_Filesystem();
         $arrContextOptions = array(
             "ssl" => array(
                 "verify_peer"      => false,
                 "verify_peer_name" => false,
             ),
         );
-        $data = file_get_contents($source, false, stream_context_create( $arrContextOptions ) );//phpcs:ignore
-        if ( file_put_contents($destination, $data) ) {
+        $data = file_get_contents( $source, false, stream_context_create( $arrContextOptions ) ); // phpcs:ignore
+
+        // Use the WordPress Filesystem API to write the data to the destination
+        if ( $wp_filesystem->put_contents( $destination, $data, FS_CHMOD_FILE ) ) {
             return true;
         } else {
             return false;
