@@ -64,8 +64,16 @@
                                 $upload_dir                   = wp_upload_dir();
                                 $base_dir                     = $upload_dir['basedir'];
                                 $wpifw_invoice_dir            = $base_dir . "/WOO-INVOICE";
-                                $upload_dir_permission_status = '';
-                                $upload_dir_permission_status = !file_exists($wpifw_invoice_dir) && !is_writable($wpifw_invoice_dir) && !is_writable($base_dir) ? 0 : '1';
+
+                                // Check if the directory exists and is writable using wp_is_writable().
+                                if (!file_exists($wpifw_invoice_dir)) {
+                                    if (!wp_mkdir_p($wpifw_invoice_dir)) {
+                                        return 0; // Directory couldn't be created, return 0.
+                                    }
+                                }
+
+                                // Check if the WOO-INVOICE directory is writable.
+                                $upload_dir_permission_status = wp_is_writable($wpifw_invoice_dir) ? '1' : '0';
 
                                 return $upload_dir_permission_status;
                             }
