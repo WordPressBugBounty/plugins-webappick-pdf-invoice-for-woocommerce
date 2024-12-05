@@ -566,12 +566,20 @@ class Insights {
 	public function get_post_count( $post_type ) {
 		global $wpdb;
 
-		return (int) $wpdb->get_var(
-			$wpdb->prepare(
-				"SELECT count(ID) FROM $wpdb->posts WHERE post_type = %s and post_status = 'publish'",
-				$post_type
-			)
-		);
+        $cache_key = "post_count_{$post_type}";
+        $post_count = wp_cache_get( $cache_key );
+
+        if ( false === $post_count ) {
+            $post_count = (int) $wpdb->get_var( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+            $wpdb->prepare(
+                    "SELECT COUNT(ID) FROM $wpdb->posts WHERE post_type = %s AND post_status = 'publish'",
+                    $post_type
+                )
+            );
+
+            wp_cache_set( $cache_key, $post_count );
+        }
+        return $post_count;
 	}
 
 	/**
