@@ -96,7 +96,6 @@ if ( ! function_exists('challan_order_meta_query') ) {
     }
 }
 
-
 if ( ! function_exists('challan_product_meta_query') ) {
     /**
      * @return array|object|null
