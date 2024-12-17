@@ -579,7 +579,7 @@ $challan_item_meta_query = challan_item_meta_query();
                                             if (!empty($challan_item_meta_query)) {
                                                 foreach ($challan_item_meta_query as $meta) {
                                                     $selected = $item_meta_name == $meta->meta_key ? 'selected' : '';
-                                                    echo '<option value=' . $meta->meta_key . ' ' . $selected . '>' . $meta->meta_key . '</option>'; //phpcs:ignore
+                                                    echo '<option value="' . esc_attr( $meta->meta_key ) . '" ' . $selected . '>' . esc_html( $meta->meta_key ) . '</option>'; //phpcs:ignore
                                                 }
                                             }
                                             ?>
