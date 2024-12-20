@@ -15,9 +15,9 @@ class Challan_Notifications {
 	 */
 	public function notifications_load_hooks() {
 
-//        if ( isset( $_GET['page'] ) && $_GET['page'] === 'webappick-woo-invoice' ) {//phpcs:ignore
-//            add_action( 'admin_notices', [ $this, 'woo_invoice_free_promotion_notice_cm' ] );
-//        }
+        if ( isset( $_GET['page'] ) && $_GET['page'] === 'webappick-woo-invoice' ) {//phpcs:ignore
+            add_action( 'admin_notices', [ $this, 'woo_invoice_free_promotion_notice_christmas' ] );
+        }
 
 //		add_action( 'admin_notices', [ $this, 'woo_invoice_review_notice' ] );
 		add_action( 'admin_notices', [ $this, 'woo_invoice_translation_request' ] );
@@ -340,14 +340,14 @@ class Challan_Notifications {
     /**
 	 * Black friday implementation.
 	 */
-	public function woo_invoice_free_promotion_notice_cm() {
+	public function woo_invoice_free_promotion_notice_christmas() {
 
 //        delete_user_meta( 1, 'woo_invoice_promotion_notice_dismissed');
 
-		$image_url = CHALLAN_FREE_PLUGIN_URL . 'admin/images/cm-banner-24.png';
+		$image_url = CHALLAN_FREE_PLUGIN_URL . 'admin/images/christmas-banner-24.png';
 		$pluginName    = sprintf( '<b>%s</b>', esc_html( 'Challan' ) );
 		$user_id       = get_current_user_id();
-		$review_notice_dismissed = get_user_meta($user_id, 'woo_invoice_promotion_notice_dismissed_cm', true);
+		$review_notice_dismissed = get_user_meta($user_id, 'woo_invoice_promotion_notice_dismissed_christmas', true);
 		$nonce         = wp_create_nonce( 'woo_invoice_notice_nonce' );
 
         if ( isset($review_notice_dismissed) && ! empty($review_notice_dismissed) ) {
@@ -362,7 +362,7 @@ class Challan_Notifications {
                 <p><?php
 					printf(
 					/* translators: 1: plugin name,2: Slightly Smiling Face (Emoji), 3: line break 'br' tag */
-						'<a class="woo_invoice_promotion_notice" href="https://webappick.com/plugin/woocommerce-pdf-invoice-packing-slips/?utm_source=challan+Plugin&utm_medium=cm_banner&utm_campaign=CM_24&utm_id=2024" target="_blank"><img  src="'.$image_url.'" alt="Challan_Free_Price"></a>', //phpcs:ignore
+						'<a class="woo_invoice_promotion_notice" href="https://webappick.com/plugin/woocommerce-pdf-invoice-packing-slips/?utm_source=challan+Plugin&utm_medium=HH_banner&utm_campaign=HH_24&utm_id=2024" target="_blank"><img  src="'.$image_url.'" alt="Challan_Free_Price"></a>', //phpcs:ignore
 						$pluginName, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						'<span style="font-size: 16px;">&#128516</span>',
 						'<div class="woo-invoice-review-notice-logo"></div>',
@@ -453,7 +453,7 @@ class Challan_Notifications {
             }elseif ( 'gst_close' == $_REQUEST['which'] ) {
                 update_option( 'woo_invoice_free_gst_notice', 'shown_gst_banner' );
             }elseif ( 'promotion_2024_close' == $_REQUEST['which'] ) {
-				add_user_meta($user_id, 'woo_invoice_promotion_notice_dismissed_cm', true, true);
+				add_user_meta($user_id, 'woo_invoice_promotion_notice_dismissed_christmas', true, true);
 			}elseif ( 'translate' == $_REQUEST['which'] ) {
 				update_option( 'woo_invoice_translation_notice_next_show_time', time() + ( DAY_IN_SECONDS * 30 )  );
 				add_user_meta($user_id, 'woo_invoice_translation_notice_dismissed', true, true);

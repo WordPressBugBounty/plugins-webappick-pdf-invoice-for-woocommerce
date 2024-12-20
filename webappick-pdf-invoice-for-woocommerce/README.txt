@@ -4,7 +4,7 @@ Donate link: https://webappick.com
 Tags: invoice, pdf invoice, packing slips, delivery notes, woocommerce pdf invoice
 Requires at least: 3.6
 Tested up to: 6.7
-Stable tag: 3.7.32
+Stable tag: 3.7.33
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -279,8 +279,11 @@ Please read the [documentation](https://webappick.com/docs/woo-invoice/installat
 We are looking for people to help translate this plugin. If you can help we would love for you to jump in and do so.
 Help us & the WordPress community, translate the plugin [here](https://translate.wordpress.org/projects/wp-plugins/webappick-pdf-invoice-for-woocommerce/)
 
+= 3.7.33 ( December 20, 2024 ) =
+* Added: Christmas discount banner added.
+
 = 3.7.32 ( December 17, 2024 ) =
-Improved: Added esc_attr and esc_html for better data sanitization and security when rendering meta key options.
+* Improved: Added esc_attr and esc_html for better data sanitization and security when rendering meta key options.
 
 = 3.7.31 ( December 10, 2024 ) =
 * Fixed: Minor bug.
