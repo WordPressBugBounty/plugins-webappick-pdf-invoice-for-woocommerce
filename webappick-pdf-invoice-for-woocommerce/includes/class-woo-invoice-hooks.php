@@ -683,7 +683,6 @@ class Woo_Invoice_Hooks
                     e.preventDefault();
                     var $button = $(this);
 
-
                     // Create the media frame.
                     var file_frame = wp.media.frames.file_frame = wp.media({
                         title: 'Select or upload image',
