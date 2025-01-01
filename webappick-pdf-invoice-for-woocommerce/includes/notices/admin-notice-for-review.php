@@ -16,7 +16,7 @@ class Challan_Notifications {
 	public function notifications_load_hooks() {
 
         if ( isset( $_GET['page'] ) && $_GET['page'] === 'webappick-woo-invoice' ) {//phpcs:ignore
-            add_action( 'admin_notices', [ $this, 'woo_invoice_free_promotion_notice_christmas' ] );
+          //  add_action( 'admin_notices', [ $this, 'woo_invoice_free_promotion_notice_christmas' ] );
         }
 
 //		add_action( 'admin_notices', [ $this, 'woo_invoice_review_notice' ] );
