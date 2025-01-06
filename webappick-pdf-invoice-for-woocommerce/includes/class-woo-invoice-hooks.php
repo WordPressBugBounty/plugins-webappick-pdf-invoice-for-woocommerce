@@ -402,7 +402,11 @@ class Woo_Invoice_Hooks
 				'Invoice' => $invoice,
 				'Packing Slip' => $packing_slip,
 				'Delivery Address' => $delivery_address
-			); ?>
+			);
+
+            // Apply filter to allow modification of the buttons array
+            $buttons = apply_filters('wpifw_order_buttons_array', $buttons);
+            ?>
 
             <table class="wpifw_order_invoice_table">
 				<?php foreach ($buttons as $button_text => $button_url) :
@@ -508,6 +512,9 @@ class Woo_Invoice_Hooks
 				'image' => 'shipping-label.svg',
 			),
 		);
+
+        // Apply filter to allow modification of the buttons array.
+        //$buttons = apply_filters('wpifw_admin_order_action_buttons', $buttons);
 
 		// Other buttons.
 		foreach ($buttons as $button) {
