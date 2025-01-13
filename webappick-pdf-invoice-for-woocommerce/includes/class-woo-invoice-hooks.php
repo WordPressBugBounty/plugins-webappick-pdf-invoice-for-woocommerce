@@ -514,7 +514,7 @@ class Woo_Invoice_Hooks
 		);
 
         // Apply filter to allow modification of the buttons array.
-        //$buttons = apply_filters('wpifw_admin_order_action_buttons', $buttons);
+        $buttons = apply_filters('wpifw_admin_order_action_buttons', $buttons);
 
 		// Other buttons.
 		foreach ($buttons as $button) {
