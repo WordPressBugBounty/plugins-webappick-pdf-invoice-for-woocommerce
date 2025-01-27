@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'CHALLAN_FREE_VERSION', '3.7.40' );
+define( 'CHALLAN_FREE_VERSION', '3.7.42' );
 
 if ( ! defined( 'CHALLAN_FREE_FONTS_COUNT' ) ) {
     /**
@@ -120,5 +120,6 @@ if ( ! defined( 'CHALLAN_ADMIN_UI_FONTS_DIR' ) ) {
     define( 'CHALLAN_ADMIN_UI_FONTS_DIR', wp_upload_dir()['basedir'] ."/WOO-INVOICE-ADMIN-UI-FONTS/" );
 
 }
+
 
 // end of constants.php
