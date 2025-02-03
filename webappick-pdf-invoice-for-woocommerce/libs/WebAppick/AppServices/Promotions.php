@@ -128,7 +128,7 @@ class Promotions {
 	 */
 	public function init() {
 		if ( is_null( $this->promotionSrc ) ) {
-			_doing_it_wrong( __METHOD__, __( 'Promotion Source URL Not Set. see Promotions::set_source( $URL )', 'webappick-pdf-invoice-for-woocommerce' ), '1.0.0' );
+			_doing_it_wrong( __METHOD__, esc_html__( 'Promotion Source URL Not Set. see Promotions::set_source( $URL )', 'webappick-pdf-invoice-for-woocommerce' ), '1.0.0' );
 		}
 		add_action( 'admin_init', array( $this, '__init_internal' ), 10 );
 	}
@@ -194,7 +194,7 @@ class Promotions {
 				$noticeClasses .= ' is-dismissible';
 			}
 			?>
-		<div class="<?php echo esc_attr( $noticeClasses ); ?> " id="<?php echo esc_attr( $promotion->hash ); ?>" data-nonce="<?php echo wp_create_nonce( 'wapk-dismiss-promo' ); ?>" style="<?php echo esc_attr( $wrapperStyles ); ?>">
+		<div class="<?php echo esc_attr( $noticeClasses ); ?> " id="<?php echo esc_attr( $promotion->hash ); ?>" data-nonce="<?php echo esc_attr(wp_create_nonce( 'wapk-dismiss-promo' )); ?>" style="<?php echo esc_attr( $wrapperStyles ); ?>">
 			<div class="wapk-promo-wrap
 			<?php
 			if ( ! $has_columns ) {
@@ -398,7 +398,7 @@ class Promotions {
 	 */
 	public function clear_hidden_promos() {
 		if ( ! did_action( 'admin_init' ) ) {
-			_doing_it_wrong( __METHOD__, __( 'Method must be invoked inside admin_init action', 'webappick-pdf-invoice-for-woocommerce' ), '1.0.0' );
+			_doing_it_wrong( __METHOD__, esc_html__( 'Method must be invoked inside admin_init action', 'webappick-pdf-invoice-for-woocommerce' ), '1.0.0' );
 		}
 		$this->currentUser = get_current_user_id();
 		return delete_user_option( $this->currentUser, $this->client->getSlug() . '_hidden_promos' );
