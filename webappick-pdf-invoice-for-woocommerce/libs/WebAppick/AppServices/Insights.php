@@ -628,37 +628,39 @@ class Insights {
 	 *
 	 * @return array
 	 */
-	private function __get_all_plugins() {
-		if ( ! function_exists( 'get_plugins' ) ) {
-			include ABSPATH . '/wp-admin/includes/plugin.php';
-		}
-		$plugins             = get_plugins();
-		$active_plugins      = array();
-		$active_plugins_keys = get_option( 'active_plugins', array() );
-		foreach ( $plugins as $k => $v ) {
-			// Take care of formatting the data how we want it.
-			$formatted = array(
-				'name'       => strip_tags( $v['Name'] ),
-				'version'    => isset( $v['Version'] ) ? strip_tags( $v['Version'] ) : 'N/A',
-				'author'     => isset( $v['Author'] ) ? strip_tags( $v['Author'] ) : 'N/A',
-				'network'    => isset( $v['Network'] ) ? strip_tags( $v['Network'] ) : 'N/A',
-				'plugin_uri' => isset( $v['PluginURI'] ) ? strip_tags( $v['PluginURI'] ) : 'N/A',
-			);
-			if ( in_array( $k, $active_plugins_keys ) ) {
-				unset( $plugins[ $k ] ); // Remove active plugins from list so we can show active and inactive separately
-				$active_plugins[ $k ] = $formatted;
-			} else {
-				$plugins[ $k ] = $formatted;
-			}
-		}
+    private function __get_all_plugins() {
+        if ( ! function_exists( 'get_plugins' ) ) {
+            include ABSPATH . '/wp-admin/includes/plugin.php';
+        }
+        $plugins             = get_plugins();
+        $active_plugins      = array();
+        $active_plugins_keys = get_option( 'active_plugins', array() );
 
-		return array(
-			'active_plugins'   => $active_plugins,
-			'inactive_plugins' => $plugins,
-		);
-	}
+        foreach ( $plugins as $k => $v ) {
+            // Take care of formatting the data securely
+            $formatted = array(
+                'name'       => wp_strip_all_tags( $v['Name'] ),
+                'version'    => isset( $v['Version'] ) ? wp_strip_all_tags( $v['Version'] ) : 'N/A',
+                'author'     => isset( $v['Author'] ) ? wp_strip_all_tags( $v['Author'] ) : 'N/A',
+                'network'    => isset( $v['Network'] ) ? wp_strip_all_tags( $v['Network'] ) : 'N/A',
+                'plugin_uri' => isset( $v['PluginURI'] ) ? wp_strip_all_tags( $v['PluginURI'] ) : 'N/A',
+            );
 
-	/**
+            if ( in_array( $k, $active_plugins_keys ) ) {
+                unset( $plugins[ $k ] ); // Remove active plugins from list
+                $active_plugins[ $k ] = $formatted;
+            } else {
+                $plugins[ $k ] = $formatted;
+            }
+        }
+
+        return array(
+            'active_plugins'   => $active_plugins,
+            'inactive_plugins' => $plugins,
+        );
+    }
+
+    /**
 	 * Get user totals based on user role.
 	 *
 	 * @return array
