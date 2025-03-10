@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'CHALLAN_FREE_VERSION', '3.7.48' );
+define( 'CHALLAN_FREE_VERSION', '3.7.49' );
 
 if ( ! defined( 'CHALLAN_FREE_FONTS_COUNT' ) ) {
     /**

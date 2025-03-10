@@ -386,11 +386,17 @@ class Insights {
 	 *
 	 * @return boolean
 	 */
-	private function __is_local_server() {
-		return apply_filters( 'WebAppick_is_local', in_array( $_SERVER['REMOTE_ADDR'], array( '127.0.0.1', '::1' ) ) );
-	}
+    private function __is_local_server() {
+        if (isset($_SERVER['REMOTE_ADDR'])) {
+            $remote_addr = sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR']));
+        } else {
+            $remote_addr = ''; // Default value if REMOTE_ADDR is not set
+        }
 
-	/**
+        return apply_filters('WebAppick_is_local', in_array($remote_addr, array('127.0.0.1', '::1')));
+    }
+
+    /**
 	 * Schedule the event weekly
 	 *
 	 * @return void
