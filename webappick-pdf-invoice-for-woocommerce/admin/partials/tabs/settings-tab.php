@@ -52,50 +52,50 @@ $challan_item_meta_query = challan_item_meta_query();
                             echo 'none';
                         }
                         ?>
-                            ">
+                                ">
                             <div class="woo-invoice-custom-checkbox-label"></div>
                             <div class="woo-invoice-custom-checkbox-container">
                                 <div class="woo-invoice-custom-control woo-invoice-custom-checkbox">
 
                                     <input type="checkbox" name="wpifw_invoice_download_check_list[]" class="woo-invoice-custom-control-input" id="downloadChecked1" value="processing" <?php
-                                                                                                                                                                                        if (in_array('processing', $wpifw_invoice_download_check_list)) {
-                                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                                        }
-                                                                                                                                                                                        ?>>
+                                    if (in_array('processing', $wpifw_invoice_download_check_list)) {
+                                        echo 'checked';
+                                    }
+                                    ?>>
                                     <label class="woo-invoice-custom-control-label" for="downloadChecked1"><?php esc_html_e('Processing Order', 'webappick-pdf-invoice-for-woocommerce'); ?></label>
                                 </div>
                                 <div class="woo-invoice-custom-control woo-invoice-custom-checkbox">
                                     <input type="checkbox" name="wpifw_invoice_download_check_list[]" class="woo-invoice-custom-control-input" id="downloadChecked5" value="on-hold" <?php
-                                                                                                                                                                                        if (in_array('on-hold', $wpifw_invoice_download_check_list)) {
-                                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                                        }
-                                                                                                                                                                                        ?>>
+                                    if (in_array('on-hold', $wpifw_invoice_download_check_list)) {
+                                        echo 'checked';
+                                    }
+                                    ?>>
                                     <label class="woo-invoice-custom-control-label" for="downloadChecked5"><?php esc_html_e('On Hold Order', 'webappick-pdf-invoice-for-woocommerce'); ?></label>
                                 </div>
                                 <div class="woo-invoice-custom-control woo-invoice-custom-checkbox">
 
                                     <input type="checkbox" name="wpifw_invoice_download_check_list[]" class="woo-invoice-custom-control-input" id="downloadChecked2" value="completed" <?php
-                                                                                                                                                                                        if (in_array('completed', $wpifw_invoice_download_check_list)) {
-                                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                                        }
-                                                                                                                                                                                        ?>>
+                                    if (in_array('completed', $wpifw_invoice_download_check_list)) {
+                                        echo 'checked';
+                                    }
+                                    ?>>
                                     <label class="woo-invoice-custom-control-label" for="downloadChecked2"><?php esc_html_e('Complete Order', 'webappick-pdf-invoice-for-woocommerce'); ?></label>
                                 </div>
                                 <div class="woo-invoice-custom-control woo-invoice-custom-checkbox">
                                     <input type="checkbox" name="wpifw_invoice_download_check_list[]" class="woo-invoice-custom-control-input" id="downloadChecked3" value="payment_complete" <?php
-                                                                                                                                                                                                if (in_array('payment_complete', $wpifw_invoice_download_check_list)) {
-                                                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                                                }
-                                                                                                                                                                                                ?>>
+                                    if (in_array('payment_complete', $wpifw_invoice_download_check_list)) {
+                                        echo 'checked';
+                                    }
+                                    ?>>
                                     <label class="woo-invoice-custom-control-label" for="downloadChecked3"><?php esc_html_e('After Payment Complete', 'webappick-pdf-invoice-for-woocommerce'); ?></label>
                                 </div>
                                 <div class="woo-invoice-custom-control woo-invoice-custom-checkbox">
 
                                     <input type="checkbox" name="wpifw_invoice_download_check_list[]" class="woo-invoice-custom-control-input" id="downloadChecked4" value="always_allow" <?php
-                                                                                                                                                                                            if (in_array('always_allow', $wpifw_invoice_download_check_list)) {
-                                                                                                                                                                                                echo 'checked';
-                                                                                                                                                                                            }
-                                                                                                                                                                                            ?>>
+                                    if (in_array('always_allow', $wpifw_invoice_download_check_list)) {
+                                        echo 'checked';
+                                    }
+                                    ?>>
                                     <label class="woo-invoice-custom-control-label" for="downloadChecked4"><?php esc_html_e('Always Allow', 'webappick-pdf-invoice-for-woocommerce'); ?></label>
                                 </div>
                             </div>
@@ -123,7 +123,7 @@ $challan_item_meta_query = challan_item_meta_query();
                             echo 'none';
                         }
                         ?>
-                            ">
+                                ">
                             <span class="woo-invoice-custom-checkbox-label"></span>
                             <div class="woo-invoice-custom-checkbox-container">
                                 <div class="woo-invoice-custom-control woo-invoice-custom-checkbox">
@@ -139,20 +139,20 @@ $challan_item_meta_query = challan_item_meta_query();
                                 <div class="woo-invoice-custom-control woo-invoice-custom-checkbox">
 
                                     <input type="checkbox" name="wpifw_email_attach_check_list[]" class="woo-invoice-custom-control-input" id="emailChecked6" value="customer_completed_order" <?php
-                                                                                                                                                                                                if (in_array('customer_completed_order', $wpifw_email_attach_check_list)) {
-                                                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                                                }
-                                                                                                                                                                                                ?>>
+                                    if (in_array('customer_completed_order', $wpifw_email_attach_check_list)) {
+                                        echo 'checked';
+                                    }
+                                    ?>>
                                     <label class="woo-invoice-custom-control-label" for="emailChecked6"><?php esc_html_e('Completed Order', 'webappick-pdf-invoice-for-woocommerce'); ?></label>
                                 </div>
 
                                 <div class="woo-invoice-custom-control woo-invoice-custom-checkbox">
 
                                     <input type="checkbox" name="wpifw_email_attach_check_list[]" class="woo-invoice-custom-control-input" id="emailChecked9" value="customer_on_hold_order" <?php
-                                                                                                                                                                                                if (in_array('customer_on_hold_order', $wpifw_email_attach_check_list)) {
-                                                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                                                }
-                                                                                                                                                                                                ?>>
+                                    if (in_array('customer_on_hold_order', $wpifw_email_attach_check_list)) {
+                                        echo 'checked';
+                                    }
+                                    ?>>
                                     <label class="woo-invoice-custom-control-label" for="emailChecked9"><?php esc_html_e('On Hold Order', 'webappick-pdf-invoice-for-woocommerce'); ?></label>
                                 </div>
                                 <div class="woo-invoice-custom-control woo-invoice-custom-checkbox">
@@ -167,19 +167,19 @@ $challan_item_meta_query = challan_item_meta_query();
                                 <div class="woo-invoice-custom-control woo-invoice-custom-checkbox">
 
                                     <input type="checkbox" name="wpifw_email_attach_check_list[]" class="woo-invoice-custom-control-input" id="emailChecked7" value="customer_refunded_order" <?php
-                                                                                                                                                                                                if (in_array('customer_refunded_order', $wpifw_email_attach_check_list)) {
-                                                                                                                                                                                                    echo 'checked';
-                                                                                                                                                                                                }
-                                                                                                                                                                                                ?>>
+                                    if (in_array('customer_refunded_order', $wpifw_email_attach_check_list)) {
+                                        echo 'checked';
+                                    }
+                                    ?>>
                                     <label class="woo-invoice-custom-control-label" for="emailChecked7"><?php esc_html_e('Refunded Order', 'webappick-pdf-invoice-for-woocommerce'); ?></label>
                                 </div>
                                 <div class="woo-invoice-custom-control woo-invoice-custom-checkbox">
 
                                     <input type="checkbox" name="wpifw_email_attach_check_list[]" class="woo-invoice-custom-control-input" id="emailChecked8" value="customer_invoice" <?php
-                                                                                                                                                                                        if (in_array('customer_invoice', $wpifw_email_attach_check_list)) {
-                                                                                                                                                                                            echo 'checked';
-                                                                                                                                                                                        }
-                                                                                                                                                                                        ?>>
+                                    if (in_array('customer_invoice', $wpifw_email_attach_check_list)) {
+                                        echo 'checked';
+                                    }
+                                    ?>>
                                     <label class="woo-invoice-custom-control-label" for="emailChecked8"><?php esc_html_e('Customer Invoice', 'webappick-pdf-invoice-for-woocommerce'); ?></label>
                                 </div>
                             </div>
@@ -391,10 +391,10 @@ $challan_item_meta_query = challan_item_meta_query();
 
                                 if (is_array($order_meta_label) && !empty($order_meta_label)) {
                                     foreach ($order_meta_label as $key => $value) {
-                                ?>
+                                        ?>
                                         <div class="woo_invoice_order_meta_html woo_invoice_meta_html woo_invoice_col_3">
                                             <input type="text" placeholder="Meta Label" class="woo-invoice-form-control woo-invoice-order-meta-label" name="_winvoice_order_meta_label[]" value="<?php echo $value; //phpcs:ignore 
-                                                                                                                                                                                                    ?>">
+                                            ?>">
                                             <select id="_winvoice_order_meta_name" class="woo-invoice-select-control woo-invoice-order-meta" name="_winvoice_order_meta_name[]">
                                                 <option value="" disabled><?php esc_html_e('Select Order Meta', 'webappick-pdf-invoice-for-woocommerce'); ?></option>
                                                 <?php
@@ -422,7 +422,7 @@ $challan_item_meta_query = challan_item_meta_query();
                                             <a href="#" class="woo-invoice-delete-order-meta"><span class="dashicons dashicons-trash" style="color:#D94D40"></span></a>
                                         </div>
 
-                                    <?php
+                                        <?php
                                     }
                                 } else {
 
@@ -501,7 +501,7 @@ $challan_item_meta_query = challan_item_meta_query();
                                     $post_meta_label = '';
                                 }
                                 if ($post_meta_label) {
-                                ?>
+                                    ?>
                                     <div class="woo_invoice_product_meta_html woo_invoice_meta_html woo_invoice_col_2">
 
                                         <input type="text" placeholder="Meta Label" class="woo-invoice-form-control woo-invoice-product-post-meta-label" name="_winvoice_post_meta_label" value="<?php echo esc_html($post_meta_label); ?>">
@@ -519,10 +519,10 @@ $challan_item_meta_query = challan_item_meta_query();
                                         </select>
                                         <a href="#" class="woo-invoice-delete-product-meta"><span class="dashicons dashicons-trash" style="color:#D94D40"></span></a>
                                     </div>
-                                <?php
+                                    <?php
 
                                 } else {
-                                ?>
+                                    ?>
                                     <div style="display: none">
                                         <div class="woo_invoice_product_meta_html woo_invoice_meta_html woo_invoice_col_2">
                                             <input type="text" name="_winvoice_post_meta_label" placeholder="Meta Label" class="woo-invoice-form-control woo-invoice-product-post-meta-label">
@@ -570,7 +570,7 @@ $challan_item_meta_query = challan_item_meta_query();
                                     $item_meta_label = '';
                                 }
                                 if ($item_meta_label) {
-                                ?>
+                                    ?>
                                     <div class="woo_invoice_order_item_meta_html woo_invoice_meta_html woo_invoice_col_2">
                                         <input type="text" placeholder="Item Meta Label" class="woo-invoice-form-control woo-invoice-order-item-meta-label" name="_winvoice_order_item_meta_label" value="<?php echo esc_html($item_meta_label); ?>">
                                         <select id="wpifw_order_item_meta_show" class="woo-invoice-select-control woo-invoice-order-item-meta" name="_winvoice_order_item_meta_name">
@@ -586,10 +586,10 @@ $challan_item_meta_query = challan_item_meta_query();
                                         </select>
                                         <a href="#" class="woo-invoice-delete-order-item-meta"><span class="dashicons dashicons-trash" style="color:#D94D40"></span></a>
                                     </div>
-                                <?php
+                                    <?php
 
                                 } else {
-                                ?>
+                                    ?>
                                     <div style="display: none">
                                         <div class="woo_invoice_order_item_meta_html woo_invoice_meta_html woo_invoice_col_2">
                                             <input type="text" name="_winvoice_order_item_meta_label" placeholder="Item Meta Label" class="woo-invoice-form-control woo-invoice-order-item-meta-label">
@@ -658,7 +658,7 @@ $challan_item_meta_query = challan_item_meta_query();
 
                                     foreach ( $options as $key => $value ) {
                                         ?>
-                                        <option value="<?php echo $key ?>"><?php echo $value ?></option>
+                                        <option value="<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $value ); ?></option>
                                         <?php
                                     }
                                 } ?>
@@ -786,51 +786,51 @@ $challan_item_meta_query = challan_item_meta_query();
                         <h4><?php esc_html_e('SELECTED TEMPLATE', 'webappick-pdf-invoice-for-woocommerce'); ?></h4>
                     </div><!-- end .woo-invoice-card-header -->
                     <div class="" style="text-align: center">
-		                <?php
-		                $template_name = get_option('wpifw_templateid');
+                        <?php
+                        $template_name = get_option('wpifw_templateid');
 
-		                // Function to get the last order ID
-		                function get_last_order_id()
-		                {
-			                global $wpdb;
-			                $statuses = function_exists('wc_get_order_statuses') ? array_keys(wc_get_order_statuses()) : '';
-			                $statuses = !empty($statuses) ? implode("','", $statuses) : '';
+                        // Function to get the last order ID
+                        function get_last_order_id()
+                        {
+                            global $wpdb;
+                            $statuses = function_exists('wc_get_order_statuses') ? array_keys(wc_get_order_statuses()) : '';
+                            $statuses = !empty($statuses) ? implode("','", $statuses) : '';
 
-			                // Getting last Order ID (max value)
-			                if (woo_invoice_hpos_enabled()) {
-				                $results = $wpdb->get_col("SELECT MAX(id) FROM {$wpdb->prefix}wc_orders WHERE type ='shop_order'");
-			                } else {
-				                $results = $wpdb->get_col("SELECT MAX(ID) FROM {$wpdb->prefix}posts WHERE post_type LIKE 'shop_order' AND post_status IN ( '$statuses' ) ");
-			                }
+                            // Getting last Order ID (max value)
+                            if (woo_invoice_hpos_enabled()) {
+                                $results = $wpdb->get_col("SELECT MAX(id) FROM {$wpdb->prefix}wc_orders WHERE type ='shop_order'");
+                            } else {
+                                $results = $wpdb->get_col("SELECT MAX(ID) FROM {$wpdb->prefix}posts WHERE post_type LIKE 'shop_order' AND post_status IN ( '$statuses' ) ");
+                            }
 
-			                return reset($results);
-		                }
+                            return reset($results);
+                        }
 
-		                $order_id = get_last_order_id();
-		                $preview_url = esc_url(wp_nonce_url(admin_url('admin-ajax.php?action=wpifw_generate_invoice&order_id=' . $order_id) .'#toolbar=0', 'woo_invoice_ajax_nonce'));
-		                $template_image_url = esc_attr(CHALLAN_FREE_PLUGIN_URL . 'admin/images/templates/' . $template_name . '.png');
-		                ?>
+                        $order_id = get_last_order_id();
+                        $preview_url = esc_url(wp_nonce_url(admin_url('admin-ajax.php?action=wpifw_generate_invoice&order_id=' . $order_id) .'#toolbar=0', 'woo_invoice_ajax_nonce'));
+                        $template_image_url = esc_attr(CHALLAN_FREE_PLUGIN_URL . 'admin/images/templates/' . $template_name . '.png');
+                        ?>
 
-		                <?php if ('' != $order_id) { ?>
-                        <div class="_winvoice-iframe-container">
-                            <iframe class="_winvoice-iframe-responsive woo-invoice-template-preview" src="<?php echo $preview_url; ?>"></iframe>
-                        </div>
-		                <?php } else { ?>
-                            <img class="woo-invoice-template-preview" src="<?php echo $template_image_url; ?>" alt="Preview Template">
-		                <?php } ?>
+                        <?php if ('' != $order_id) { ?>
+                            <div class="_winvoice-iframe-container">
+                                <iframe class="_winvoice-iframe-responsive woo-invoice-template-preview" src="<?php echo esc_url($preview_url); ?>"></iframe>
+                            </div>
+                        <?php } else { ?>
+                            <img class="woo-invoice-template-preview" src="<?php echo esc_url($template_image_url); ?>" alt="Preview Template">
+                        <?php } ?>
 
-		                <?php if ('' != $order_id) { ?>
-                            <a class="invoice_template_preiview_btn" target="_blank" href="<?php echo $preview_url; ?>">
+                        <?php if ('' != $order_id) { ?>
+                            <a class="invoice_template_preiview_btn" target="_blank" href="<?php echo esc_url($preview_url); ?>">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#fff" viewBox="0 0 467.4 467.4" style="enable-background:new 0 0 467.4 467.4" xml:space="preserve">
                                     <path d="M236.182 15v70h70.001z" />
                                     <path d="M197.289 347.5H71.182v-30h120.641c-.03-1.009-.07-2.016-.07-3.033 0-13.036 2.472-25.506 6.968-36.967H71.182v-30h145.855c18.622-21.177 45.899-34.566 76.248-34.566 9.671 0 19.03 1.361 27.897 3.898V115h-115V0h-185v415h257.885c-38.14-5.369-69.53-32.012-81.778-67.5zm-126.107-170h200v30h-200v-30zM374.87 374.838a102.39 102.39 0 0 1-21.213 21.213l71.349 71.349 21.213-21.213-71.349-71.349z" />
                                     <path d="M293.286 242.934c-39.443 0-71.533 32.089-71.533 71.533S253.843 386 293.286 386s71.533-32.09 71.533-71.533-32.09-71.533-71.533-71.533z" />
                                 </svg>
-				                <?php echo esc_html_e('PREVIEW LAST ORDER', 'webappick-pdf-invoice-for-woocommerce') ?>
+                                <?php echo esc_html_e('PREVIEW LAST ORDER', 'webappick-pdf-invoice-for-woocommerce') ?>
                             </a>
-		                <?php } else { ?>
-                            <a class="invoice_template_preiview_btn" target="_blank" href="<?php echo $template_image_url; ?>"><?php echo esc_html_e('PREVIEW', 'webappick-pdf-invoice-for-woocommerce') ?></a>
-		                <?php } ?>
+                        <?php } else { ?>
+                            <a class="invoice_template_preiview_btn" target="_blank" href="<?php esc_url($template_image_url); ?>"><?php echo esc_html_e('PREVIEW', 'webappick-pdf-invoice-for-woocommerce') ?></a>
+                        <?php } ?>
                     </div><!-- end .woo-invoice-card-body -->
                 </div><!-- end .woo-invoice-card -->
 
