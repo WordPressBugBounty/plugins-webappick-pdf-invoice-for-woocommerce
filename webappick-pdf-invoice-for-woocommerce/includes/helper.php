@@ -84,7 +84,7 @@ if ( ! function_exists('challan_order_meta_query') ) {
         // Check if HPOS (High-Performance Order Storage) is enabled
         if ( woo_invoice_hpos_enabled() ) {
             // HPOS is enabled, query the wc_orders_meta table
-            $order_meta_query_arr = $wpdb->get_results("SELECT DISTINCT meta_key FROM {$wpdb->prefix}wc_orders_meta");
+            $order_meta_query_arr = $wpdb->get_results("SELECT DISTINCT meta_key FROM {$wpdb->prefix}wc_orders_meta"); // phpcs:ignore
         } else {
             // Traditional CPT-based orders are in use, query the postmeta table
             $order_meta_query_arr = $wpdb->get_results("SELECT $wpdb->postmeta.meta_key FROM $wpdb->postmeta LEFT JOIN $wpdb->posts ON $wpdb->postmeta.post_id = $wpdb->posts.id WHERE $wpdb->posts.post_type = 'shop_order' GROUP BY $wpdb->postmeta.meta_key");//phpcs:ignore;
