@@ -447,25 +447,23 @@ class Insights {
 							'webappick-pdf-invoice-for-woocommerce'
 						)
 					),
-					'<strong>Challan Free</strong>'
+                    '<strong>' . esc_html__( 'Challan Free', 'webappick-pdf-invoice-for-woocommerce' ) . '</strong>'
 				);
 			} else {
-				$notice = $this->notice;
+                $notice = esc_html( $this->notice );
 			}
 
-			$notice .= ' (<a class="' . $this->client->getSlug() . '-insights-data-we-collect" href="#">' . esc_html__(
-				'what we collect',
-				'webappick-pdf-invoice-for-woocommerce'
-			) . '</a>)';
-			$notice .= '<p class="description" style="display:none;">' . implode(
-				', ',
-				$this->data_we_collect()
-			) . '. ' . esc_html__(
-				'No sensitive data is tracked.',
-				'webappick-pdf-invoice-for-woocommerce'
-			) . '</p>';
+            $notice .= ' (<a class="' . esc_attr( $this->client->getSlug() ) . '-insights-data-we-collect" href="#">' . esc_html__(
+                    'what we collect',
+                    'webappick-pdf-invoice-for-woocommerce'
+                ) . '</a>)';
+
+            $notice .= '<p class="description" style="display:none;">' . esc_html( implode( ', ', $this->data_we_collect() ) ) . '. ' . esc_html__(
+                    'No sensitive data is tracked.',
+                    'webappick-pdf-invoice-for-woocommerce'
+                ) . '</p>';
 			echo '<div class="updated"><p>';
-			echo $notice;
+            echo wp_kses_post( $notice );
 			echo '</p><p class="submit">';
 			echo '&nbsp;<a href="' . esc_url( $this->get_opt_in_url() ) . '" class="button button-primary">' . esc_html__(
 					'Allow',
@@ -477,10 +475,15 @@ class Insights {
 			) . '</a>';
 
 			echo '</p></div>';
-			echo "<script type='text/javascript'>jQuery('." . $this->client->getSlug() . "-insights-data-we-collect').on('click', function(e) {
-                    e.preventDefault();
-                    jQuery(this).parents('.updated').find('p.description').slideToggle('fast');
-            });</script>";
+            // Properly escape inline JavaScript
+            echo "<script type='text/javascript'>
+                jQuery(document).ready(function($) {
+                    $('." . esc_js( $this->client->getSlug() ) . "-insights-data-we-collect').on('click', function(e) {
+                        e.preventDefault();
+                        $(this).parents('.updated').find('p.description').slideToggle('fast');
+                    });
+                });
+              </script>";
 		}
 	}
 
@@ -998,10 +1001,10 @@ class Insights {
 		$showSupportTicket = ( ! empty( $this->ticketTemplate ) && ! empty( $this->ticketRecipient ) && ! empty( $this->supportURL ) );
 		?>
 		<div class="wapk-dr-modal"
-             id="<?php echo $this->client->getSlug(); ?>-wapk-dr-modal"
+             id="<?php echo esc_attr( $this->client->getSlug() ); ?>-wapk-dr-modal"
              aria-label="<?php printf(
                     // Translators: %s is the name of the plugin.
-                     esc_attr__( '&ldquo;%s&rdquo; Uninstall Confirmation', 'webappick-pdf-invoice-for-woocommerce' ), $this->client->getName() ); ?>"
+                     esc_attr__( '&ldquo;%s&rdquo; Uninstall Confirmation', 'webappick-pdf-invoice-for-woocommerce' ), esc_html( $this->client->getName() ) ); ?>"
              role="dialog" aria-modal="true">
 			<?php if ( $showSupportTicket ) { ?>
 			<div class="wapk-dr-modal-wrap support" style="display: none;">
@@ -1016,7 +1019,7 @@ class Insights {
 				</div>
 				<div class="wapk-dr-modal-body">
 					<div class="wapk-row mui col-2 col-left">
-						<label for="wapk-support-name" class="<?php echo ! empty( $displayName ) ? 'shrink' : ''; ?>"><?php esc_html_e( 'Name', 'webappick-pdf-invoice-for-woocommerce' ); ?></label>
+                        <label for="wapk-support-name" class="<?php echo ! empty( $displayName ) ? esc_attr( 'shrink' ) : ''; ?>"><?php esc_html_e( 'Name', 'webappick-pdf-invoice-for-woocommerce' ); ?></label>
 						<div class="wapk-form-control">
 							<input type="text" name="name" id="wapk-support-name" value="<?php echo esc_attr( $displayName ); ?>" required>
 						</div>
@@ -1201,8 +1204,8 @@ class Insights {
 						});
 					}
 					// Variables
-					var modal = $('#<?php echo $this->client->getSlug(); ?>-wapk-dr-modal'),
-						deactivateLink = '',
+                    var modal = $('#<?php echo esc_js( $this->client->getSlug() ); ?>-wapk-dr-modal'),
+                        deactivateLink = '',
 						reason = modal.find('.reason'),
 						support = modal.find('.support'),
 						supportResponse = support.find('.response'),
@@ -1293,8 +1296,8 @@ class Insights {
 							});
 					}
 					// the clicker
-					$('#the-list').on('click', 'a.<?php echo $this->client->getSlug(); ?>-deactivate-link', function (e) {
-						preventDefault(e);
+                    $('#the-list').on('click', 'a.<?php echo esc_attr( $this->client->getSlug() ); ?>-deactivate-link', function (e) {
+                        preventDefault(e);
 						modal.addClass('modal-active');
 						deactivateLink = $(this).attr('href');
 						modal.find('a.dont-bother-me').attr('href', deactivateLink).css('float', 'left');
@@ -1353,7 +1356,7 @@ class Insights {
 							var buttonElem = $(this),
 								__BTN_TEXT__ = buttonElem.text(),
 								data = {
-                                    action: '<?php echo $this->client->getSlug(); ?>_submit-support-ticket',
+                                    action: '<?php echo esc_js( $this->client->getSlug() ); ?>_submit-support-ticket',
                                     _wpnonce: '<?php echo esc_attr( wp_create_nonce( $this->client->getSlug() . '_insight_action' ) ); ?>'
                                 };
 							mui.each( function () { data[$(this).attr('name')] = $(this).val() } );
