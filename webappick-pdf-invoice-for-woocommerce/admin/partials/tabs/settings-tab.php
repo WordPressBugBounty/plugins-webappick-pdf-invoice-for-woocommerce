@@ -790,20 +790,28 @@ $challan_item_meta_query = challan_item_meta_query();
                         $template_name = get_option('wpifw_templateid');
 
                         // Function to get the last order ID
-                        function get_last_order_id()
-                        {
-                            global $wpdb;
-                            $statuses = function_exists('wc_get_order_statuses') ? array_keys(wc_get_order_statuses()) : '';
-                            $statuses = !empty($statuses) ? implode("','", $statuses) : '';
+                        function get_last_order_id() {
+                            $cache_key = 'woo_last_order_id';
+                            $last_order_id = wp_cache_get( $cache_key );
 
-                            // Getting last Order ID (max value)
-                            if (woo_invoice_hpos_enabled()) {
-                                $results = $wpdb->get_col("SELECT MAX(id) FROM {$wpdb->prefix}wc_orders WHERE type ='shop_order'");
-                            } else {
-                                $results = $wpdb->get_col("SELECT MAX(ID) FROM {$wpdb->prefix}posts WHERE post_type LIKE 'shop_order' AND post_status IN ( '$statuses' ) ");
+                            if ( false === $last_order_id ) {
+                                $statuses = wc_get_is_paid_statuses(); // safer than all possible statuses
+
+                                $args = array(
+                                    'limit'        => 1,
+                                    'orderby'      => 'date',
+                                    'order'        => 'DESC',
+                                    'status'       => $statuses,
+                                    'return'       => 'ids',
+                                );
+
+                                $orders = wc_get_orders( $args );
+                                $last_order_id = ! empty( $orders ) ? $orders[0] : 0;
+
+                                wp_cache_set( $cache_key, $last_order_id, '', 60 ); // cache for 60 seconds
                             }
 
-                            return reset($results);
+                            return $last_order_id;
                         }
 
                         $order_id = get_last_order_id();
