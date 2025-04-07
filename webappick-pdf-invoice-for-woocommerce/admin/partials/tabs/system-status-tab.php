@@ -301,11 +301,7 @@
                 </div><!-- end .woo-invoice-card-body -->
             </div><!-- end .woo-invoice-card -->
         </div><!-- end .woo-invoice-col-sm-8 -->
-        <!-- <div class="woo-invoice-col-sm-4">
-            <div class="woo-invoice-card">
 
-            </div>
-        </div>end .woo-invoice-col-sm-4 -->
         <div class="woo-invoice-col-sm-3 woo-invoice-col-12 ">
             <div class="woo-invoice-banner-sidebar">
                 <div class="woo-invoice-card">
