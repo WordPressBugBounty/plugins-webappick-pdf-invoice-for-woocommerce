@@ -74,7 +74,8 @@ if (!function_exists('woo_invoice_dashboard_widget_render')) {
 		?>
         <div class="woo-pdf-invoice-widget-banner">
             <div class="woo-pdf-invoice-widget-banner-image">
-                <img src='<?php echo esc_url($woo_invoice_pro_image); ?>'>
+                <img src='<?php echo esc_url($woo_invoice_pro_image); // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
+                ?>' alt=""> 
 
             </div>
             <div class="woo-pdf-invoice-widget-banner-heading"><?php echo esc_html__('Unlock Exclusive Features for PDF Invoice & Packing Slip!', 'webappick-pdf-invoice-for-woocommerce') ?></div>
