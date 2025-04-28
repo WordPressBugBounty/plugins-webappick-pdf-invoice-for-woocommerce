@@ -6,7 +6,7 @@
  * Plugin Name:  Challan - PDF Invoice & Packing Slip for WooCommerce
  * Plugin URI:   https://webappick.com
  * Description:  Automatic Generate PDF Invoice and attach  with order email for WooCommerce.
- * Version:      3.7.57
+ * Version:      3.7.58
  * Author:       WebAppick
  * Author URI:   https://webappick.com
  * License:      GPLv2
@@ -107,7 +107,7 @@ if ( ! defined( 'CHALLAN_FREE_ROOT_FILE_PATH' ) ) {
 }
 
 
-// Load files
+    // Load files
     require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/constants.php';
     require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/config.php';
     require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/settings.php';
@@ -116,13 +116,12 @@ if ( ! defined( 'CHALLAN_FREE_ROOT_FILE_PATH' ) ) {
     require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/activator.php';
     require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/deactivator.php';
     require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/uninstaller.php';
-function challan_free_load_file_upgrader()
-{
-    require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/upgrader.php';
-}
+    function challan_free_load_file_upgrader(){
+        require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/upgrader.php';
+    }
 
-// Hook into `init` to ensure files are only loaded after WordPress initialization.
-add_action('init', 'challan_free_load_file_upgrader');
+    // Hook into `init` to ensure files are only loaded after WordPress initialization.
+    add_action('init', 'challan_free_load_file_upgrader');
     require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/notices.php';
     require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/filters.php';
 

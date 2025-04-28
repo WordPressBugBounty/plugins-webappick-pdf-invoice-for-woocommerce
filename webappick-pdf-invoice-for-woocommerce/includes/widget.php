@@ -58,10 +58,8 @@ if (!function_exists('woo_invoice_dashboard_widget_render')) {
 		$woo_invoice_pro_image = plugin_dir_url(dirname(__FILE__)) . 'admin/images/challan-pro-logo-banner.png';
 
 		$column_one = [
-			//  esc_html__(' Customizable Readymade Templates','webappick-pdf-invoice-for-woocommerce'),
 			esc_html__('Paid Stamp, QR & BAR Code ', 'webappick-pdf-invoice-for-woocommerce'),
 			esc_html__('Image,Signature & Watermark', 'webappick-pdf-invoice-for-woocommerce'),
-			// esc_html__('Compatible with a Variety of Plugins', 'webappick-pdf-invoice-for-woocommerce'),
 			esc_html__('30-Day Money Back Guarantee', 'webappick-pdf-invoice-for-woocommerce'),
 
 		];
@@ -69,13 +67,12 @@ if (!function_exists('woo_invoice_dashboard_widget_render')) {
 			esc_html__('Multiple Tax Classes Support', 'webappick-pdf-invoice-for-woocommerce'),
 			esc_html__('Multilingual Invoice', 'webappick-pdf-invoice-for-woocommerce'),
 			esc_html__('ZATCA-compliant(Saudi Arabia)', 'webappick-pdf-invoice-for-woocommerce'),
-			// esc_html__('Dedicated Customer Support and Live Chat','webappick-pdf-invoice-for-woocommerce'),
 		];
 		?>
         <div class="woo-pdf-invoice-widget-banner">
             <div class="woo-pdf-invoice-widget-banner-image">
                 <img src='<?php echo esc_url($woo_invoice_pro_image); // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
-                ?>' alt=""> 
+                ?>' alt="">
 
             </div>
             <div class="woo-pdf-invoice-widget-banner-heading"><?php echo esc_html__('Unlock Exclusive Features for PDF Invoice & Packing Slip!', 'webappick-pdf-invoice-for-woocommerce') ?></div>
