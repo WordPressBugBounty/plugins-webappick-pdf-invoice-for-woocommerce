@@ -14,7 +14,7 @@ $challan_item_meta_query = challan_item_meta_query();
             <div class="woo-invoice-card woo-invoice-mr-0">
                 <div class="woo-invoice-card-body">
                     <form action="" method="post">
-                        <?php wp_nonce_field('invoice_form_nonce'); ?>
+                        <?php wp_nonce_field( 'invoice_form_nonce', 'invoice_form_nonce' ); ?>
                         <div class="woo-invoice-header-title woo-invoice-mt-0">
                             <h4><?php esc_html_e('General Settings', 'webappick-pdf-invoice-for-woocommerce'); ?></h4>
                         </div>
