@@ -503,41 +503,52 @@ class Woo_Invoice_Helper
 	 *
 	 * @return string
 	 */
-	public function get_invoice_logo() {
-		$logo_url = false;
+    public function get_invoice_logo() {
+        $logo_html = '';
 
-		// Get original logo image.
-		if ( false !== get_option('wpifw_logo_attachment_id') ) {
-			if ( substr(get_option('wpifw_logo_attachment_id'), 0, 7) === 'http://' || substr(get_option('wpifw_logo_attachment_id'), 0, 8) === 'https://' ) {
-				$image_id       = attachment_url_to_postid(get_option('wpifw_logo_attachment_id'));
-				$full_size_path = get_attached_file($image_id);
-				update_option('wpifw_logo_attachment_id', $full_size_path);
-				update_option('wpifw_logo_attachment_image_id', $image_id);
-			}
-			$logo_url = get_option('wpifw_logo_attachment_id');
-		} elseif ( has_custom_logo() ) { // Get custom logo from theme customization.
-			$custom_logo_id  = get_theme_mod('custom_logo');
-			$custom_logo_url = wp_get_attachment_image_url($custom_logo_id, 'full');
-			$logo_url        = $custom_logo_url;
-		}
+        if (false !== get_option('wpifw_logo_attachment_id')) {
+            $image_id = 0;
+            $image_data = get_option('wpifw_logo_attachment_id');
 
-		$logo_url = apply_filters('woo_invoice_store_logo', $logo_url);
+            if (is_string($image_data) && (strpos($image_data, 'http://') === 0 || strpos($image_data, 'https://') === 0)) {
+                $image_id = attachment_url_to_postid($image_data);
+                if ($image_id) {
+                    update_option('wpifw_logo_attachment_id', get_attached_file($image_id));
+                    update_option('wpifw_logo_attachment_image_id', $image_id);
+                }
+            } else {
+                $image_id = get_option('wpifw_logo_attachment_image_id');
+            }
 
-		// Set Logo Width.
-		$logo_width = '' != get_option('wpifw_logo_width') ? get_option('wpifw_logo_width') : '20%';
-		$logo_width = ! empty($logo_width) ? "style='width:$logo_width'" : '';
+            if ($image_id) {
+                $logo_html = $this->get_clean_image($image_id);
+            }
+        } elseif (has_custom_logo()) {
+            $custom_logo_id = get_theme_mod('custom_logo');
+            if ($custom_logo_id) {
+                $logo_html = $this->get_clean_image($custom_logo_id);
+            }
+        }
 
-		// Final Logo.
-		$logo = "<img class='logo' src='$logo_url' $logo_width >";
+        return $logo_html ? apply_filters('woo_invoice_store_logo', $logo_html) : '';
+    }
 
-		if ( ! empty($logo_url) ) {
-			return $logo;
-		}
+    /**
+     * Generate a clean image without width and height.
+     */
+    private function get_clean_image($attachment_id) {
+        $img_html = wp_get_attachment_image($attachment_id, 'full', false, [
+            'class' => 'logo',
+            'style' => 'width:' . esc_attr(get_option('wpifw_logo_width', '20%')),
+        ]);
 
-		return '';
-	}
+        // Remove width and height attributes
+        $img_html = preg_replace('/(width|height)="\d*"\s/', "", $img_html);
 
-	/**
+        return $img_html;
+    }
+
+    /**
 	 * Seller Info according to plugin settings
 	 *
 	 * @return string
