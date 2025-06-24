@@ -520,7 +520,7 @@ class Woo_Invoice_Hooks
 		foreach ($buttons as $button) {
 			$url = wp_nonce_url(admin_url("admin-ajax.php?action={$button['action']}&order_id={$order_id}{$output_type}"), 'woo_invoice_ajax_nonce');
 			$image_class = 'width: 19px;margin-top: 4px;margin-left: 3px;';
-			echo "<a href='" . esc_url($url) . "' target='_blank' class='button tips parcial " . esc_html($button['class']) . "' data-tip='" . esc_html($button['text']) . "'> <img src='" . esc_url(CHALLAN_FREE_PLUGIN_URL . "admin/images/{$button['image']}") . "' style='" . esc_html($image_class) . "'/></a>";
+			echo "<a href='" . esc_url($url) . "' target='_blank' class='button tips parcial " . esc_html($button['class']) . "' data-tip='" . esc_html($button['text']) . "'> <img src='" . esc_url(CHALLAN_FREE_PLUGIN_URL . "admin/images/{$button['image']}") . "' style='" . esc_html($image_class) . "'/></a>"; // phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage
 		}
         // Function for Print option
 		$this->printButtonScript( $url );
