@@ -226,7 +226,7 @@ $challan_item_meta_query = challan_item_meta_query();
                                             <div class="woo-invoice-card-body" style="height:650px">
                                                 <div class="woo-invoice-row">
                                                     <div class="woo-invoice-col-sm-4">
-                                                        <a href="#" class="woo-invoice-template-selection" data-template="invoice-1"><img src="<?php echo esc_attr(CHALLAN_FREE_PLUGIN_URL . 'admin/images/templates/invoice-1.png'); ?>" alt="" style="
+                                                        <a href="#" class="woo-invoice-template-selection" data-template="invoice-1"><img src="<?php echo esc_attr(CHALLAN_FREE_PLUGIN_URL . 'admin/images/templates/invoice-1.png'); //phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>" alt="" style="
                                                             <?php
                                                             if ('invoice-1' === get_option('wpifw_templateid')) {
                                                                 echo esc_attr($woo_invoice_style2);
@@ -237,7 +237,7 @@ $challan_item_meta_query = challan_item_meta_query();
                                                                     "></a>
                                                     </div>
                                                     <div class="woo-invoice-col-sm-4">
-                                                        <a href="#" class="woo-invoice-template-selection" data-template="invoice-2"><img src="<?php echo esc_attr(CHALLAN_FREE_PLUGIN_URL . 'admin/images/templates/invoice-2.png'); ?>" alt="" style="
+                                                        <a href="#" class="woo-invoice-template-selection" data-template="invoice-2"><img src="<?php echo esc_attr(CHALLAN_FREE_PLUGIN_URL . 'admin/images/templates/invoice-2.png'); //phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>" alt="" style="
                                                             <?php
                                                             if ('invoice-2' === get_option('wpifw_templateid')) {
                                                                 echo esc_attr($woo_invoice_style2);
@@ -249,22 +249,22 @@ $challan_item_meta_query = challan_item_meta_query();
                                                     </div>
 
                                                     <div class="woo-invoice-col-sm-4" style="position:relative">
-                                                        <a href="#" class="woo-invoice-element-disable" data-template="" style="position: absolute;top: 0;z-index: 3333;"><img src="<?php echo esc_attr(CHALLAN_FREE_PLUGIN_URL . 'admin/images/templates/invoice-3.png'); ?>" alt="" style="max-width:80%;display:block;margin:0 auto;border: 3px solid #0F74A6;"></a>
+                                                        <a href="#" class="woo-invoice-element-disable" data-template="" style="position: absolute;top: 0;z-index: 3333;"><img src="<?php echo esc_attr(CHALLAN_FREE_PLUGIN_URL . 'admin/images/templates/invoice-3.png'); //phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>" alt="" style="max-width:80%;display:block;margin:0 auto;border: 3px solid #0F74A6;"></a>
                                                         <div style="width: 80%;height: 284px;position: absolute;top: 0;z-index:1111;background: #ddd;opacity: 0.7;margin-left: 25px;"></div>
                                                         <a href="https://webappick.com/plugin/woocommerce-pdf-invoice-packing-slips/?utm_source=customer_site&utm_medium=free_vs_pro&utm_campaign=woo_invoice_free" target="_blank" style="position: absolute;top: 0;z-index: 2222;background: #DC4C40;color: #fff;padding: 5px;border-radius: 3px;text-transform: uppercase;margin: 120px 80px;">Premium</a>
                                                     </div>
                                                     <div class="woo-invoice-col-sm-4" style="position:relative;margin-top: 25px;">
-                                                        <a href="#" class="woo-invoice-element-disable" data-template="" style="position: absolute;top: 0;z-index: 3333;"><img src="<?php echo esc_attr(CHALLAN_FREE_PLUGIN_URL . 'admin/images/templates/invoice-4.png'); ?>" alt="" style="max-width:80%;display:block;margin:0 auto;border: 3px solid #0F74A6;"></a>
+                                                        <a href="#" class="woo-invoice-element-disable" data-template="" style="position: absolute;top: 0;z-index: 3333;"><img src="<?php echo esc_attr(CHALLAN_FREE_PLUGIN_URL . 'admin/images/templates/invoice-4.png'); //phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>" alt="" style="max-width:80%;display:block;margin:0 auto;border: 3px solid #0F74A6;"></a>
                                                         <div style="width: 80%;height: 281px;position: absolute;top: 0;z-index:1111;background: #ddd;opacity: 0.7;margin-left: 25px;"></div>
                                                         <a href="https://webappick.com/plugin/woocommerce-pdf-invoice-packing-slips/?utm_source=customer_site&utm_medium=free_vs_pro&utm_campaign=woo_invoice_free" target="_blank" style="position: absolute;top: 0;z-index: 2222;background: #DC4C40;color: #fff;padding: 5px;border-radius: 3px;text-transform: uppercase;margin: 120px 80px;">Premium</a>
                                                     </div>
                                                     <div class="woo-invoice-col-sm-4" style="position:relative;margin-top: 25px;">
-                                                        <a href="#" class="woo-invoice-element-disable" data-template="" style="position: absolute;top: 0;z-index: 3333;"><img src="<?php echo esc_attr(CHALLAN_FREE_PLUGIN_URL . 'admin/images/templates/invoice-5.png'); ?>" alt="" style="max-width:80%;display:block;margin:0 auto;border: 3px solid #0F74A6;"></a>
+                                                        <a href="#" class="woo-invoice-element-disable" data-template="" style="position: absolute;top: 0;z-index: 3333;"><img src="<?php echo esc_attr(CHALLAN_FREE_PLUGIN_URL . 'admin/images/templates/invoice-5.png'); //phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>" alt="" style="max-width:80%;display:block;margin:0 auto;border: 3px solid #0F74A6;"></a>
                                                         <div style="width: 80%;height: 281px;position: absolute;top: 0;z-index:1111;background: #ddd;opacity: 0.7;margin-left: 25px;"></div>
                                                         <a href="https://webappick.com/plugin/woocommerce-pdf-invoice-packing-slips/?utm_source=customer_site&utm_medium=free_vs_pro&utm_campaign=woo_invoice_free" target="_blank" style="position: absolute;top: 0;z-index: 2222;background: #DC4C40;color: #fff;padding: 5px;border-radius: 3px;text-transform: uppercase;margin: 120px 80px;">Premium</a>
                                                     </div>
                                                     <div class="woo-invoice-col-sm-4" style="position:relative;margin-top: 25px;">
-                                                        <a href="#" class="woo-invoice-element-disable" data-template="" style="position: absolute;top: 0;z-index: 3333;"><img src="<?php echo esc_attr(CHALLAN_FREE_PLUGIN_URL . 'admin/images/templates/invoice-6.png'); ?>" alt="" style="max-width:80%;display:block;margin:0 auto;border: 3px solid #0F74A6;"></a>
+                                                        <a href="#" class="woo-invoice-element-disable" data-template="" style="position: absolute;top: 0;z-index: 3333;"><img src="<?php echo esc_attr(CHALLAN_FREE_PLUGIN_URL . 'admin/images/templates/invoice-6.png'); //phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>" alt="" style="max-width:80%;display:block;margin:0 auto;border: 3px solid #0F74A6;"></a>
                                                         <div style="width: 80%;height: 281px;position: absolute;top: 0;z-index:1111;background: #ddd;opacity: 0.7;margin-left: 25px;"></div>
                                                         <a href="https://webappick.com/plugin/woocommerce-pdf-invoice-packing-slips/?utm_source=customer_site&utm_medium=free_vs_pro&utm_campaign=woo_invoice_free" target="_blank" style="position: absolute;top: 0;z-index: 2222;background: #DC4C40;color: #fff;padding: 5px;border-radius: 3px;text-transform: uppercase;margin: 120px 80px;">Premium</a>
                                                     </div>
@@ -824,7 +824,7 @@ $challan_item_meta_query = challan_item_meta_query();
                                 <iframe class="_winvoice-iframe-responsive woo-invoice-template-preview" src="<?php echo esc_url($preview_url); ?>"></iframe>
                             </div>
                         <?php } else { ?>
-                            <img class="woo-invoice-template-preview" src="<?php echo esc_url($template_image_url); ?>" alt="Preview Template">
+                            <img class="woo-invoice-template-preview" src="<?php echo esc_url($template_image_url); //phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>" alt="Preview Template">
                         <?php } ?>
 
                         <?php if ('' != $order_id) { ?>
@@ -850,7 +850,7 @@ $challan_item_meta_query = challan_item_meta_query();
 
                 <div class="woo-invoice-banner-container">
                     <div class="woo-invoice-banner-logo">
-                        <a class="wapk-woo-invoice-banner-logo" href="<?php echo esc_url('https://webappick.com/plugin/woocommerce-pdf-invoice-packing-slips/?utm_source=customer_site&utm_medium=free_vs_pro&utm_campaign=woo_invoice_free'); ?>" target="_blank"><img src="<?php echo esc_url($woo_invoice_banner_logo_dir); ?>" alt="Woo Invoice"></a>
+                        <a class="wapk-woo-invoice-banner-logo" href="<?php echo esc_url('https://webappick.com/plugin/woocommerce-pdf-invoice-packing-slips/?utm_source=customer_site&utm_medium=free_vs_pro&utm_campaign=woo_invoice_free'); ?>" target="_blank"><img src="<?php echo esc_url($woo_invoice_banner_logo_dir); //phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>" alt="Woo Invoice"></a>
                     </div>
                     <div class="woo-invoice-banner-title">
                         <h2>Why Upgrade to the Challan Pro?</h2>
