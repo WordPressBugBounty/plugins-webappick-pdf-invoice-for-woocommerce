@@ -116,15 +116,14 @@
                             $chalan_minimum_wp_version = $chalan_plugin_data['RequiresWP'] ? $chalan_plugin_data['RequiresWP'] : '4.4';
                             $chalan_wp_version_status         = $chalan_wp_current_version < $chalan_minimum_wp_version ? 0 : 1;
 
-                            // Minimum Woocommerce Version.
-                            if (class_exists('woocommerce')) {
-                                $chalan_wc_current_version = WC_VERSION;
-                            } else {
-                                $chalan_wc_current_version = 'Not Active Woocommerce';
-                            }
+                            // WooCommerce Version Check
+                            $chalan_wc_current_version = class_exists('woocommerce') ? WC_VERSION : 'Not Active WooCommerce';
 
+                            // Default to '3.2' or your plugin’s minimum version requirement
                             $chalan_minimum_wc_version = isset($chalan_plugin_data['WC requires at least']) ? $chalan_plugin_data['WC requires at least'] : '3.2';
-                            $chalan_wc_status = $chalan_wc_current_version < $chalan_minimum_wc_version ? 0 : 1;
+
+                            // Version comparison
+                            $chalan_wc_status = version_compare($chalan_wc_current_version, $chalan_minimum_wc_version, '>=');
 
                             // WordPress minimum upload size .
                             $calan_wp_minimum_upload_file_size = '40MB';
