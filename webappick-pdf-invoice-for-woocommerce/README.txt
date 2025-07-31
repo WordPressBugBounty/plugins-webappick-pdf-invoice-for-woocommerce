@@ -4,7 +4,7 @@ Donate link: https://webappick.com
 Tags: invoice, pdf invoice, packing slips, delivery notes, woocommerce pdf invoice
 Requires at least: 3.6
 Tested up to: 6.8
-Stable tag: 3.7.66
+Stable tag: 3.7.67
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -279,6 +279,9 @@ Please read the [documentation](https://webappick.com/docs/woo-invoice/installat
 We are looking for people to help translate this plugin. If you can help we would love for you to jump in and do so.
 Help us & the WordPress community, translate the plugin [here](https://translate.wordpress.org/projects/wp-plugins/webappick-pdf-invoice-for-woocommerce/)
 
+= 3.7.67  ( July 31, 2025 ) =
+* Updated: Readme.txt and Changelog file.
+
 = 3.7.66  ( July 24, 2025 ) =
 * Fixed: Updated WooCommerce version check to use version_compare() for accurate comparison.
 
@@ -299,76 +302,3 @@ Help us & the WordPress community, translate the plugin [here](https://translate
 
 = 3.7.60  ( May 15, 2025 ) =
 * Fixed: Improved logo rendering by using wp_get_attachment_image() and fixed Plugin Check warnings on invoice logo.
-
-= 3.7.59  ( May 05, 2025 ) =
-* Fixed: Nonce verification issue.
-* Added: Capability checks to settings form submission.
-
-= 3.7.58  ( April 28, 2025 ) =
-* Update: Code Refactored.
-
-= 3.7.57 ( April 21, 2025 ) =
-* Fixed: Minor issue.
-
-= 3.7.56 ( April 16, 2025 ) =
-* Tested: WordPress 6.8 Compatibility.
-
-= 3.7.55 ( April 15, 2025 ) =
-* Tested: WooCommerce 9.8 Compatibility.
-
-= 3.7.54 ( April 07, 2025 ) =
-* Fixed: Minor issue.
-
-= 3.7.53 ( March 24, 2025 ) =
-* Improved: Replaced direct DB query with wc_get_orders() for HPOS compatibility.
-* Added: Caching with wp_cache_get/set to optimize performance.
-
-= 3.7.52 ( March 20, 2025 ) =
-* Updated: Escaped all dynamic outputs to comply with WordPress security standards.
-* Fixed: XSS vulnerabilities by properly escaping JavaScript variables, attributes, URLs, and user inputs.
-* Resolved: WordPress.Security.EscapeOutput.OutputNotEscaped warnings for safer data handling.
-
-= 3.7.51 ( March 17, 2025 ) =
-* Fixed: Minor issue.
-
-= 3.7.50 ( March 13, 2025 ) =
-* Fixed: Escaped output using esc_url() to prevent security vulnerabilities.
-
-= 3.7.49 ( March 10, 2025 ) =
-* Updated: Improved security and compliance by properly validating, unslashing, and sanitizing $_SERVER['REMOTE_ADDR'] before usage.
-
-= 3.7.48 ( March 06, 2025 ) =
-* Security Improvement: wp_strip_all_tags() ensures no malicious scripts remain.
-
-= 3.7.47 ( March 03, 2025 ) =
-* Tested: WooCommerce 9.7 Compatibility.
-
-= 3.7.46 ( February 25, 2025 ) =
-* Fixed: Escaped output using wp_kses_post() to prevent XSS.
-
-= 3.7.45 ( February 17, 2025 ) =
-* Fixed: Minor issue fixed.
-
-= 3.7.44 ( February 10, 2025 ) =
-* Updated: Replaced is_writeable() with wp_is_writable() (WordPress recommended).
-
-= 3.7.43 ( February 03, 2025 ) =
-* Fixed: WordPress.Security.EscapeOutput.OutputNotEscaped issue.
-
-= 3.7.42 ( January 27, 2025 ) =
-* Tested: WooCommerce 9.6 Compatibility.
-
-= 3.7.41 ( January 20, 2025 ) =
-* Added: Minor issue fixed.
-
-= 3.7.40 ( January 16, 2025 ) =
-* Updated: readme.txt updated.
-
-= 3.7.39 ( January 13, 2025 ) =
-* Added: A filter 'wpifw_admin_order_action_buttons' to modify the buttons in admin orders page.
-
-= 3.7.38 ( January 06, 2025 ) =
-* Added: Introduced a new filter hook 'wpifw_order_buttons_array' to allow dynamic modification of the buttons array.
-
-= 3.7.37 ( January 01, 2025 ) =
-* Removed: Christmas discount banner removed.
