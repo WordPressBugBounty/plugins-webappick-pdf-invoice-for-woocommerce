@@ -172,11 +172,18 @@ class Woo_Invoice_PDF
      */
     public function generate_pdf() {
         try {
-            $mpdf                     = new \Mpdf\Mpdf($this->config);
-              $mpdf->autoScriptToLang = true;// phpcs:ignore
-              $mpdf->baseScript       = 1;// phpcs:ignore
-              $mpdf->autoVietnamese   = true; // phpcs:ignore
-              $mpdf->autoArabic       = true; // phpcs:ignore
+            // Save the current error reporting level
+            $original_error_reporting = error_reporting();
+
+            // Suppress deprecation notices (for PHP 8.1+)
+            error_reporting($original_error_reporting & ~E_DEPRECATED);
+
+            // Entire MPDF interaction block
+            $mpdf                   = new \Mpdf\Mpdf($this->config);
+            $mpdf->autoScriptToLang = true;// phpcs:ignore
+            $mpdf->baseScript       = 1;// phpcs:ignore
+            $mpdf->autoVietnamese   = true; // phpcs:ignore
+            $mpdf->autoArabic       = true; // phpcs:ignore
             // $mpdf->fonttrans['freeserif'] = true;
             $mpdf->debug = get_option('wpifw_pdf_invoice_debug_mode') === '1' ? true : false;
 
@@ -189,7 +196,7 @@ class Woo_Invoice_PDF
                     'P',
                     'P'
                 );
-                      $mpdf->showWatermarkImage = true; // phpcs:ignore
+                $mpdf->showWatermarkImage = true; // phpcs:ignore
             }
 
             $template = ucwords(str_replace('_', ' ', $this->template));
@@ -213,26 +220,26 @@ class Woo_Invoice_PDF
                     $mpdf->Output($filename . '.pdf', 'I');
                 }
             }
-            exit;
-        } catch ( \Mpdf\MpdfException $e ) { // Note: safer fully qualified exception name used for catch.
-            // Process the exception, log, print etc.
-            if ( 'save' !== $this->template ) {
-                $pdf_error_message = esc_attr($e->getMessage());
-                if ( strpos($pdf_error_message, 'Cannot find TTF') !== false ) {
-                    if ( strpos($pdf_error_message, 'Cannot find TTF') !== false ) {
-                        $doc_link = '<a target="_blank" href="'.admin_url() .'admin.php?page=webappick-woo-invoice">' .esc_html('Go to setting page').'</a>'; //phpcs:ignore
-                        if ( is_admin() ) {
-                            echo $pdf_error_message. '<h3><br/>' . __('Please go to Challan plugins setting page to download the missing fonts. '.$doc_link, 'webappick-pdf-invoice-for-woocommerce') . '</h3>'; //phpcs:ignore
-                        }else {
-                            echo $pdf_error_message. '<h4><br/>' . __('Please notify site admin to download invoice.', 'webappick-pdf-invoice-for-woocommerce') . '</h4>'; //phpcs:ignore
-                        }
-                    } else {
-                        echo esc_attr($e->getMessage());
-                    }
-                } else {
 
-                    echo esc_attr($e->getMessage());
+            // Restore original error reporting
+            error_reporting($original_error_reporting);
+
+            exit;
+        } catch (\Mpdf\MpdfException $e) {
+            // Restore original error reporting in case of exception
+            error_reporting($original_error_reporting);
+
+            // Existing error handling
+            $pdf_error_message = esc_attr($e->getMessage());
+            if (strpos($pdf_error_message, 'Cannot find TTF') !== false) {
+                $doc_link = '<a target="_blank" href="' . admin_url() . 'admin.php?page=webappick-woo-invoice">' . esc_html__('Go to setting page', 'webappick-pdf-invoice-for-woocommerce') . '</a>';
+                if (is_admin()) {
+                    echo $pdf_error_message . '<h3><br/>' . __('Please go to Challan plugin’s setting page to download the missing fonts. ', 'webappick-pdf-invoice-for-woocommerce') . $doc_link . '</h3>';
+                } else {
+                    echo $pdf_error_message . '<h4><br/>' . __('Please notify site admin to download invoice.', 'webappick-pdf-invoice-for-woocommerce') . '</h4>';
                 }
+            } else {
+                echo esc_attr($e->getMessage());
             }
         }
     }
