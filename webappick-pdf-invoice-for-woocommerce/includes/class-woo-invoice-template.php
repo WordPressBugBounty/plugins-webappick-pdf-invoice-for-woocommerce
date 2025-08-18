@@ -287,23 +287,23 @@ class Woo_Invoice_Template {
 	 *
 	 * @return false|string
 	 */
-public function get_html_start( $page_break = '' ) {
-	ob_start();
-	$rtl_css = '';
-	if ( 'rtl' === $this->rtl && file_exists( plugin_dir_path( __FILE__ ) . 'templates/invoice-rtl.css' ) ) {
-		$rtl_css = file_get_contents( plugin_dir_path( __FILE__ ) . 'templates/invoice-rtl.css' );
-	}
-	?>
+    public function get_html_start( $page_break = '' ) {
+        ob_start();
+        $rtl_css = '';
+        if ( 'rtl' === $this->rtl && file_exists( plugin_dir_path( __FILE__ ) . 'templates/invoice-rtl.css' ) ) {
+            $rtl_css = file_get_contents( plugin_dir_path( __FILE__ ) . 'templates/invoice-rtl.css' );
+        }
+        ?>
 
-    <style><?php echo esc_attr( $rtl_css ); ?></style>
-<div dir="<?php echo $this->rtl; ?>" class='invoice-box <?php echo $page_break; //phpcs:ignore?>'>
-	<?php
-	echo woo_invoice_before_document( $this->order, $this->template_type );//phpcs:ignore
-	$html = ob_get_contents();
-	ob_end_clean();
+            <style><?php echo esc_attr( $rtl_css ); ?></style>
+            <div dir="<?php echo $this->rtl; ?>" class='invoice-box <?php echo $page_break; //phpcs:ignore?>'>
+                <?php
+                echo woo_invoice_before_document( $this->order, $this->template_type );//phpcs:ignore
+                $html = ob_get_contents();
+                ob_end_clean();
 
-	return $html;
-}
+        return $html;
+    }
 
 	/**
 	 * Load Header
