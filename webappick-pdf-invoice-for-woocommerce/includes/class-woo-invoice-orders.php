@@ -18,7 +18,6 @@
 class Woo_Invoice_Orders
 {
 
-
 	/**
 	 *  Init Helper Class
 	 *

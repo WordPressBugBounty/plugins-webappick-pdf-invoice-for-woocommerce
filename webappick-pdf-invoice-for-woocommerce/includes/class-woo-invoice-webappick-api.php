@@ -18,8 +18,6 @@ if ( ! class_exists( 'Woo_Invoice_WebAppickAPI' ) ) {
 	 */
 	final class Woo_Invoice_WebAppickAPI {
 
-
-
 		/**
 		 * Singleton instance
 		 *
