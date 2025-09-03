@@ -50,59 +50,8 @@ class Woo_Invoice_Admin
     public function __construct( $plugin_name, $version ) {
         $this->plugin_name = $plugin_name;
         $this->version     = $version;
-        //$this->check_version_and_invoice_number_update();
 
     }
-
-//    /**
-//     * Check the plugin version and update the invoice number if necessary.
-//     *
-//     * This function checks the saved version of the plugin in the database.
-//     * If the version is not set or is less than the defined minimum version,
-//     * it updates the invoice number and the stored version.
-//     *
-//     * @since 3.7.0
-//     */
-//    private function check_version_and_invoice_number_update() {
-//        // Retrieve the saved plugin version from the database
-//        $saved_version = get_option('my_plugin_version');
-//
-//        // Define the minimum version for the update
-//        $minimum_version = '3.6.35';
-//
-//        /** If the saved version is not set or is less than the minimum version,
-//         *  and the current version is greater than or equal to 3.6.35, run the update
-//         **/
-//        if ($saved_version === false ||
-//            (version_compare($saved_version, $minimum_version, '<=') && version_compare(CHALLAN_FREE_VERSION, '3.7.0', '>='))) {
-//
-//            // Run the function to update invoice numbers
-//            $this->update_invoice_number_option();
-//
-//            // Update the stored version to the current version to ensure this runs only once
-//            update_option('my_plugin_version', CHALLAN_FREE_VERSION);
-//        }
-//    }
-//
-//    /**
-//     * Update the invoice number option.
-//     *
-//     * This function retrieves the current invoice number from the database,
-//     * increments it by one, and then saves the new invoice number back to the database.
-//     *
-//     * @since 3.7.0
-//     */
-//    private function update_invoice_number_option() {
-//
-//        // Get the current invoice number.
-//        $current_invoice_no = get_option('wpifw_invoice_no', 1);
-//
-//        // Increment the invoice number.
-//        $new_invoice_no = $current_invoice_no + 1;
-//
-//        // Update the invoice number option.
-//        update_option('wpifw_invoice_no', $new_invoice_no);
-//    }
 
     /**
      * Register the stylesheets for the admin area.
