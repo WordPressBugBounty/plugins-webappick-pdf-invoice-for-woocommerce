@@ -576,25 +576,45 @@ class Woo_Invoice_Orders
 		return $name;
 	}
 
-	/**
-	 * Get Product Weight
-	 *
-	 * @param  WC_Product $product  Product Object.
-	 * @param  WC_Product $quantity Product Quanity.
-	 * @return mixed|string
-	 */
-	private function get_item_weight( $product, $quantity ) {
-		if ( $product instanceof WC_Product ) {
-			$product_weight = $product->get_weight();
-			if ( $product_weight ) {
-				$product_weight = ( $quantity > 0 ) ? $product_weight * $quantity : $product_weight;
-				return $product_weight;
-			}
-		}
-		return '';
-	}
+    /**
+     * Get Product Weight multiplied by quantity, safely.
+     *
+     * @param WC_Product $product  Product object.
+     * @param float|int|WC_Order_Item $quantity Quantity or an order item (from which quantity can be derived).
+     * @return string                     Decimal string (formatted) or empty string if no weight.
+     */
+    private function get_item_weight(WC_Product $product, float|int|WC_Order_Item $quantity = 1 ) {
+        if ( ! $product instanceof WC_Product ) {
+            return '';
+        }
 
-	/**
+        // 1) Normalize quantity
+        if ( is_object( $quantity ) ) {
+            // e.g. WC_Order_Item_Product, WC_Order_Item
+            if ( method_exists( $quantity, 'get_quantity' ) ) {
+                $quantity = $quantity->get_quantity();
+            } else {
+                $quantity = 1;
+            }
+        }
+        $qty = is_numeric( $quantity ) ? (float) $quantity : 1.0;
+
+        // 2) Get and validate weight (Woo stores weight as a string)
+        $weight = $product->get_weight();
+        if ( $weight === '' || $weight === null ) {
+            return '';
+        }
+
+        // 3) Cast and multiply safely (avoid string * object errors)
+        // wc_format_decimal() returns a normalized decimal string; cast to float for math.
+        $single_weight = (float) wc_format_decimal( $weight );
+        $total_weight  = $single_weight * $qty;
+
+        // 4) Return a formatted string (2 decimals is typical for weight)
+        return wc_format_decimal( $total_weight, 2 );
+    }
+
+    /**
 	 * Get Product Dimension
 	 *
 	 * @param WC_Product $product Product Object.
