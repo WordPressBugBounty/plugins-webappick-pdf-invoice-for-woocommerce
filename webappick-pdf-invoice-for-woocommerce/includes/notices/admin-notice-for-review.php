@@ -16,7 +16,7 @@ class Challan_Notifications {
 	public function notifications_load_hooks() {
 
         if ( isset( $_GET['page'] ) && $_GET['page'] === 'webappick-woo-invoice' ) {//phpcs:ignore
-          //  add_action( 'admin_notices', [ $this, 'woo_invoice_free_promotion_notice_christmas' ] );
+            //add_action( 'admin_notices', [ $this, 'woo_invoice_free_promotion_notice_hw2025' ] );
         }
 
 //		add_action( 'admin_notices', [ $this, 'woo_invoice_review_notice' ] );
@@ -340,11 +340,11 @@ class Challan_Notifications {
     /**
 	 * Black friday implementation.
 	 */
-	public function woo_invoice_free_promotion_notice_christmas() {
+	public function woo_invoice_free_promotion_notice_hw2025() {
 
 //        delete_user_meta( 1, 'woo_invoice_promotion_notice_dismissed');
 
-		$image_url = CHALLAN_FREE_PLUGIN_URL . 'admin/images/christmas-banner-24.png';
+		$image_url = CHALLAN_FREE_PLUGIN_URL . 'admin/images/HW2025_Banner.gif';
 		$pluginName    = sprintf( '<b>%s</b>', esc_html( 'Challan' ) );
 		$user_id       = get_current_user_id();
 		$review_notice_dismissed = get_user_meta($user_id, 'woo_invoice_promotion_notice_dismissed_christmas', true);
@@ -362,7 +362,7 @@ class Challan_Notifications {
                 <p><?php
 					printf(
 					/* translators: 1: plugin name,2: Slightly Smiling Face (Emoji), 3: line break 'br' tag */
-						'<a class="woo_invoice_promotion_notice" href="https://webappick.com/plugin/woocommerce-pdf-invoice-packing-slips/?utm_source=challan+Plugin&utm_medium=HH_banner&utm_campaign=HH_24&utm_id=2024" target="_blank"><img  src="'.$image_url.'" alt="Challan_Free_Price"></a>', //phpcs:ignore
+						'<a class="woo_invoice_promotion_notice" href="https://webappick.com/discount-deal/?utm_source=halloween_25&utm_medium=wp_free&utm_campaign=halloween_25" target="_blank"><img  src="'.$image_url.'" alt="Challan_Free_Price"></a>', //phpcs:ignore
 						$pluginName, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						'<span style="font-size: 16px;">&#128516</span>',
 						'<div class="woo-invoice-review-notice-logo"></div>',

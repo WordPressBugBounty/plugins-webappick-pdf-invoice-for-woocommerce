@@ -2,16 +2,6 @@
 /**
  * The admin-specific functionality of the plugin.
  *
- * @link  https://webappick.com
- * @since 1.0.0
- *
- * @package    Woo_Invoice
- * @subpackage Woo_Invoice/admin
- */
-
-/**
- * The admin-specific functionality of the plugin.
- *
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *

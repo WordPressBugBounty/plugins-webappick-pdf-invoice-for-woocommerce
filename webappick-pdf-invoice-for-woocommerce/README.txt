@@ -1,261 +1,290 @@
-=== Challan - PDF Invoice & Packing Slip for WooCommerce ===
+=== PDF Invoices & Packing Slips for WooCommerce – Challan ===
 Contributors: wahid0003,webappick
 Donate link: https://webappick.com
-Tags: invoice, pdf invoice, packing slips, delivery notes, woocommerce pdf invoice
+Tags: woocommerce pdf invoice, woocommerce invoice, packing slip, pdf invoice, invoice generator
 Requires at least: 3.6
 Tested up to: 6.8
-Stable tag: 3.7.74
+Stable tag: 3.7.82
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Automatically email PDF invoice and easily create & print Packing Slip and Delivery Address for woocommerce orders.
+WooCommerce PDF invoice generator with automatic email attachment. Create packing slips, shipping labels, credit notes, multilingual. ZATCA & GST ready.
 
 == Description ==
 
-Challan - PDF Invoice & Packing Slip for WooCommerce generate PDF invoice automatically and send it to your customers by attaching it with the order email based on the configured order status.
+**Challan** is a powerful WooCommerce PDF invoice plugin that lets you automatically generate PDF invoices, attach PDF invoices to WooCommerce order emails, create packing slips, shipping labels, and delivery notes – all from one dashboard.
 
-Challan includes a basic template with some additional templates, which you can modify at any time. It also includes the bulk invoice and packing slip download, invoice number, custom date format, localization, logo resize, etc.  The process of creating and printing invoices is easy with Challan.
+Looking for the best WooCommerce invoice generator? Challan automatically creates professional PDF invoices when orders are placed and attaches them to customer emails. No manual work required.
 
-You will be mesmerized with hundreds of unique features of this pdf invoice plugin.  This WooCommerce PDF invoice & Packing Slip plugin makes the sales and purchasing process more comfortable and more organized for a store manager.
+**[Upgrade to Pro](https://webappick.com/plugin/woocommerce-pdf-invoice-packing-slips/) | [Complete Documentation](https://webappick.com/docs/challan/) | [Get Support](https://webappick.com/contact/)**
 
-= ☞ PDF Invoice =
+==Why Store Owners Choose Challan for WooCommerce PDF Invoices?==
 
-Challan – PDF Invoice & Packing Slip for WooCommerce by WebAppick allows you to create an invoice in PDF format. The plugin automatically attaches the pdf invoice with the order confirmation emails and instantly sends it to the customer whenever the order status changes.
+= ✉️ Attach PDF Invoice to Email Automatically =
 
-You can resize the PDF file format whenever you need to. The plugin allows you to download multiple pdf invoices at a time., etc., with the order confirmation email. It is possible to bulk download pdf invoices at a time.
+The #1 reason store owners choose Challan: **automatically attach PDF invoice to WooCommerce order emails**. When a customer places an order, Challan generates the invoice and attaches it to the confirmation email instantly.
 
-= ☞ Easy Interface =
+No more manually creating invoices. No more forgetting to send them. Challan handles everything automatically.
 
-The interface of Challan is straightforward to use and includes numerous options for the users. Every element of this plugin is visible and easily understandable by the users. For example, users can quickly set information regarding the shipping, billing, order data, customer note, bank information, refund note, tax, vat, shipping labels, etc.
+Supported emails for PDF invoice attachment:
 
-Users can get individual or multiple invoices in a single interface. They can easily download the invoice in CSV file format. After placing an order, customers can also download the invoice instantly according to order status configuration.
-
-= ☞ Easy Customization =
-
-Challan - PDF invoice plugin includes a vast number of customization options according to customer requirements. For example, Users can customize invoice numbers, order numbers, product title, customer note, shipping and billing address, etc.
-
-You can customize the invoice template style by including custom CSS in the plugins settings page. It is possible to customize the invoice templates of the Invoice and packing slip easily.
-
-This PDF Invoice and Packing slip for the WooCommerce plugin has Filter and Action Hooks in all the possible sections to customize the template as you like.
-
-= ☞ Packing Slip =
-
-A packing slip describes the contents of a package that helps shippers to state that a specific item has been sent to the correct destination. It also helps receivers to verify that the item is received correctly. Product descriptions and quantities are stated on a packing slip in detail.
-
-This PDF invoice plugin can generate, customize, and print the WooCommerce packing slip accurately. You can easily print and download the WooCommerce packing slip for individual and multiple orders as a batch. The packing slip can be organized according to a selected date range.
-
-You can customize the packing slip according to your business type or preference. You can also attach the required packing slip with the email and send it to your customer. All the product details are enlisted properly on the packing slip generated by this plugin.
-
-= ☞ Attach to Order Email =
-With this WooCommerce PDF Invoice plugin, an invoice gets attached with the email whenever an order status is changed. A credit note also is attached with the order refund email to a customer. The credit note feature is only available in the premium version. So, customers and the business owner gets updated with any change in the order status.
-
-The packing slip is also attached to every order confirmation email. You can attach a custom file, watermark, paid stamp, etc., with this PDF invoice. The business process gets more organized more effectively due to email attachments.
-
-Attach the invoice, packing slip, and credit note based on the following statuses:
-
-* New Order
+* New Order (Admin notification)
 * Processing Order
 * Completed Order
+* Customer Invoice / Order Details
 * Refunded Order
-* Partially Refunded Order
-* Customer Invoice
 * Customer Note
-* Canceled Order
 
-= ☞ Delivery Address =
+= 📄 WooCommerce Invoice Generator =
 
-A perfect package includes the shipping label or delivery address embedded with it. It makes the package ideal for picking and packing items. When a package includes a delivery address, you won’t need a separate sheet for the shipping information. In one interface or sheet, you can create delivery address labels.
+Challan works as a complete **WooCommerce invoice generator** that creates professional invoices containing:
 
-Challan - delivery address plugin includes an option to generate accurate delivery addresses with phone and email on the order. You can generate the delivery address label according to the order date range. You can also bulk download shipping labels to minimize the effort of the logistics operation. Store managers can quickly get the shipping information of the ordered products by using this delivery address generator woocommerce plugin.
+* Order details and order number
+* Customer billing and shipping address
+* Product names, quantities, SKUs
+* Tax breakdown (VAT, GST, custom taxes)
+* Discounts and coupon information
+* Payment method and status
+* Custom invoice notes
 
-> ## **Challan Pro**
->
-> If you like this free you will love the  <a href="https://webappick.com/plugin/woocommerce-pdf-invoice-packing-slips/?utm_source=customer_site&utm_medium=free_vs_pro&utm_campaign=woo_invoice_free">premium</a> version. The  <a href="https://webappick.com/plugin/woocommerce-pdf-invoice-packing-slips/?utm_source=customer_site&utm_medium=free_vs_pro&utm_campaign=woo_invoice_free">Challan Pro </a> have some additional awesome features.
+Generate invoices automatically on order status change, or create them manually with one click from the WooCommerce orders page.
 
+= 📦 WooCommerce Packing Slip =
 
-= 💎 Invoice Template (Pro) 💎 =
+Create **WooCommerce packing slips** for your warehouse and fulfillment team. Packing slips help ensure accurate order picking and shipping.
 
-Customizable and decent PDF invoice templates can quickly satisfy a customer. A customer may prefer different types of invoices for various products or services. It helps users to categorize the services when they have the freedom to choose between various invoice templates.
+Packing slip features:
 
-Challan is a unique PDF invoice plugin for WooCommerce that allows users to interchange between multiple available templates. The customizable invoice templates of this plugin ensure a better user experience for the clients.
+* Product names and quantities
+* SKU and weight information
+* Custom packing instructions
+* Option to hide prices (for dropshipping)
+* Bulk print multiple packing slips
 
-Users can select any template and change the look and feel of the invoice. It ensures professional invoice creation and grows your business by enhancing customer interaction.
+= 🎨 Customize WooCommerce PDF Invoice Template =
 
-= ☞ Paper Size =
+Want to **customize WooCommerce PDF invoice** appearance? Challan gives you full control:
 
-Different paper sizes are helpful to print a PDF invoice file for different business purposes. Paper size variation depends on preferences or requirements to print out a PDF in a specific paper size.
+* Upload your company logo
+* Add business name and address
+* Custom header and footer text
+* Multiple paper sizes (A4, A5, Letter, A3)
+* Custom CSS for advanced styling
+* RTL support for Arabic, Hebrew, Persian
 
-This WooCommerce invoice Plugin includes different paper sizes for each template. It includes variations of paper sizes such as A3, A4, A5, Letter. You can select the paper size from the mentioned options for your invoice, packing slip & delivery address label.
+Looking to **add custom field to WooCommerce PDF invoice**? Challan Pro supports custom fields, meta data, and product attributes on invoices.
 
-= 💎 Custom Paper Size (Pro) 💎 =
+= 🏷️ Shipping Labels & Delivery Notes =
 
-Premium version of the plugin support custom paper size with any dimension.
+Generate **WooCommerce shipping labels** and delivery notes directly from your dashboard:
 
-= ☞ Logo =
+* Print delivery address labels
+* Include phone and email on labels
+* Bulk download by date range
+* Multiple label formats
+* Barcode and QR code support (Pro)
 
-Brand value is an essential factor that promotes businesses very effectively. Stores and business owners are always eager to showcase their brand wherever and whenever possible. Using the company logo in an invoice creates an excellent opportunity to increase brand identity.
+= 💾 Bulk Download WooCommerce PDF Invoices =
 
-With this multipurpose PDF invoice plugin, users can easily upload a brand logo and customize it when necessary. The logo is visible on the top left corner of the invoice and creates a professional vibe.
+Need to **download WooCommerce PDF invoices** in bulk? Challan makes it easy:
 
-You can also resize the logo and use it on the invoice by navigating through the settings page. Business owners can upload their brand or business logo to increase brand popularity by applying the logo on the invoice.
+* Download all invoices as ZIP file
+* Merge into single PDF document
+* Filter by date range
+* Filter by order status
+* Export for accounting software
 
-= ☞ Order No. & Sequential Order No. =
+= 🌍 Multi-Language PDF Invoice Support =
 
-The order number is one of the essential features of this remarkable WooCommerce Invoice & Packing Slip plugin. You can customize your WooCommerce order number easily if you need it. Several plugins allow the change of Woocommerce order numbers, but this plugin makes the process way more flexible.
+Create **PDF invoices in multiple languages** with proper font rendering:
 
-Using this advanced invoice plugin, you can customize order numbers and prints them on the pdf invoice. You can add suffixes and prefixes with the order number using this plugin. Your invoice will include sequential and organized order numbers rather than random or sloppy numbers.
+* Bengali (বাংলা)
+* Arabic (العربية) – Full RTL support
+* Hindi (হিন্দী)
+* German (Deutsch)
+* French (Français)
+* Spanish (Español)
+* Japanese (日本語)
+* Chinese (中文)
+* And 15+ more languages
 
-The plugin also includes changing order numbers using filter hooks and adding custom order numbers according to user preference.
+**Free version:** Generate invoices in your site's language with full font support.
+**Pro version:** Generate invoices in the customer's order language for multi-language stores (WPML, Polylang, Weglot).
 
-To include sequential order numbers, the plugin is compatible with these sequential order number plugins:
+= 🔧 WooCommerce Plugin Compatibility =
 
-* <a hrefs='https://woocommerce.com/products/sequential-order-numbers-pro/' target='_blank'>Sequential Order Numbers Pro</a>
-* <a hrefs='https://wordpress.org/plugins/wt-woocommerce-sequential-order-numbers/' target='_blank'>Sequential Order Number for WooCommerce</a>
-* <a hrefs='https://wordpress.org/plugins/woocommerce-sequential-order-numbers/' target='_blank'>WooCommerce Sequential Order Numbers</a>
-* <a hrefs='https://wordpress.org/plugins/woo-custom-and-sequential-order-number/' target='_blank'>Woo Custom and Sequential Order Number</a>
-* <a hrefs='https://wordpress.org/plugins/custom-order-numbers-for-woocommerce/' target='_blank'>Custom Order Numbers for WooCommerce</a>
-* <a hrefs='https://yithemes.com/themes/plugins/yith-woocommerce-sequential-order-number/' target='_blank'>YITH WOOCOMMERCE SEQUENTIAL ORDER NUMBER</a>
+Searching for a **WordPress invoice plugin**? Challan is built specifically for WooCommerce-powered WordPress stores. If your store runs on WooCommerce, Challan is the invoice solution you need.
 
-The order number is available on the invoice, credit note, and packing slip after being generated.
+Compatible with:
 
-= ☞ Billing Address & Shipping Address =
+* **Multi-Language Plugins (Pro):** WPML, Polylang, TranslatePress, Weglot – generate invoice in order language
+* Works with all WooCommerce themes
+* Compatible with page builders (Elementor, Divi)
+* WooCommerce Subscriptions ready (Pro)
+* WooCommerce Bookings compatible
+* Bundle and Composite Products support
 
-Shipping address is crucial information alongside the billing information while placing orders in an eCommerce store. This address confirms the destination of the ordered products of a customer.
+==Free vs Pro Comparison==
 
-This invoice plugin for WooCommerce shows the shipping address accurately on the invoice alongside the billing address. You can enable or disable the shipping address on a need basis. For the same billing address, you can hide the shipping address.
+**Free Version – WooCommerce PDF Invoices & Packing Slips:**
 
-= ☞ Date Format =
+✅ Auto-generate PDF invoices
+✅ Attach PDF invoice to order emails
+✅ WooCommerce packing slip generation
+✅ Shipping labels / delivery address
+✅ Custom invoice number format
+✅ Company logo and branding
+✅ Multiple paper sizes
+✅ Bulk invoice download
+✅ Multi-language fonts (site language)
+✅ RTL language support
+✅ Customer invoice download from My Account
+✅ Custom CSS styling
+✅ Developer hooks and filters
+
+**Pro Version – Additional Features:**
+
+🚀 10+ Premium invoice templates
+🚀 **Invoice in order language** (WPML, Polylang, Weglot)
+🚀 Credit notes for refunds
+🚀 Proforma invoices
+🚀 **ZATCA e-invoicing** (Saudi Arabia)
+🚀 **GST invoice format** (India)
+🚀 Add custom fields to invoice
+🚀 Product images on invoices
+🚀 Digital signature
+🚀 20+ paid stamp designs
+🚀 Dropbox automatic backup
+🚀 Barcode & QR codes
+🚀 WooCommerce Subscriptions invoices
+🚀 Priority support
+
+**[Upgrade to Pro](https://webappick.com/plugin/woocommerce-pdf-invoice-packing-slips/) | [Complete Documentation](https://webappick.com/docs/challan/) | [Get Support](https://webappick.com/contact/)**
+
+==Who Uses Challan?==
+
+* **WooCommerce Store Owners** – Automate PDF invoice generation
+* **Dropshipping Businesses** – Packing slips without prices
+* **Indian E-commerce Stores** – GST compliant invoicing
+* **Saudi Arabian Stores** – ZATCA e-invoicing ready
+* **European Sellers** – VAT invoice support
+* **Multi-language Stores (Pro)** – Invoice in customer's order language
+* **Wholesale Businesses** – Bulk operations
+
+==About WebAppick==
+
+Challan is built by **[WebAppick](https://webappick.com/)**, creators of [CTX Feed – the #1 WooCommerce Product Feed plugin](https://wordpress.org/plugins/webappick-product-feed-for-woocommerce/)  with **80,000+ active installations**. We've been building WooCommerce solutions since 2015.
+
+== Our Other Free Plugins ==
+* <strong>[Disco – Dynamic Pricing & Discount Rules for WooCommerce](https://wordpress.org/plugins/disco/)
+* <strong>[Product Feed Manager for WooCommerce – CTX Feed](https://wordpress.org/plugins/webappick-product-feed-for-woocommerce/)
 
-Date format is one of the essential elements of an invoice. Changing the date format is a necessary option for customers from different regions. An Ideal invoice should have the proper date format based on store location.
-
-This outstanding WooCommerce pdf invoice and packing slip plugin includes several date formats. Users can change the available date formats according to their preference or region.
-
-Users can choose the date format from the plugin’s Settings page when needed. Applying personalized date format is possible by using the filter hook of the plugin.
-
-= ☞ Order Item Info =
-
-Order item info is a core function of an Invoice. Order item info includes product image, title, description, category, order item meta, product meta, dimension, weight, extra product options etc. All this information is crucial to create a complete and adequate invoice.
-
-Our PDF invoice plugin for WooCommerce shows order item info in a lucrative format. It includes all the order item info that a perfect invoice should have. You have the freedom to limit the information on your invoice and organize it with your preferred or required data.
-
-Using the action and filter hooks, you can add any information. Customize the order item info, change the image height and width, and whatnot! You can also limit the product title and product description length from the plugin’s Setting option.
-
-= ☞ Order Total =
-
-This PDF Invoice plugin displays the details order total without any miscalculation. You can show the order total, including or excluding discount (coupon’s), TAX, VAT, and shipping cost with or without tax, detailed refund information.
-
-Order total shows the cost after calculating the vat, tax, and extra fee of a product. Challan is compatible with numerous third-party “Extra Fee” plugins. You can easily customize the order total using the filter hook available in this plugin.
-
-= ☞ Refund Info =
-
-After issuing the invoice to a customer or receiving the payment against an invoice, a situation may occur where you need to refund the customer. A customer may require a refund if charged with the wrong fee, received the wrong or damaged item, etc. It includes total refund amount with into invoice total section.
-
-= 💎 Detail Refund Info (Pro) 💎 =
-
-This exclusive PDF invoice plugin for WooCommerce collects the refund info and creates an invoice when a customer asks for a refund. It includes all the refund information such as refunded amount, refunded address, refund reason, refunded message, etc. For refunded orders, the plugin also provides an individual credit note attached with the refund email.
-
-= ☞ Invoice Download =
-
-Invoice is an essential document for both the business owners and clients. Buyers and sellers can track and organize their inventory and get detailed product information.
-
-This Invoice & Packing Slip plugin includes download options in different scenarios. After placing a new order, you will get an option to download the invoice in the My Account > Order section. Also, you can download the attached invoice from the order confirmation email.
-
-Admins can download the customer invoice for a newly placed order, completed orders, refunded orders, etc. The download option of this plugin makes the invoice available both online and offline.
-
-= 💎 Bulk Download (Pro) 💎 =
-
-This invoice and packing slip plugin includes a bulk download option for the invoice, packing slip, and shipping label. Users can download an individual, specific, or list of invoices according to order date range.
-
-Users can quickly identify packing slips and shipping labels for multiple products at a time by downloading in a bulk amount. They also have the flexibility to download in multiple-row or columns for the shipping label.
-
-= ☞ Font =
-
-An invoice with the font changing option brings more flexibility, creates brand uniqueness, and increases user satisfaction. The invoice becomes more personalized and eye-catching by applying different fonts.
-
-Our plugin allows you to change the font size on any template. You can easily interchange from the available font family. If a font family is not available on the plugin, you can download your preferred font family online and upload it on the plugin and use it on the invoice. Change the font size according to your preference from the plugin’s Settings page.
-
-= ☞ Footer Design =
-
-On every invoice, there is a bottom area which is also known as a footer. On the invoice, the footer contains a signature, footer text, copyright information, terms & conditions, footer line, etc. These footer elements can make the invoice look more professional and organized.
-
-Our PDF invoice plugin allows its users to change the footer design according to personal preference. You can customize the footer text on the top and bottom areas of the footer. You can also place the signature on the footer, enable or disable the footer line and page number, and place a signature on the footer.
-
-= 💎 Credit Note (Pro) 💎 =
-
-The credit note is a business document that notifies the customers about the credit applied to their accounts. The credit can be applied to a customer's account if that customer denies taking the product or service, the product gets damaged, the payable amount is incorrect, and the paid amount is incorrect.
-
-When a customer is taking a full or partial refund, that refund information is stated on a credit note. This WooCommerce invoice plugin creates a detailed credit note with all the refund information of an order. Whenever a customer is refunded or credited, he gets a credit note attached with the refund confirmation email.
-
-= 💎 Multi-Language (Pro) 💎 =
-
-The multi-language option is crucial for an invoice when someone wants to run a business in different countries. Customers from different countries will understand the invoice without any hassle when they get it in their native language.
-
-Multi-Language support is one of the most notable features of this pdf invoice and packing slip plugin. You can provide the invoice either in your customer order language or the site language. You have the option to generate the invoice in both ways, including the site language, Or the order language.
-
-This plugin is compatible with below multi-language plugins:
-
-* <a target="_blank" href="https://wpml.org/">WPML</a>.
-* <a target="_blank" href="https://wordpress.org/plugins/polylang/">Polylang</a>.
-* <a target="_blank" href="https://wordpress.org/plugins/weglot/">Weglot</a>.
-* <a target="_blank" href="https://wordpress.org/plugins/translatepress-multilingual/">Translatepress</a>.
-
-= 💎 Multi-Currency (Pro) 💎 =
-
-Challan PDF invoice plugin is capable of displaying currencies of different countries.
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
+= Automatic Installation =
 
-e.g.
+1. Go to **Plugins > Add New** in WordPress
+2. Search for "**Challan PDF Invoice**"
+3. Click **Install Now** then **Activate**
+4. Configure settings under **Challan** menu
 
-1. Download and unzip the plugin
-2. Upload the entire "webappick-pdf-invoice-for-woocommerce" directory to the `/wp-content/plugins/` directory
-3. Activate the plugin through the 'Plugins' menu in WordPress
-4. Go to "Challan" menu and configure your settings
+= Manual Installation =
+
+1. Download the plugin from WordPress.org
+2. Go to **Plugins > Add New > Upload Plugin**
+3. Upload the ZIP file and click **Install Now**
+4. Activate and configure under **Challan** menu
+
+= Configuration =
+
+1. Navigate to **Challan > Settings**
+2. Upload your company logo
+3. Enter business details
+4. Set invoice number format
+5. Choose emails for PDF attachment
+6. Save and start generating invoices!
 
 == Frequently Asked Questions ==
 
-= Is Challan a ZATCA e-invoicing plugin? =
+= How do I attach PDF invoice to WooCommerce order email? =
 
-No, But Challan Pro version is compatible with ZATCA e-invoicing plugin feature, including the ability to scan Saudi Arabia QR code within a PDF invoice. You can see the screenshot above.
+Go to **Challan > Settings > Invoice** and enable "Attach Invoice to Email." Select which order statuses trigger attachment (Processing, Completed, etc.). Challan will automatically attach PDF invoice to WooCommerce emails for those statuses.
 
-= Does it attach Invoice with Order Email? =
+= Does this WooCommerce invoice generator work automatically? =
 
-Yes, It automatically attach invoice with order email.
+Yes! Challan is a fully automatic WooCommerce invoice generator. Once configured, it creates PDF invoices whenever orders are placed or status changes. No manual work needed.
 
-= Is it possible to download and print bulk invoice? =
+= How do I customize WooCommerce PDF invoice template? =
 
-Yes, you can easily print or download multiple order both by selecting orders from order list admin page or by date range from plugin page.
+Go to **Challan > Settings > Invoice > Template**. You can add your logo, change paper size, modify header/footer text, and write custom CSS. Pro users get 10+ premium templates and visual customization.
 
-= Is this plugin generate shipping label? =
-Yes, from woocommerce order list page you can download the shipping label.
+= Can I add custom field to WooCommerce PDF invoice? =
 
-= Is it possible to add custom logo for invoice? =
+Challan Pro supports adding custom fields to invoices. You can display order meta, product attributes, and custom checkout fields on your PDF invoices. The free version supports basic customization through hooks and filters.
 
-Yes, you can easily add custom logo for your invoice and packing slip.
+= How do I create WooCommerce packing slip? =
 
-= Is this plugin support my local currency? =
+Go to any order in **WooCommerce > Orders** and click the "Packing Slip" button. You can also bulk generate packing slips from **Challan > Bulk Download** by selecting date range and order status.
 
-Yes, you are able set your own currency. this plugin supported almost all currency in the world.
+= Is this a free WooCommerce PDF invoice plugin? =
 
-= How can i change the pdf invoice design? =
+Yes! Challan free version includes PDF invoice generation, email attachment, packing slips, shipping labels, and bulk download. Pro version adds premium templates, ZATCA, GST, custom fields, and more.
 
-You can change the pdf invoice and packing slip design to wring custom css according to your need. there has option to write custom css in plugin settings.
+= Does Challan support WooCommerce PDF invoices and packing slips together? =
 
-= Is it possible to change paper size? =
+Absolutely. Challan is a complete solution for WooCommerce PDF invoices and packing slips. Generate both document types from the same plugin with independent customization options.
 
-Yes its possible. you can change paper size easily from plugin settings.
+= How do I bulk download WooCommerce invoices? =
 
-= Is it possible to customize invoice texts? =
+Go to **Challan > Bulk Download**. Set your date range and order status filter. Choose ZIP (separate files) or merged PDF format. Click download to get all matching invoices instantly.
 
-Yes, You can easily do that.
+= Can customers download PDF invoice from My Account? =
 
-= How can i discuss about the plugin issues? =
+Yes, customers can download their PDF invoices from **My Account > Orders**. A download button appears next to each completed order.
 
-You're more than welcome! we ready to solve your issue. you can ask the query here.
-https://wordpress.org/support/plugin/webappick-pdf-invoice-for-woocommerce/
+= Is Challan ZATCA compliant for Saudi Arabia e-invoicing? =
+
+Challan Pro is compatible with ZATCA (Zakat, Tax and Customs Authority) requirements. It supports QR code generation and required fields for Saudi Arabian e-invoicing compliance.
+
+= Does this WordPress invoice plugin support GST for India? =
+
+Yes, Challan Pro supports GST invoice generation for Indian stores. Add GSTIN, HSN/SAC codes, and generate tax-compliant invoices with CGST, SGST, and IGST breakdown.
+
+= How to make a PDF invoice with custom logo? =
+
+Go to **Challan > Settings > Invoice > Seller Information**. Click "Upload Logo" and select your image. Recommended size: 200x100 pixels. Your logo appears on all invoices automatically.
+
+= Can I generate WooCommerce PDF invoices in multiple languages? =
+
+**Free version:** Generates invoices in your site's default language with full font support for Bengali, Arabic, Hindi, Chinese, Japanese, and more.
+
+**Pro version:** For multi-language stores using WPML, Polylang, or Weglot, Challan Pro generates invoices in the customer's order language automatically. Each customer receives their invoice in the language they used when placing the order.
+
+= Does this plugin work as a WordPress billing plugin? =
+
+Challan is a WooCommerce-specific invoice plugin. It requires WooCommerce to function. If you're searching for a WordPress invoice plugin or WordPress billing plugin for your WooCommerce store, Challan handles all billing documentation including invoices, packing slips, and credit notes.
+
+= How do I create packing slip without prices for dropshipping? =
+
+Go to **Challan > Settings > Packing Slip** and disable price display. Your packing slips will show products and quantities without revealing prices – perfect for dropshipping and gift orders.
+
+= What paper sizes are supported for PDF invoices? =
+
+Challan supports A4, A5, A3, and Letter paper sizes. Configure this in **Challan > Settings > Invoice > Template Settings**. Different paper sizes can be set for invoices and packing slips separately.
+
+= Is the WooCommerce invoice number customizable? =
+
+Yes, fully customizable. Add prefix (e.g., "INV-"), suffix, set starting number, and configure digit padding. Pro version includes yearly/monthly reset options.
+
+= Does Challan work with WooCommerce Subscriptions? =
+
+Basic subscription orders work with the free version. Challan Pro includes full WooCommerce Subscriptions integration with recurring invoice generation.
+
+= How is Challan different from WP Overnight PDF Invoices? =
+
+Challan includes shipping labels and delivery notes in the free version (WP Overnight charges extra). Challan Pro offers native ZATCA and GST compliance, order-language invoicing for multilingual stores, and is built by WebAppick (80,000+ users trust our plugins).
 
 = How to install fonts? =
 Please read the [documentation](https://webappick.com/docs/woo-invoice/installation-setup/font-installation) on our website to install fonts.
@@ -278,6 +307,30 @@ Please read the [documentation](https://webappick.com/docs/woo-invoice/installat
 = 💎 Translation Request 💎 =
 We are looking for people to help translate this plugin. If you can help we would love for you to jump in and do so.
 Help us & the WordPress community, translate the plugin [here](https://translate.wordpress.org/projects/wp-plugins/webappick-pdf-invoice-for-woocommerce/)
+
+= 3.7.82  ( February 03, 2026 ) =
+* Updated : Plugin description.
+
+= 3.7.81  ( November 17, 2025 ) =
+* Added : 10 Year Anniversary Discount Banner.
+
+= 3.7.80  ( November 10, 2025 ) =
+* Refactored: Code refactored on template file.
+
+= 3.7.79  ( November 04, 2025 ) =
+* Removed: Halloween 2025 discount banner.
+
+= 3.7.78  ( October 27, 2025 ) =
+* Tested: WooCommerce 10.3 Compatibility.
+
+= 3.7.77  ( October 22, 2025 ) =
+* Fixed: PHP fatal error issue on php 7.4.
+
+= 3.7.76  ( October 20, 2025 ) =
+* Added: Halloween 2025 discount banner.
+
+= 3.7.75  ( October 06, 2025 ) =
+* Removed: Duplicate comments from class-woo-invoice-admin.php file.
 
 = 3.7.74  ( September 25, 2025 ) =
 * Tested: WooCommerce 10.2 Compatibility.

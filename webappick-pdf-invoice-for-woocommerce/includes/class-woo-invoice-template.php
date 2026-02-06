@@ -714,64 +714,64 @@ class Woo_Invoice_Template {
 	 *
 	 * @return false|string
 	 */
-public function get_footer_section() {
-if ( 'invoice' === $this->template_type ) {
-	ob_start();
-	// Footer 1.
-	$terms_and_condition = stripslashes( get_option( 'wpifw_terms_and_condition' ) );
-	if ( has_filter( 'woo_invoice_footer_1' ) ) {
-		$terms_and_condition = apply_filters( 'woo_invoice_footer_1', $terms_and_condition, $this->template_type, $this->order );
-	}
-	// Footer 2.
-	$other_information = stripslashes( get_option( 'wpifw_other_information' ) );
-	if ( has_filter( 'woo_invoice_footer_2' ) ) {
-		$other_information = apply_filters( 'woo_invoice_footer_2', $other_information, $this->template_type, $this->order );
-	}
-	$footer_font_size = ( get_option( 'wpifw_invoice_footer_font_size' ) ) ? get_option( 'wpifw_invoice_footer_font_size' ) : '9';
-	?>
-    <htmlpagefooter name="invoiceFooter">
-		<?php
-		if ( '' != $terms_and_condition || '' != $other_information ) : ?>
-            <hr class='invoice-footer-hr'>
-		<?php
-		endif;
-		?>
+    public function get_footer_section() {
+        if ( 'invoice' === $this->template_type ) {
+            ob_start();
+            // Footer 1.
+            $terms_and_condition = stripslashes( get_option( 'wpifw_terms_and_condition' ) );
+            if ( has_filter( 'woo_invoice_footer_1' ) ) {
+                $terms_and_condition = apply_filters( 'woo_invoice_footer_1', $terms_and_condition, $this->template_type, $this->order );
+            }
+            // Footer 2.
+            $other_information = stripslashes( get_option( 'wpifw_other_information' ) );
+            if ( has_filter( 'woo_invoice_footer_2' ) ) {
+                $other_information = apply_filters( 'woo_invoice_footer_2', $other_information, $this->template_type, $this->order );
+            }
+            $footer_font_size = ( get_option( 'wpifw_invoice_footer_font_size' ) ) ? get_option( 'wpifw_invoice_footer_font_size' ) : '9';
+            ?>
+            <htmlpagefooter name="invoiceFooter">
+                <?php
+                if ( '' != $terms_and_condition || '' != $other_information ) : ?>
+                    <hr class='invoice-footer-hr'>
+                <?php
+                endif;
+                ?>
 
-        <div class="invoice-footer">
-            <table border="0" class="invoice-footer-table">
-                <tbody>
-                <tr>
-                    <td class="order-term-condition">
-						<?php if ( ! empty( $terms_and_condition ) ) : ?>
-                            <p style="font-size:<?php echo esc_attr( $footer_font_size ) . 'px'; ?>"><?php echo esc_html( $terms_and_condition ); ?></p>
-                            <br>
-						<?php endif;
-						if ( ! empty( $other_information ) ) : ?>
-                            <p style="font-size:<?php echo esc_attr( $footer_font_size ) . 'px'; ?>"><?php echo esc_html( $other_information ); ?></p>
-						<?php endif; ?>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-			<?php
-			// Footer content added by action hook.
-			$footer_content = woo_invoice_after_document( $this->order, $this->template_type );
-			echo esc_html( $footer_content );
-			?>
-        </div>
-    </htmlpagefooter>
-    <sethtmlpagefooter name="invoiceFooter" value="1"/>
-</div>
-	<?php
-	$html = ob_get_contents();
-	ob_end_clean();
+                <div class="invoice-footer">
+                    <table border="0" class="invoice-footer-table">
+                        <tbody>
+                        <tr>
+                            <td class="order-term-condition">
+                                <?php if ( ! empty( $terms_and_condition ) ) : ?>
+                                    <p style="font-size:<?php echo esc_attr( $footer_font_size ) . 'px'; ?>"><?php echo esc_html( $terms_and_condition ); ?></p>
+                                    <br>
+                                <?php endif;
+                                if ( ! empty( $other_information ) ) : ?>
+                                    <p style="font-size:<?php echo esc_attr( $footer_font_size ) . 'px'; ?>"><?php echo esc_html( $other_information ); ?></p>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <?php
+                    // Footer content added by action hook.
+                    $footer_content = woo_invoice_after_document( $this->order, $this->template_type );
+                    echo esc_html( $footer_content );
+                    ?>
+                </div>
+            </htmlpagefooter>
+            <sethtmlpagefooter name="invoiceFooter" value="1"/>
+            </div>
+            <?php
+            $html = ob_get_contents();
+            ob_end_clean();
 
-	return $html;
-} else {
-	return '</div>';
-}
+            return $html;
+        } else {
+            return '</div>';
+        }
 
-}
+    }
 
 	/**
 	 * Close HTML Tags

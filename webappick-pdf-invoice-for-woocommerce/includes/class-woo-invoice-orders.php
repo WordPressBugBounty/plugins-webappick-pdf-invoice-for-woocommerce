@@ -579,16 +579,19 @@ class Woo_Invoice_Orders
     /**
      * Get Product Weight multiplied by quantity, safely.
      *
+     * Compatible with PHP 7.4 and PHP 8+.
+     *
      * @param WC_Product $product  Product object.
-     * @param float|int|WC_Order_Item $quantity Quantity or an order item (from which quantity can be derived).
-     * @return string                     Decimal string (formatted) or empty string if no weight.
+     * @param mixed      $quantity Quantity (float|int|WC_Order_Item).
+     * @return string Decimal string (formatted) or empty string if no weight.
      */
-    private function get_item_weight(WC_Product $product, float|int|WC_Order_Item $quantity = 1 ) {
+    private function get_item_weight( $product, $quantity = 1 ) {
+        // Validate product
         if ( ! $product instanceof WC_Product ) {
             return '';
         }
 
-        // 1) Normalize quantity
+        // Normalize quantity
         if ( is_object( $quantity ) ) {
             // e.g. WC_Order_Item_Product, WC_Order_Item
             if ( method_exists( $quantity, 'get_quantity' ) ) {
@@ -597,20 +600,20 @@ class Woo_Invoice_Orders
                 $quantity = 1;
             }
         }
+
         $qty = is_numeric( $quantity ) ? (float) $quantity : 1.0;
 
-        // 2) Get and validate weight (Woo stores weight as a string)
+        // Get and validate weight (Woo stores weight as string)
         $weight = $product->get_weight();
         if ( $weight === '' || $weight === null ) {
             return '';
         }
 
-        // 3) Cast and multiply safely (avoid string * object errors)
-        // wc_format_decimal() returns a normalized decimal string; cast to float for math.
+        // Multiply safely
         $single_weight = (float) wc_format_decimal( $weight );
         $total_weight  = $single_weight * $qty;
 
-        // 4) Return a formatted string (2 decimals is typical for weight)
+        // Return formatted string (2 decimals typical for weight)
         return wc_format_decimal( $total_weight, 2 );
     }
 
