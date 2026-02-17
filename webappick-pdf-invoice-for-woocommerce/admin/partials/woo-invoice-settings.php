@@ -12,6 +12,8 @@
  * @subpackage Woo_Invoice/admin/partials
  */
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 // Checkbox Value to compare.
 $woo_invoice_current = 1;
 

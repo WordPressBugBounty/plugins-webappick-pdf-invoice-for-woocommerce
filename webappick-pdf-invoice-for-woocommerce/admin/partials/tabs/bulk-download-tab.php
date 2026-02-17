@@ -1,3 +1,6 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+?>
 <!--START BULK DOWNLOAD TAB-->
 <li>
     <div class="woo-invoice-row">

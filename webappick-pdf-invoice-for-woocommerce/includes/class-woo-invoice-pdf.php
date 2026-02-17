@@ -1,4 +1,5 @@
 <?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 /**
  * Used to generate PDF Document
  *
@@ -234,9 +235,9 @@ class Woo_Invoice_PDF
             if (strpos($pdf_error_message, 'Cannot find TTF') !== false) {
                 $doc_link = '<a target="_blank" href="' . admin_url() . 'admin.php?page=webappick-woo-invoice">' . esc_html__('Go to setting page', 'webappick-pdf-invoice-for-woocommerce') . '</a>';
                 if (is_admin()) {
-                    echo $pdf_error_message . '<h3><br/>' . __('Please go to Challan plugin’s setting page to download the missing fonts. ', 'webappick-pdf-invoice-for-woocommerce') . $doc_link . '</h3>';
+                    echo esc_attr($pdf_error_message) . '<h3><br/>' . esc_html_e('Please go to Challan plugin’s setting page to download the missing fonts. ', 'webappick-pdf-invoice-for-woocommerce') . esc_url($doc_link) . '</h3>';
                 } else {
-                    echo $pdf_error_message . '<h4><br/>' . __('Please notify site admin to download invoice.', 'webappick-pdf-invoice-for-woocommerce') . '</h4>';
+                    echo esc_attr($pdf_error_message) . '<h4><br/>' . esc_html_e('Please notify site admin to download invoice.', 'webappick-pdf-invoice-for-woocommerce') . '</h4>';
                 }
             } else {
                 echo esc_attr($e->getMessage());

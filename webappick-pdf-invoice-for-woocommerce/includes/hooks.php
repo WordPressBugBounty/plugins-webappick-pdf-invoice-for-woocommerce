@@ -8,6 +8,8 @@
  * Time: 7:41 PM
  */
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 // ################## Language Switch  ######################
 add_action('woo_invoice_switch_language','woo_invoice_free_switch_language_callback');
 add_action('woo_invoice_restore_language','woo_invoice_free_restore_language_callback');

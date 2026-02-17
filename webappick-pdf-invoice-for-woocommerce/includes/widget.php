@@ -10,6 +10,8 @@
  * Time: 9:02 PM
  */
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 if (!function_exists('woo_invoice_add_dashboard_widgets')) {
 	/**
 	 * Add a widget to the dashboard.

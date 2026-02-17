@@ -1,5 +1,5 @@
 <?php
-
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 use Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController;
 /**
  * The file that defines the core plugin class

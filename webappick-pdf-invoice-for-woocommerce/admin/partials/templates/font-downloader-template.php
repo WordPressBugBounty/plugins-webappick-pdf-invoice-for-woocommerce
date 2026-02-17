@@ -9,6 +9,7 @@
  * @link       https://webappick.com
  */
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 if ( ! woo_invoice_is_uploads_folder_writable() ) {
     return;

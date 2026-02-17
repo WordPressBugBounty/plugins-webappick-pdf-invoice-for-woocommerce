@@ -1,3 +1,6 @@
+<?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+?>
 <!--START LOCALIZATION TAB-->
 <li>
     <div class="woo-invoice-row">

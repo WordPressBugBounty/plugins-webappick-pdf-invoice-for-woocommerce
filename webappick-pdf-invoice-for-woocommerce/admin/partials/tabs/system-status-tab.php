@@ -1,4 +1,7 @@
 <!-- SYSTEM STATUS TAB-->
+<?php
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+?>
 <li>
     <div class="woo-invoice-row">
         <div class="woo-invoice-col-sm-8">

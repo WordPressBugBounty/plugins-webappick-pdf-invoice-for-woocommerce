@@ -1,6 +1,8 @@
 <!--START SETTING TAB-->
 <?php
 
+if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+
 $challan_order_meta_query = challan_order_meta_query();
 $challan_product_meta_query = challan_product_meta_query();
 $challan_item_meta_query = challan_item_meta_query();

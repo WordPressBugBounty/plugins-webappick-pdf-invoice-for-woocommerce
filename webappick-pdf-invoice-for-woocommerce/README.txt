@@ -3,8 +3,8 @@ Contributors: wahid0003,webappick
 Donate link: https://webappick.com
 Tags: woocommerce pdf invoice, woocommerce invoice, packing slip, pdf invoice, invoice generator
 Requires at least: 3.6
-Tested up to: 6.8
-Stable tag: 3.7.82
+Tested up to: 6.9
+Stable tag: 3.7.83
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -307,6 +307,9 @@ Please read the [documentation](https://webappick.com/docs/woo-invoice/installat
 = 💎 Translation Request 💎 =
 We are looking for people to help translate this plugin. If you can help we would love for you to jump in and do so.
 Help us & the WordPress community, translate the plugin [here](https://translate.wordpress.org/projects/wp-plugins/webappick-pdf-invoice-for-woocommerce/)
+
+= 3.7.83  ( February 17, 2026 ) =
+* Compliance Fix: Fixed Plugin Check (PCP) errors for WordPress.org guidelines compliance.
 
 = 3.7.82  ( February 03, 2026 ) =
 * Updated : Plugin description.
