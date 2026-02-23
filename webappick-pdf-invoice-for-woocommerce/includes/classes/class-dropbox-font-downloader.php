@@ -78,10 +78,11 @@ class Challan_DropBoxFontDownloader
         }
 
         WP_Filesystem();
+        // Security: Enable SSL verification to prevent MITM attacks
         $arrContextOptions = array(
             "ssl" => array(
-                "verify_peer"      => false,
-                "verify_peer_name" => false,
+                "verify_peer"      => true,
+                "verify_peer_name" => true,
             ),
         );
         $data = file_get_contents( $source, false, stream_context_create( $arrContextOptions ) ); // phpcs:ignore

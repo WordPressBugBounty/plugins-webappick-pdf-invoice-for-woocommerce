@@ -77,11 +77,16 @@ if ( ! class_exists("Challan_Font_Downloader_API") ) {
          * @return  object  WP_REST_Response
          */
         public function background_download_font( $request ) {
-
-//        $retrieved_nonce = isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '';
-//        if ( ! wp_verify_nonce( $retrieved_nonce, 'wp_rest' ) ) {
-//            die( 'Failed security check' );
-//        }
+            // Security: Verify REST API nonce (skip if called via AJAX - nonce already verified in AJAX handler)
+            if ( ! wp_doing_ajax() ) {
+                $retrieved_nonce = $request->get_header( 'X-WP-Nonce' );
+                if ( ! $retrieved_nonce || ! wp_verify_nonce( $retrieved_nonce, 'wp_rest' ) ) {
+                    return new WP_REST_Response([
+                        'status'   => 403,
+                        'response' => 'Failed security check',
+                    ], 403);
+                }
+            }
 
             //check font directory is writeable or not
             if ( ( ! is_dir(CHALLAN_FREE_FONT_DIR) || ! file_exists(CHALLAN_FREE_FONT_DIR)) || ! is_writable(CHALLAN_FREE_FONT_DIR) ) {
@@ -132,11 +137,16 @@ if ( ! class_exists("Challan_Font_Downloader_API") ) {
          * @return  object  WP_REST_Response
          */
         public function download_font( $request ) {
-
-//        $retrieved_nonce = isset( $_POST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ) : '';
-//        if ( ! wp_verify_nonce( $retrieved_nonce, 'wp_rest' ) ) {
-//            die( 'Failed security check' );
-//        }
+            // Security: Verify REST API nonce (skip if called via AJAX - nonce already verified in AJAX handler)
+            if ( ! wp_doing_ajax() ) {
+                $retrieved_nonce = $request->get_header( 'X-WP-Nonce' );
+                if ( ! $retrieved_nonce || ! wp_verify_nonce( $retrieved_nonce, 'wp_rest' ) ) {
+                    return new WP_REST_Response([
+                        'status'   => 403,
+                        'response' => 'Failed security check',
+                    ], 403);
+                }
+            }
 
             //check font directory is writeable or not
             if ( ( ! is_dir(CHALLAN_FREE_FONT_DIR) || ! file_exists(CHALLAN_FREE_FONT_DIR)) || ! is_writable(CHALLAN_FREE_FONT_DIR) ) {
@@ -220,10 +230,11 @@ if ( ! class_exists("Challan_Font_Downloader_API") ) {
         }
 
         public function get_route_access() {
-            return true;
-//        if ( current_user_can('manage_options') ) {
-//			return true;
-//		}
+           if ( current_user_can('manage_options') ) {
+                return true;
+           }
+
+           return false;
         }
 
 	    /**
@@ -243,8 +254,10 @@ if ( ! class_exists("Challan_Font_Downloader_API") ) {
     add_action('rest_api_init', function () {
 		if ( ! headers_sent() ) {
 			header('Access-Control-Allow-Headers: Authorization, X-WP-Nonce,Content-Type, X-Requested-With');
-			header('Access-Control-Allow-Origin: *');
-			header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
+			// Security: Only allow requests from the same origin (WordPress site URL)
+			$allowed_origin = esc_url_raw( home_url() );
+			header('Access-Control-Allow-Origin: ' . $allowed_origin);
+			header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 			header('Access-Control-Allow-Credentials: true');
 		}
         $apiFontDownloader = new Challan_Font_Downloader_API();
@@ -253,10 +266,25 @@ if ( ! class_exists("Challan_Font_Downloader_API") ) {
 
 
 	add_action( 'wp_ajax_prepare_fonts', function () {
+		// Security: Verify user has admin capability (wp_ajax_ already ensures user is logged in)
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( 'Unauthorized access', 403 );
+			wp_die();
+		}
+
+		// Security: Verify nonce - check both possible parameter names
+		$nonce = isset( $_REQUEST['nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['nonce'] ) ) : '';
+		if ( empty( $nonce ) || ! wp_verify_nonce( $nonce, 'prepare_fonts_nonce' ) ) {
+			wp_send_json_error( 'Security check failed', 403 );
+			wp_die();
+		}
+
 		if ( ! headers_sent() ) {
 			header('Access-Control-Allow-Headers: Authorization, X-WP-Nonce,Content-Type, X-Requested-With');
-			header('Access-Control-Allow-Origin: *');
-			header('Access-Control-Allow-Methods: POST, GET, OPTIONS, PUT, DELETE');
+			// Security: Only allow requests from the same origin (WordPress site URL)
+			$allowed_origin = esc_url_raw( home_url() );
+			header('Access-Control-Allow-Origin: ' . $allowed_origin);
+			header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 			header('Access-Control-Allow-Credentials: true');
 			header('Content-Type: application/json; charset=utf-8');
 			http_response_code(200);

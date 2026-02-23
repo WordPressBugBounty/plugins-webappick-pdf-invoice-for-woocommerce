@@ -42,10 +42,11 @@ class Challan_AdminUIFontDownloader
         $source         = "{$baseUrl}{$path}";
         $fileSep        = explode('/', $source);
         $destination    = CHALLAN_ADMIN_UI_FONTS_DIR . $fileSep[ count($fileSep) - 1 ];
+        // Security: Enable SSL verification to prevent MITM attacks
         $arrContextOptions = array(
             "ssl" => array(
-                "verify_peer"      => false,
-                "verify_peer_name" => false,
+                "verify_peer"      => true,
+                "verify_peer_name" => true,
             ),
         );
         //download file

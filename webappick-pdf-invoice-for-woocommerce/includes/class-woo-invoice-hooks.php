@@ -158,63 +158,131 @@ class Woo_Invoice_Hooks
      */
 
 	public function woo_invoice_font_download_ajax() {
-	    // Check valid request form user.
+	    // Check valid request from user.
 		check_ajax_referer('wpifw_pdf_nonce');
 
-		$get_font_content = file_get_contents($_FILES["file"]["tmp_name"]); //phpcs:ignore
-		$file_name = sanitize_text_field(wp_unslash($_FILES["file"]["name"])); //phpcs:ignore
+		// Security: Check user capability
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( 'Unauthorized access' );
+			wp_die();
+		}
+
+		// Security: Validate file upload
+		if ( ! isset( $_FILES['file'] ) || ! is_uploaded_file( $_FILES['file']['tmp_name'] ) ) {
+			wp_send_json_error( 'Invalid file upload' );
+			wp_die();
+		}
+
+		$get_font_content = file_get_contents( $_FILES['file']['tmp_name'] ); //phpcs:ignore
+		// Security: Use basename() to prevent path traversal attacks
+		$file_name = basename( sanitize_file_name( wp_unslash( $_FILES['file']['name'] ) ) ); //phpcs:ignore
+
+		// Security: Validate file size (max 10MB)
+		$max_file_size = 10 * 1024 * 1024; // 10MB
+		if ( $_FILES['file']['size'] > $max_file_size ) {
+			wp_send_json_error( 'File size exceeds maximum allowed size' );
+			wp_die();
+		}
+
 		if ( ! empty( $get_font_content ) ) {
             // Make lowercase uploaded file name.
-		    $get_name_lowercase = strtolower($file_name);
+		    $get_name_lowercase = strtolower( $file_name );
 		    // Get last extension of file name.
 			$get_last_extension = strrchr( $get_name_lowercase, '.' );
+
+			// Security: Only allow specific font extensions
+			$allowed_extensions = array( '.ttf', '.otf', '.zip' );
+			if ( ! in_array( $get_last_extension, $allowed_extensions, true ) ) {
+				wp_send_json_error( 'Only .ttf, .otf, and .zip font files are allowed' );
+				wp_die();
+			}
+
 			// Check last name if zip.
 		    if ( '.zip' !== $get_last_extension ) {
 		        // Validate only mpdf predefine fonts.
 			    $default_fonts = ( new Mpdf\Config\FontVariables() )->getDefaults()['fontdata'];
-			    $regular_font = array_column($default_fonts, 'R');
-			    $italic_font = array_column($default_fonts, 'I');
-			    $bold_italic_font = array_column($default_fonts, 'BI');
-			    $bold_font = array_column($default_fonts, 'B');
-			    $array_collection = array_merge($regular_font, $bold_font, $bold_italic_font, $italic_font);
-			    if ( in_array($file_name, $array_collection) ) {
-				    file_put_contents( CHALLAN_FREE_FONT_DIR . $file_name, $get_font_content );
+			    $regular_font = array_column( $default_fonts, 'R' );
+			    $italic_font = array_column( $default_fonts, 'I' );
+			    $bold_italic_font = array_column( $default_fonts, 'BI' );
+			    $bold_font = array_column( $default_fonts, 'B' );
+			    $array_collection = array_merge( $regular_font, $bold_font, $bold_italic_font, $italic_font );
+			    // Security: Use strict comparison in in_array
+			    if ( in_array( $file_name, $array_collection, true ) ) {
+				    // Security: Use wp_unique_filename to prevent overwrites
+				    $safe_file_name = wp_unique_filename( CHALLAN_FREE_FONT_DIR, $file_name );
+				    file_put_contents( CHALLAN_FREE_FONT_DIR . $safe_file_name, $get_font_content ); //phpcs:ignore
 				    // Success response message.
 				    $response = array(
-					    'font_name'      => $file_name,
+					    'font_name'      => $safe_file_name,
 					    'last_extension' => $get_last_extension,
 				    );
 				    wp_send_json_success( $response );
 				    wp_die();
 
-			    }else {
+			    } else {
 			        // Error response message.
-				    wp_send_json_error( 'Upload only mpdf fonts');
+				    wp_send_json_error( 'Upload only mpdf fonts' );
 				    wp_die();
                 }
-            }else {
-		       //  Upload zip file.
-			    file_put_contents( CHALLAN_FREE_FONT_DIR . $file_name, $get_font_content );
+            } else {
+		        // Upload zip file.
+			    // Security: Use wp_unique_filename to prevent overwrites
+			    $safe_file_name = wp_unique_filename( CHALLAN_FREE_FONT_DIR, $file_name );
+			    $zip_path = CHALLAN_FREE_FONT_DIR . $safe_file_name;
+			    file_put_contents( $zip_path, $get_font_content ); //phpcs:ignore
+
 			    // Extract Zip file.
-			    if ( class_exists('ZipArchive') ) {
+			    if ( class_exists( 'ZipArchive' ) ) {
 				    $zip = new ZipArchive();
-				    if ( $zip->open( CHALLAN_FREE_FONT_DIR . $file_name ) === true ) {
+				    if ( $zip->open( $zip_path ) === true ) {
+					    // Security: Validate zip contents before extraction to prevent path traversal
+					    $is_safe = true;
+					    for ( $i = 0; $i < $zip->numFiles; $i++ ) {
+						    $entry_name = $zip->getNameIndex( $i );
+						    // Check for path traversal attempts
+						    if ( strpos( $entry_name, '..' ) !== false || strpos( $entry_name, '/' ) === 0 ) {
+							    $is_safe = false;
+							    break;
+						    }
+						    // Only allow font files in zip
+						    $entry_ext = strtolower( strrchr( $entry_name, '.' ) );
+						    if ( ! empty( $entry_ext ) && ! in_array( $entry_ext, array( '.ttf', '.otf', '.woff', '.woff2' ), true ) ) {
+							    // Allow directories (no extension)
+							    if ( substr( $entry_name, -1 ) !== '/' && ! empty( $entry_ext ) ) {
+								    $is_safe = false;
+								    break;
+							    }
+						    }
+					    }
+
+					    if ( ! $is_safe ) {
+						    $zip->close();
+						    wp_delete_file( $zip_path );
+						    wp_send_json_error( 'Invalid zip file contents detected' );
+						    wp_die();
+					    }
+
 					    $zip->extractTo( CHALLAN_FREE_FONT_DIR );
 					    $zip->close();
-                        wp_delete_file( CHALLAN_FREE_FONT_DIR . $file_name );
+                        wp_delete_file( $zip_path );
 					    $response = array(
-						    'font_name' => $file_name,
+						    'font_name' => $safe_file_name,
 					    );
 					    wp_send_json_success( $response );
 					    wp_die();
+				    } else {
+					    wp_delete_file( $zip_path );
+					    wp_send_json_error( 'Failed to open zip file' );
+					    wp_die();
 				    }
-			    }else {
+			    } else {
+				    wp_delete_file( $zip_path );
 				    wp_send_json_error( 'Please enable ZipArchive php extension for uploading zip file.' );
 				    wp_die();
 			    }
             }
 		}
-		wp_send_json_error('Something went wrong');
+		wp_send_json_error( 'Something went wrong' );
 		wp_die();
 	}
 

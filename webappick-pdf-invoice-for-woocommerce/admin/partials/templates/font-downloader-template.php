@@ -88,7 +88,7 @@ if ( isset($fontConfig["font_remaining"]) ) {
         let wpif_progress_bar_setp = 2;
         let wpf_progress_bar_interval = null;
         //url should be replaced before deploying to production
-        let wpif_prepare_font_endpoint = "<?php echo esc_url( admin_url( 'admin-ajax.php?action=prepare_fonts&nonce=' . wp_create_nonce( "prepare_fonts_nonce" ) ) ) ?>";
+        let wpif_prepare_font_endpoint = "<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>?action=prepare_fonts&nonce=<?php echo esc_attr( wp_create_nonce( 'prepare_fonts_nonce' ) ); ?>";
 
 
         const wpif_init_default_progress_bar_cb_func = function () {

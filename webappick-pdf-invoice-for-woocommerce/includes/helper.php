@@ -85,10 +85,16 @@ if ( ! function_exists('challan_order_meta_query') ) {
         // Check if HPOS (High-Performance Order Storage) is enabled
         if ( woo_invoice_hpos_enabled() ) {
             // HPOS is enabled, query the wc_orders_meta table
-            $order_meta_query_arr = $wpdb->get_results("SELECT DISTINCT meta_key FROM {$wpdb->prefix}wc_orders_meta"); // phpcs:ignore
+            // Note: Table name uses $wpdb->prefix which is a trusted WordPress value
+            $table_name = esc_sql( $wpdb->prefix . 'wc_orders_meta' );
+            $order_meta_query_arr = $wpdb->get_results( "SELECT DISTINCT meta_key FROM {$table_name}" ); // phpcs:ignore
         } else {
             // Traditional CPT-based orders are in use, query the postmeta table
-            $order_meta_query_arr = $wpdb->get_results("SELECT $wpdb->postmeta.meta_key FROM $wpdb->postmeta LEFT JOIN $wpdb->posts ON $wpdb->postmeta.post_id = $wpdb->posts.id WHERE $wpdb->posts.post_type = 'shop_order' GROUP BY $wpdb->postmeta.meta_key");//phpcs:ignore;
+            // Note: $wpdb->postmeta and $wpdb->posts are trusted WordPress table name constants
+            $order_meta_query_arr = $wpdb->get_results( $wpdb->prepare(
+                "SELECT pm.meta_key FROM {$wpdb->postmeta} AS pm LEFT JOIN {$wpdb->posts} AS p ON pm.post_id = p.id WHERE p.post_type = %s GROUP BY pm.meta_key",
+                'shop_order'
+            ) ); // phpcs:ignore
         }
         $order_meta_query = array();
         $order_meta_query = $order_meta_query_arr;
@@ -104,7 +110,11 @@ if ( ! function_exists('challan_product_meta_query') ) {
     function challan_product_meta_query(){
         global $wpdb;
 
-        $product_meta_query = $wpdb->get_results("SELECT $wpdb->postmeta.meta_key, $wpdb->postmeta.meta_id FROM $wpdb->postmeta LEFT JOIN $wpdb->posts ON $wpdb->postmeta.post_id = $wpdb->posts.id WHERE $wpdb->posts.post_type = 'product' GROUP BY $wpdb->postmeta.meta_key" );//phpcs:ignore;
+        // Note: $wpdb->postmeta and $wpdb->posts are trusted WordPress table name constants
+        $product_meta_query = $wpdb->get_results( $wpdb->prepare(
+            "SELECT pm.meta_key, pm.meta_id FROM {$wpdb->postmeta} AS pm LEFT JOIN {$wpdb->posts} AS p ON pm.post_id = p.id WHERE p.post_type = %s GROUP BY pm.meta_key",
+            'product'
+        ) ); // phpcs:ignore
 
         return $product_meta_query;
     }
@@ -118,7 +128,8 @@ if ( ! function_exists('challan_item_meta_query') ) {
         global $wpdb;
 
 		if ( class_exists( 'WooCommerce' ) ) {
-			$item_meta = $wpdb->get_results("SELECT DISTINCT $wpdb->order_itemmeta.meta_key  FROM $wpdb->order_itemmeta");//phpcs:ignore
+			// Note: $wpdb->order_itemmeta is a trusted WooCommerce table name constant
+			$item_meta = $wpdb->get_results( "SELECT DISTINCT meta_key FROM {$wpdb->order_itemmeta}" ); // phpcs:ignore
 		} else {
 			$item_meta = array();
 		}
