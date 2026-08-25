@@ -20,7 +20,7 @@
                     if(getAction==="wpifw_bulk_invoice") {
                         event.preventDefault();
                         var wpifwOrderIds = [];
-                        $('tbody th.check-column input[type="checkbox"]:checked').each(
+                        $('tbody .check-column input[type="checkbox"]:checked').each(
                             function () {
                                 wpifwOrderIds.push($(this).val());
                             }
@@ -46,7 +46,7 @@
 
                         event.preventDefault();
                         var wpifwOrderIds = [];
-                        $('tbody th.check-column input[type="checkbox"]:checked').each(
+                        $('tbody .check-column input[type="checkbox"]:checked').each(
                             function () {
                                 wpifwOrderIds.push($(this).val());
                             }
