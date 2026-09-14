@@ -176,8 +176,9 @@ class Woo_Invoice_PDF
             // Save the current error reporting level
             $original_error_reporting = error_reporting();
 
-            // Suppress deprecation notices (for PHP 8.1+)
-            error_reporting($original_error_reporting & ~E_DEPRECATED);
+            // Suppress deprecation notices (for PHP 8.1+) and warnings during mPDF operations
+            // E_WARNING suppressed to handle mPDF's unserialize() warnings from _getObjAttr()
+            error_reporting( $original_error_reporting & ~E_DEPRECATED & ~E_WARNING );
 
             // Entire MPDF interaction block
             $mpdf                   = new \Mpdf\Mpdf($this->config);
