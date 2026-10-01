@@ -4,7 +4,7 @@ Donate link: https://webappick.com
 Tags: woocommerce pdf invoice, woocommerce invoice, packing slip, pdf invoice, invoice generator
 Requires at least: 3.6
 Tested up to: 7.1
-Stable tag: 3.7.87
+Stable tag: 3.7.88
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -174,7 +174,7 @@ Compatible with:
 
 ==About WebAppick==
 
-Challan is built by **[WebAppick](https://webappick.com/)**, creators of [CTX Feed – the #1 WooCommerce Product Feed plugin](https://wordpress.org/plugins/webappick-product-feed-for-woocommerce/)  with **80,000+ active installations**. We've been building WooCommerce solutions since 2015.
+Challan is built by **[WebAppick](https://webappick.com/)**, creators of [CTX Feed – the #1 WooCommerce Product Feed plugin](https://wordpress.org/plugins/webappick-product-feed-for-woocommerce/)  with **90,000+ active installations**. We've been building WooCommerce solutions since 2015.
 
 == Our Other Free Plugins ==
 * <strong>[Disco – Dynamic Pricing & Discount Rules for WooCommerce](https://wordpress.org/plugins/disco/)
@@ -307,6 +307,9 @@ Please read the [documentation](https://webappick.com/docs/woo-invoice/installat
 = 💎 Translation Request 💎 =
 We are looking for people to help translate this plugin. If you can help we would love for you to jump in and do so.
 Help us & the WordPress community, translate the plugin [here](https://translate.wordpress.org/projects/wp-plugins/webappick-pdf-invoice-for-woocommerce/)
+
+= 3.7.88  ( October 01, 2026 ) =
+* Updated : Plugin description.
 
 = 3.7.87  ( September 14, 2026 ) =
 Fixed : PHP Warning: unserialize() Extra Data issue in mPDF Library
