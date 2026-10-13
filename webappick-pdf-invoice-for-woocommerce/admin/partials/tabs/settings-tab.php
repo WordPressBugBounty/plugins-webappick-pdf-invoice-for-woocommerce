@@ -778,7 +778,7 @@ $challan_item_meta_query = challan_item_meta_query();
                             </div>
                             <p class="woo-invoice-banner-title">Upgrade to Challan Pro Today!</p>
                             <button
-                                    onclick="window.open('https://webappick.com/discount-deal/?utm_source=10YC-fix&utm_medium=free-to-pro&utm_campaign=10Y-25&utm_id=1')"
+                                    onclick="window.open('https://webappick.com/plugin/woocommerce-pdf-invoice-packing-slips/?utm_source=customer_site&utm_medium=free_vs_pro&utm_campaign=woo_invoice_free', '_blank')"
                                     class="woo-invoice-banner-btn"
                             >
                                 Get 60% Off Now ➜
@@ -808,6 +808,42 @@ $challan_item_meta_query = challan_item_meta_query();
                         </div>
                     </div>
                 <?php endif; ?>
+                <?php
+                if ( ! function_exists( 'get_last_order_id' ) ) {
+                    /**
+                     * Latest order in the store, any status.
+                     *
+                     * @return int
+                     */
+                    function get_last_order_id() {
+                        $cache_key     = 'woo_last_store_order_id';
+                        $last_order_id = wp_cache_get( $cache_key );
+
+                        if ( false === $last_order_id ) {
+                            $orders        = wc_get_orders(
+                                array(
+                                    'limit'   => 1,
+                                    'orderby' => 'date',
+                                    'order'   => 'DESC',
+                                    'status'  => 'any',
+                                    'return'  => 'ids',
+                                )
+                            );
+                            $last_order_id = ! empty( $orders ) ? $orders[0] : 0;
+
+                            if ( $last_order_id ) {
+                                wp_cache_set( $cache_key, $last_order_id, '', 60 );
+                            }
+                        }
+
+                        return $last_order_id;
+                    }
+                }
+
+                $order_id      = get_last_order_id();
+                $preview_order = absint( $order_id ) ? wc_get_order( absint( $order_id ) ) : false;
+                if ( $preview_order ) :
+                    ?>
                 <div class="woo-invoice-card">
                     <div class="woo-invoice-card-header">
                         <h4><?php esc_html_e('SELECTED TEMPLATE', 'webappick-pdf-invoice-for-woocommerce'); ?></h4>
@@ -815,41 +851,51 @@ $challan_item_meta_query = challan_item_meta_query();
                     <div class="" style="text-align: center">
                         <?php
                         $template_name = get_option('wpifw_templateid');
-
-                        // Function to get the last order ID
-                        function get_last_order_id() {
-                            $cache_key = 'woo_last_order_id';
-                            $last_order_id = wp_cache_get( $cache_key );
-
-                            if ( false === $last_order_id ) {
-                                $statuses = wc_get_is_paid_statuses(); // safer than all possible statuses
-
-                                $args = array(
-                                    'limit'        => 1,
-                                    'orderby'      => 'date',
-                                    'order'        => 'DESC',
-                                    'status'       => $statuses,
-                                    'return'       => 'ids',
-                                );
-
-                                $orders = wc_get_orders( $args );
-                                $last_order_id = ! empty( $orders ) ? $orders[0] : 0;
-
-                                wp_cache_set( $cache_key, $last_order_id, '', 60 ); // cache for 60 seconds
-                            }
-
-                            return $last_order_id;
-                        }
-
-                        $order_id = get_last_order_id();
                         $preview_url = esc_url(wp_nonce_url(admin_url('admin-ajax.php?action=wpifw_generate_invoice&order_id=' . $order_id) .'#toolbar=0', 'woo_invoice_ajax_nonce'));
                         $template_image_url = esc_attr(CHALLAN_FREE_PLUGIN_URL . 'admin/images/templates/' . $template_name . '.png');
                         ?>
 
-                        <?php if ('' != $order_id) { ?>
+                        <?php if ( $preview_order ) { ?>
                             <div class="_winvoice-iframe-container">
-                                <iframe class="_winvoice-iframe-responsive woo-invoice-template-preview" src="<?php echo esc_url($preview_url); ?>"></iframe>
+                                <iframe class="_winvoice-iframe-responsive woo-invoice-template-preview" src="<?php echo esc_url($preview_url); ?>" onload="challanFitPreviewFrame(this)"></iframe>
                             </div>
+                            <script>
+                                function challanFitPreviewFrame(frame) {
+                                    var doc;
+                                    try {
+                                        doc = frame.contentDocument;
+                                    } catch (e) {
+                                        return;
+                                    }
+                                    if (!doc || !doc.body || doc.body.getAttribute('data-challan-notice') !== '1') {
+                                        return;
+                                    }
+                                    var box = frame.parentNode;
+                                    if (box) {
+                                        box.style.aspectRatio = 'auto';
+                                        box.style.height = 'auto';
+                                    }
+                                    frame.style.position = 'relative';
+                                    frame.style.height = doc.body.scrollHeight + 'px';
+                                }
+                            </script>
+                        <?php } elseif ( '' != $order_id ) { ?>
+                            <p class="woo-invoice-preview-notice"><?php esc_html_e( 'Order not found.', 'webappick-pdf-invoice-for-woocommerce' ); ?></p>
+                            <style>
+                                .woo-invoice-preview-notice {
+                                    box-sizing: border-box;
+                                    height: auto;
+                                    margin: 16px;
+                                    padding: 12px 14px;
+                                    background: #fcf9e8;
+                                    border: 1px solid #dba617;
+                                    border-left-width: 4px;
+                                    color: #1d2327;
+                                    font-size: 13px;
+                                    line-height: 1.5;
+                                    text-align: left;
+                                }
+                            </style>
                         <?php } else { ?>
                             <img class="woo-invoice-template-preview" src="<?php echo esc_url($template_image_url); //phpcs:ignore PluginCheck.CodeAnalysis.ImageFunctions.NonEnqueuedImage ?>" alt="Preview Template">
                         <?php } ?>
@@ -868,6 +914,7 @@ $challan_item_meta_query = challan_item_meta_query();
                         <?php } ?>
                     </div><!-- end .woo-invoice-card-body -->
                 </div><!-- end .woo-invoice-card -->
+                <?php endif; ?>
 
                 <!-- <div class="woo_invoice_template_free_vs_pro">
                 <div class="woo-invoice-card-body" style="text-align: center">

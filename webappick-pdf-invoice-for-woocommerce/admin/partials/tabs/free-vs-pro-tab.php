@@ -217,7 +217,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
                             </div>
                             <p class="woo-invoice-banner-title">Upgrade to Challan Pro Today!</p>
                             <button
-                                    onclick="window.open('https://webappick.com/discount-deal/?utm_source=10YC-fix&utm_medium=free-to-pro&utm_campaign=10Y-25&utm_id=1')"
+                                    onclick="window.open('https://webappick.com/plugin/woocommerce-pdf-invoice-packing-slips/?utm_source=customer_site&utm_medium=free_vs_pro&utm_campaign=woo_invoice_free', '_blank')"
                                     class="woo-invoice-banner-btn"
                             >
                                 Get 60% Off Now ➜

@@ -76,65 +76,103 @@ function woo_invoice_free_reload_text_domain() {
 
 }
 
+if ( ! function_exists('challan_get_cached_meta_keys') ) {
+    /**
+     * Return a meta key list from a transient and run the query only when the transient is empty.
+     *
+     * The lists are cleared by challan_flush_meta_keys_cache() when the Settings tab is saved,
+     * so newly added meta keys show up right after a save.
+     *
+     * @param string   $cache_key Transient name.
+     * @param callable $query     Returns the meta key rows.
+     * @return array
+     */
+    function challan_get_cached_meta_keys( $cache_key, $query ) {
+        $meta_keys = get_transient( $cache_key );
+        if ( false === $meta_keys ) {
+            $meta_keys = call_user_func( $query );
+            $meta_keys = is_array( $meta_keys ) ? $meta_keys : array();
+            set_transient( $cache_key, $meta_keys, 12 * HOUR_IN_SECONDS );
+        }
+
+        return $meta_keys;
+    }
+}
+
+if ( ! function_exists('challan_flush_meta_keys_cache') ) {
+    /**
+     * Delete the cached order, product and order item meta key lists.
+     *
+     * @return void
+     */
+    function challan_flush_meta_keys_cache() {
+        delete_transient( 'challan_order_meta_keys_hpos' );
+        delete_transient( 'challan_order_meta_keys_cpt' );
+        delete_transient( 'challan_product_meta_keys' );
+        delete_transient( 'challan_item_meta_keys' );
+    }
+}
+
 if ( ! function_exists('challan_order_meta_query') ) {
     /**
-     * @return array|object|null
+     * @return array
      */
     function challan_order_meta_query(){
-        global $wpdb;
-        // Check if HPOS (High-Performance Order Storage) is enabled
-        if ( woo_invoice_hpos_enabled() ) {
-            // HPOS is enabled, query the wc_orders_meta table
-            // Note: Table name uses $wpdb->prefix which is a trusted WordPress value
-            $table_name = esc_sql( $wpdb->prefix . 'wc_orders_meta' );
-            $order_meta_query_arr = $wpdb->get_results( "SELECT DISTINCT meta_key FROM {$table_name}" ); // phpcs:ignore
-        } else {
+        $hpos_enabled = woo_invoice_hpos_enabled();
+        $cache_key    = $hpos_enabled ? 'challan_order_meta_keys_hpos' : 'challan_order_meta_keys_cpt';
+
+        return challan_get_cached_meta_keys( $cache_key, function () use ( $hpos_enabled ) {
+            global $wpdb;
+            // Check if HPOS (High-Performance Order Storage) is enabled
+            if ( $hpos_enabled ) {
+                // HPOS is enabled, query the wc_orders_meta table
+                // Note: Table name uses $wpdb->prefix which is a trusted WordPress value
+                $table_name = esc_sql( $wpdb->prefix . 'wc_orders_meta' );
+                return $wpdb->get_results( "SELECT DISTINCT meta_key FROM {$table_name}" ); // phpcs:ignore
+            }
+
             // Traditional CPT-based orders are in use, query the postmeta table
             // Note: $wpdb->postmeta and $wpdb->posts are trusted WordPress table name constants
-            $order_meta_query_arr = $wpdb->get_results( $wpdb->prepare(
+            return $wpdb->get_results( $wpdb->prepare(
                 "SELECT pm.meta_key FROM {$wpdb->postmeta} AS pm LEFT JOIN {$wpdb->posts} AS p ON pm.post_id = p.id WHERE p.post_type = %s GROUP BY pm.meta_key",
                 'shop_order'
             ) ); // phpcs:ignore
-        }
-        $order_meta_query = array();
-        $order_meta_query = $order_meta_query_arr;
-
-        return $order_meta_query;
+        } );
     }
 }
 
 if ( ! function_exists('challan_product_meta_query') ) {
     /**
-     * @return array|object|null
+     * @return array
      */
     function challan_product_meta_query(){
-        global $wpdb;
+        return challan_get_cached_meta_keys( 'challan_product_meta_keys', function () {
+            global $wpdb;
 
-        // Note: $wpdb->postmeta and $wpdb->posts are trusted WordPress table name constants
-        $product_meta_query = $wpdb->get_results( $wpdb->prepare(
-            "SELECT pm.meta_key, pm.meta_id FROM {$wpdb->postmeta} AS pm LEFT JOIN {$wpdb->posts} AS p ON pm.post_id = p.id WHERE p.post_type = %s GROUP BY pm.meta_key",
-            'product'
-        ) ); // phpcs:ignore
-
-        return $product_meta_query;
+            // Note: $wpdb->postmeta and $wpdb->posts are trusted WordPress table name constants
+            return $wpdb->get_results( $wpdb->prepare(
+                "SELECT pm.meta_key, pm.meta_id FROM {$wpdb->postmeta} AS pm LEFT JOIN {$wpdb->posts} AS p ON pm.post_id = p.id WHERE p.post_type = %s GROUP BY pm.meta_key",
+                'product'
+            ) ); // phpcs:ignore
+        } );
     }
 }
 
 if ( ! function_exists('challan_item_meta_query') ) {
     /**
-     * @return array|object|null
+     * @return array
      */
     function challan_item_meta_query(){
-        global $wpdb;
+        return challan_get_cached_meta_keys( 'challan_item_meta_keys', function () {
+            global $wpdb;
 
-		if ( class_exists( 'WooCommerce' ) ) {
-			// Note: $wpdb->order_itemmeta is a trusted WooCommerce table name constant
-			$item_meta = $wpdb->get_results( "SELECT DISTINCT meta_key FROM {$wpdb->order_itemmeta}" ); // phpcs:ignore
-		} else {
-			$item_meta = array();
-		}
+            if ( ! class_exists( 'WooCommerce' ) ) {
+                return array();
+            }
 
-        return $item_meta;
+            // Note: $wpdb->order_itemmeta is a trusted WooCommerce table name constant
+            return $wpdb->get_results( "SELECT DISTINCT meta_key FROM {$wpdb->order_itemmeta}" ); // phpcs:ignore
+        } );
     }
 }
 
@@ -381,4 +419,26 @@ function woo_invoice_update_meta($order, $meta_key, $meta_value) {
         update_post_meta($order->get_id(), $meta_key, $meta_value);
     }
     return true;
+}
+
+/**
+ * Stop the request with a compact notice.
+ * Used inside the invoice preview frame, which otherwise keeps an A4-page height.
+ *
+ * @param string $message Notice text.
+ */
+function woo_invoice_exit_with_notice( $message ) {
+    if ( ! headers_sent() ) {
+        status_header( 404 );
+        nocache_headers();
+        header( 'Content-Type: text/html; charset=utf-8' );
+    }
+
+    $message = esc_html( $message );
+    echo '<!DOCTYPE html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;height:auto;background:#fff;}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+.challan-order-notice{box-sizing:border-box;margin:16px;padding:12px 14px;background:#fcf9e8;border:1px solid #dba617;border-left-width:4px;color:#1d2327;font-size:13px;line-height:1.5;}
+</style></head><body data-challan-notice="1"><p class="challan-order-notice">' . $message . '</p></body></html>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+    exit;
 }

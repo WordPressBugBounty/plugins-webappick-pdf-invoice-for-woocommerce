@@ -116,6 +116,11 @@ class Challan_DropBoxFontDownloader
         $zip = new ZipArchive();
         $res = $zip->open($zipFile);
         if ( TRUE === $res ) {
+            if ( ! self::zipEntriesAreSafe( $zip ) ) {
+                $zip->close();
+                wp_delete_file( $zipFile );
+                return false;
+            }
             $zip->extractTo($extractTo);
             $zip->close();
             if ( file_exists( $zipFile ) ) {
@@ -125,6 +130,26 @@ class Challan_DropBoxFontDownloader
         } else {
             return false;
         }
+    }
+
+    /**
+     * Reject ZIP entries that would write outside the destination directory.
+     *
+     * @param ZipArchive $zip Open archive.
+     * @return bool
+     */
+    private static function zipEntriesAreSafe( $zip ) {
+        for ( $i = 0; $i < $zip->numFiles; $i++ ) {
+            $entry_name = $zip->getNameIndex( $i );
+            if ( ! is_string( $entry_name ) ) {
+                return false;
+            }
+            $entry_name = str_replace( '\\', '/', $entry_name );
+            if ( false !== strpos( $entry_name, '..' ) || ( isset( $entry_name[0] ) && '/' === $entry_name[0] ) ) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

@@ -659,20 +659,23 @@ class Woo_Invoice_Hooks
 
         $allowed_statuses = apply_filters( 'woo_invoice_email_types', $allowed_statuses );
 
-        // Delete old pdf files before generating new one.
-        array_map( 'unlink', glob( CHALLAN_FREE_INVOICE_DIR . '*.pdf' ) ); // Delete files.
-
-        // Generate & Save Invoice.
-        woo_invoice_engine()->save_invoice($order_id);
-
-        // Attach invoice with email.
+        // Replace only this order's invoice. Other PDFs in the folder stay in place.
         $invoice_no = woo_invoice_get_invoice_number( $order_id );
         $file_name  = 'Invoice-' . $invoice_no;
         $file_name  = apply_filters( 'woo_invoice_file_name', $file_name, 'invoice', $order_id );
+        $pdf_path   = CHALLAN_FREE_INVOICE_DIR . $file_name . '.pdf';
+
+        $invoice_dir = wp_normalize_path( untrailingslashit( CHALLAN_FREE_INVOICE_DIR ) );
+        $normalized  = wp_normalize_path( $pdf_path );
+        if ( $invoice_dir && 0 === strpos( $normalized, $invoice_dir . '/' ) && file_exists( $pdf_path ) ) {
+            wp_delete_file( $pdf_path );
+        }
+
+        // Generate & Save Invoice.
+        woo_invoice_engine()->save_invoice( $order_id );
 
         // Return file path.
         if ( isset( $status ) && in_array( $status, $allowed_statuses ) ) {
-            $pdf_path      = CHALLAN_FREE_INVOICE_DIR . $file_name . '.pdf';
             $attachments[] = $pdf_path;
         }
 
@@ -836,7 +839,10 @@ class Woo_Invoice_Hooks
         if ( isset($_REQUEST['order_id']) ) {
             $order_id = ! empty($_REQUEST['order_id']) ? sanitize_text_field(wp_unslash($_REQUEST['order_id'])) : '';
 
-            $order = wc_get_order($order_id);
+            $order = wc_get_order( absint( $order_id ) );
+            if ( ! $order ) {
+                woo_invoice_exit_with_notice( __( 'Order not found.', 'webappick-pdf-invoice-for-woocommerce' ) );
+            }
             $user  = $order->get_user_id();
             if ( wc_user_has_role(get_current_user_id(), 'administrator')
                 || wc_user_has_role(get_current_user_id(), 'shop_manager') || get_current_user_id() === $user
@@ -875,7 +881,10 @@ class Woo_Invoice_Hooks
         if ( isset($_REQUEST['order_id']) ) {
             $order_id = ! empty($_REQUEST['order_id']) ? sanitize_text_field(wp_unslash($_REQUEST['order_id'])) : '';
 
-            $order = wc_get_order($order_id);
+            $order = wc_get_order( absint( $order_id ) );
+            if ( ! $order ) {
+                woo_invoice_exit_with_notice( __( 'Order not found.', 'webappick-pdf-invoice-for-woocommerce' ) );
+            }
             $user  = $order->get_user_id();
             if ( wc_user_has_role(get_current_user_id(), 'administrator')
                 || wc_user_has_role(get_current_user_id(), 'shop_manager')
@@ -918,7 +927,10 @@ class Woo_Invoice_Hooks
 		if ( isset($_REQUEST['order_id']) ) {
 			$order_id = ! empty($_REQUEST['order_id']) ? sanitize_text_field(wp_unslash($_REQUEST['order_id'])) : '';
 
-			$order = wc_get_order($order_id);
+			$order = wc_get_order( absint( $order_id ) );
+			if ( ! $order ) {
+				woo_invoice_exit_with_notice( __( 'Order not found.', 'webappick-pdf-invoice-for-woocommerce' ) );
+			}
 			$user  = $order->get_user_id();
 			if ( wc_user_has_role(get_current_user_id(), 'administrator')
 			     || wc_user_has_role(get_current_user_id(), 'shop_manager')
@@ -948,16 +960,22 @@ class Woo_Invoice_Hooks
      */
     public function save_pdf_template() {
         check_ajax_referer('woo_invoice_ajax_nonce');
-        $template = array(
-			'template_name' => isset($_POST['template']) ? sanitize_text_field(wp_unslash($_POST['template'])) : '',
-			'location'      => CHALLAN_FREE_PLUGIN_URL . 'admin/images/templates',
-        );
+        $template_name = isset($_POST['template']) ? sanitize_key(wp_unslash($_POST['template'])) : '';
 
-        if ( ! empty($template) ) {
-            update_option('wpifw_templateid', $template['template_name']);
-            wp_send_json_success($template);
+        // Accept only template ids that have a stylesheet in includes/templates (e.g. invoice-1).
+        $is_valid_template = 1 === preg_match('/^invoice-\d+$/', $template_name)
+            && file_exists(CHALLAN_FREE_ROOT_FILE_PATH . 'includes/templates/' . $template_name . '.css');
+
+        if ( $is_valid_template ) {
+            update_option('wpifw_templateid', $template_name);
+            wp_send_json_success(
+                array(
+					'template_name' => $template_name,
+					'location'      => CHALLAN_FREE_PLUGIN_URL . 'admin/images/templates',
+                )
+            );
         }
-        wp_send_json_error($_POST);
+        wp_send_json_error( array( 'message' => 'Could not save the template.' ) );
     }
 
     /**

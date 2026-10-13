@@ -39,7 +39,7 @@ if ( defined('CHALLAN_FREE_INVOICE_DIR') ) {
     $invoice_dir_without_trailing_slash = rtrim(CHALLAN_FREE_INVOICE_DIR, '/');
 
     if ( ! file_exists($invoice_dir_without_trailing_slash) && is_writable($base_dir) ) {
-        mkdir($invoice_dir_without_trailing_slash, 0777, true);
+        mkdir($invoice_dir_without_trailing_slash, 0755, true);
         // Protect files from public access.
         touch(CHALLAN_FREE_INVOICE_DIR . '.htaccess');
         $content = 'deny from all';
@@ -62,7 +62,7 @@ if ( defined('CHALLAN_FREE_FONT_DIR') ) {
     $wpifw_invoice_font_dir = rtrim(CHALLAN_FREE_FONT_DIR, '/');
 
     if ( ! file_exists($wpifw_invoice_font_dir) && is_writable($base_dir) ) {
-        mkdir($wpifw_invoice_font_dir, 0777, true);
+        mkdir($wpifw_invoice_font_dir, 0755, true);
 
         // Protect files from public access.
         touch(CHALLAN_FREE_FONT_DIR . '.htaccess');

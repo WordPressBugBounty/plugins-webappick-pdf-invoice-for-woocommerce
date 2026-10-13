@@ -6,7 +6,7 @@
  * Plugin Name:  Challan - PDF Invoice & Packing Slip for WooCommerce
  * Plugin URI:   https://webappick.com
  * Description:  Automatic Generate PDF Invoice and attach  with order email for WooCommerce.
- * Version:      3.7.88
+ * Version:      3.7.89
  * Author:       WebAppick
  * Author URI:   https://webappick.com
  * License:      GPLv2
@@ -63,7 +63,7 @@ if ( ! defined( 'CHALLAN_FREE_INVOICE_DIR' ) ) {
     define( 'CHALLAN_FREE_INVOICE_DIR', $wpifw_invoice_dir . '/' );
     if ( woo_invoice_is_uploads_folder_writable() ) {
         if ( ! file_exists(CHALLAN_FREE_INVOICE_DIR.'.htaccess' ) ) {
-            mkdir( CHALLAN_FREE_INVOICE_DIR, 0777, true );
+            mkdir( CHALLAN_FREE_INVOICE_DIR, 0755, true );
             // Protect files from public access.
             $content = 'deny from all';
             $fp = fopen(CHALLAN_FREE_INVOICE_DIR . '.htaccess', 'wb');
@@ -86,7 +86,7 @@ if ( ! defined( 'CHALLAN_FREE_FONT_DIR' ) ) {
 	define( 'CHALLAN_FREE_FONT_DIR', $wpifw_invoice_font_dir . '/' );
 	if ( woo_invoice_is_uploads_folder_writable() ) {
         if ( ! file_exists(CHALLAN_FREE_FONT_DIR ) ) {
-            mkdir( $wpifw_invoice_font_dir, 0777, true );
+            mkdir( $wpifw_invoice_font_dir, 0755, true );
             // Protect files from public access.
             $content = 'deny from all';
             $fp      = fopen( CHALLAN_FREE_FONT_DIR . '.htaccess', 'wb' );
@@ -318,6 +318,9 @@ function woo_invoice_settings() {
             wp_die( esc_html__( 'You are not allowed to perform this action.', 'webappick-pdf-invoice-for-woocommerce' ) );
         }
 
+        // Rebuild the meta key dropdown lists after save so newly added keys appear.
+        challan_flush_meta_keys_cache();
+
 		// If checkbox is not checked then put empty value.
 		if ( ! isset( $_POST[ $invoice_allow ] ) ||
 			 ! isset( $_POST[ $email_allow ] ) ||
@@ -379,53 +382,55 @@ function woo_invoice_settings() {
                 $label = array();
                 $name = array();
                 $place = array();
-                $label_arr = isset($_POST['_winvoice_order_meta_label']) ? $_POST['_winvoice_order_meta_label'] : array(); //phpcs:ignore
-                $name_arr = isset($_POST['_winvoice_order_meta_name']) ? $_POST['_winvoice_order_meta_name'] : array(); //phpcs:ignore
-                $place_arr = isset($_POST['_winvoice_order_meta_name_position']) ? $_POST['_winvoice_order_meta_name_position'] : array(); //phpcs:ignore
+                $label_arr = isset( $_POST['_winvoice_order_meta_label'] ) ? wp_unslash( $_POST['_winvoice_order_meta_label'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                $name_arr = isset( $_POST['_winvoice_order_meta_name'] ) ? wp_unslash( $_POST['_winvoice_order_meta_name'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                $place_arr = isset( $_POST['_winvoice_order_meta_name_position'] ) ? wp_unslash( $_POST['_winvoice_order_meta_name_position'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+                $label_arr = is_array( $label_arr ) ? $label_arr : array();
+                $name_arr  = is_array( $name_arr ) ? $name_arr : array();
+                $place_arr = is_array( $place_arr ) ? $place_arr : array();
 
                 foreach ( $label_arr as $index => $val ) {
+                    $val        = sanitize_text_field( $val );
+                    $meta_name  = isset( $name_arr[ $index ] ) ? sanitize_text_field( $name_arr[ $index ] ) : '';
+                    $meta_place = isset( $place_arr[ $index ] ) ? sanitize_text_field( $place_arr[ $index ] ) : '';
 
-                    if ( '' != $val && '' != $name_arr[ $index ] && '' != $place_arr[ $index ] ) {
-                        array_push($label, $val);
-                        array_push($name, $name_arr[ $index ]);
-                        array_push($place, $place_arr[ $index ]);
-                    } else {
-                        $label_arr[ $index ] = '';
-                        $name_arr[ $index ] = '';
-                        $place_arr[ $index ] = '';
+                    if ( '' != $val && '' != $meta_name && '' != $meta_place ) {
+                        array_push( $label, $val );
+                        array_push( $name, $meta_name );
+                        array_push( $place, $meta_place );
                     }
                 }
 
-                if ( count($label) > 0 ) {
-                    update_option($key, $label);
-                    update_option('_winvoice_order_meta_name', $name);
-                    update_option('_winvoice_order_meta_name_position', $place);
+                if ( count( $label ) > 0 ) {
+                    update_option( $key, $label );
+                    update_option( '_winvoice_order_meta_name', $name );
+                    update_option( '_winvoice_order_meta_name_position', $place );
                 } else {
-                    update_option('_winvoice_order_meta_label', array());
-                    update_option('_winvoice_order_meta_name', array());
-                    update_option('_winvoice_order_meta_name_position', array());
+                    update_option( '_winvoice_order_meta_label', array() );
+                    update_option( '_winvoice_order_meta_name', array() );
+                    update_option( '_winvoice_order_meta_name_position', array() );
                 }
-            }elseif ( '_winvoice_post_meta_name' == $key ) {
+            } elseif ( '_winvoice_post_meta_name' == $key ) {
 
-                $label = $_POST['_winvoice_post_meta_label']; //phpcs:ignore
-                $name = $_POST['_winvoice_post_meta_name']; //phpcs:ignore
+                $label = isset( $_POST['_winvoice_post_meta_label'] ) ? sanitize_text_field( wp_unslash( $_POST['_winvoice_post_meta_label'] ) ) : '';
+                $name  = isset( $_POST['_winvoice_post_meta_name'] ) ? sanitize_text_field( wp_unslash( $_POST['_winvoice_post_meta_name'] ) ) : '';
                 if ( $name ) {
-                    update_option('_winvoice_post_meta_label', $label);
-                    update_option($key, $name);
+                    update_option( '_winvoice_post_meta_label', $label );
+                    update_option( $key, $name );
                 } else {
-                    update_option('_winvoice_post_meta_label', '');
-                    update_option('_winvoice_post_meta_name','');
+                    update_option( '_winvoice_post_meta_label', '' );
+                    update_option( '_winvoice_post_meta_name', '' );
                 }
-            }elseif ( strpos( $key, '_winvoice_order_item_meta_name' ) !== false ) {
+            } elseif ( strpos( $key, '_winvoice_order_item_meta_name' ) !== false ) {
 
-                $label = $_POST['_winvoice_order_item_meta_label']; //phpcs:ignore
-                $name = $_POST['_winvoice_order_item_meta_name']; //phpcs:ignore
+                $label = isset( $_POST['_winvoice_order_item_meta_label'] ) ? sanitize_text_field( wp_unslash( $_POST['_winvoice_order_item_meta_label'] ) ) : '';
+                $name  = isset( $_POST['_winvoice_order_item_meta_name'] ) ? sanitize_text_field( wp_unslash( $_POST['_winvoice_order_item_meta_name'] ) ) : '';
                 if ( $name ) {
-                    update_option('_winvoice_order_item_meta_label', $label);
-                    update_option('_winvoice_order_item_meta_name', $name);
+                    update_option( '_winvoice_order_item_meta_label', $label );
+                    update_option( '_winvoice_order_item_meta_name', $name );
                 } else {
-                    update_option('_winvoice_order_item_meta_label', '');
-                    update_option('_winvoice_order_item_meta_name','');
+                    update_option( '_winvoice_order_item_meta_label', '' );
+                    update_option( '_winvoice_order_item_meta_name', '' );
                 }
             }
 

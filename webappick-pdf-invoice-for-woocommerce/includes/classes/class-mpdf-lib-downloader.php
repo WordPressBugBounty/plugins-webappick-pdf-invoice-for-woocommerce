@@ -40,8 +40,8 @@ class Challan_MpdfLibDownloader {
         $destination    = CHALLAN_FREE_INVOICE_DIR . $fileSep[ count($fileSep) - 1 ];
         $arrContextOptions = array(
             "ssl" => array(
-                "verify_peer"      => false,
-                "verify_peer_name" => false,
+                "verify_peer"      => true,
+                "verify_peer_name" => true,
             ),
         );
         //download file
@@ -51,6 +51,11 @@ class Challan_MpdfLibDownloader {
             $zip        = new ZipArchive();
             $res        = $zip->open($zipFile);
             if ( TRUE === $res ) {
+                if ( ! self::zipEntriesAreSafe( $zip ) ) {
+                    $zip->close();
+                    wp_delete_file( $zipFile );
+                    return false;
+                }
                 $zip->extractTo($extractTo);
                 $zip->close();
                 wp_delete_file( $zipFile );
@@ -61,5 +66,25 @@ class Challan_MpdfLibDownloader {
         } else {
             return false;
         }
+    }
+
+    /**
+     * Reject ZIP entries that would write outside the destination directory.
+     *
+     * @param ZipArchive $zip Open archive.
+     * @return bool
+     */
+    private static function zipEntriesAreSafe( $zip ) {
+        for ( $i = 0; $i < $zip->numFiles; $i++ ) {
+            $entry_name = $zip->getNameIndex( $i );
+            if ( ! is_string( $entry_name ) ) {
+                return false;
+            }
+            $entry_name = str_replace( '\\', '/', $entry_name );
+            if ( false !== strpos( $entry_name, '..' ) || ( isset( $entry_name[0] ) && '/' === $entry_name[0] ) ) {
+                return false;
+            }
+        }
+        return true;
     }
 }

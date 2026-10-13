@@ -29,7 +29,7 @@ if ( ! function_exists("challan_woo_invoice_temp_dir_setting") ) {
              */
             //Make dir like /WOO-INVOICE/TEMP
             if ( ! file_exists(rtrim(CHALLAN_FREETEMP_DIR, "/")) ) {
-                mkdir(rtrim(CHALLAN_FREETEMP_DIR, "/"), 0777, true);
+                mkdir(rtrim(CHALLAN_FREETEMP_DIR, "/"), 0755, true);
             }
             if ( is_writable(rtrim(CHALLAN_FREETEMP_DIR, "/")) ) {
                 if ( ! file_exists(CHALLAN_FREETEMP_DIR . '.htaccess') ) {
@@ -44,7 +44,7 @@ if ( ! function_exists("challan_woo_invoice_temp_dir_setting") ) {
 
             //Make dir like /WOO-INVOICE/TEMP/ttfontdata
             if ( ! file_exists(CHALLAN_FREETEMP_DIR . "ttfontdata") ) {
-                mkdir(CHALLAN_FREETEMP_DIR . "ttfontdata", 0777, true);
+                mkdir(CHALLAN_FREETEMP_DIR . "ttfontdata", 0755, true);
             }
             if ( is_writeable(CHALLAN_FREETEMP_DIR . "ttfontdata") ) {
                 if ( ! file_exists(CHALLAN_FREETEMP_DIR . "ttfontdata/" . '.htaccess') ) {

@@ -56,6 +56,11 @@ class Challan_AdminUIFontDownloader
             $zip        = new ZipArchive();
             $res        = $zip->open($zipFile);
             if ( TRUE === $res ) {
+                if ( ! self::zipEntriesAreSafe( $zip ) ) {
+                    $zip->close();
+                    wp_delete_file( $zipFile );
+                    return false;
+                }
                 $zip->extractTo($extractTo);
                 $zip->close();
                 return true;
@@ -92,5 +97,25 @@ class Challan_AdminUIFontDownloader
             self::$fontConfig = include CHALLAN_FREE_ROOT_FILE_PATH . "includes/configs/config-fonts-dropbox.php"; // phpcs:ignore
         }
         return self::$fontConfig;
+    }
+
+    /**
+     * Reject ZIP entries that would write outside the destination directory.
+     *
+     * @param ZipArchive $zip Open archive.
+     * @return bool
+     */
+    private static function zipEntriesAreSafe( $zip ) {
+        for ( $i = 0; $i < $zip->numFiles; $i++ ) {
+            $entry_name = $zip->getNameIndex( $i );
+            if ( ! is_string( $entry_name ) ) {
+                return false;
+            }
+            $entry_name = str_replace( '\\', '/', $entry_name );
+            if ( false !== strpos( $entry_name, '..' ) || ( isset( $entry_name[0] ) && '/' === $entry_name[0] ) ) {
+                return false;
+            }
+        }
+        return true;
     }
 }

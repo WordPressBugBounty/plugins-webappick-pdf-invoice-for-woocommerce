@@ -1,7 +1,6 @@
 <?php
 namespace Challan\AppServices;
 
-use mysql_xdevapi\Exception;
 use WP_Theme;
 use WP_User;
 if ( ! defined( 'ABSPATH' ) ) {
@@ -255,7 +254,7 @@ class Insights {
 		$trackingInterval = apply_filters( $this->client->getSlug() . '_tracking_interval', '-1 week' );
 		try {
 			$intervalCheck = strtotime( $trackingInterval );
-		} catch ( Exception $e ) {
+		} catch ( \Exception $e ) {
 			// fallback to default 1 week if filter returned unusable data
 			$intervalCheck = strtotime( '-1 week' );
 		}

@@ -4,7 +4,7 @@ Donate link: https://webappick.com
 Tags: woocommerce pdf invoice, woocommerce invoice, packing slip, pdf invoice, invoice generator
 Requires at least: 3.6
 Tested up to: 7.1
-Stable tag: 3.7.88
+Stable tag: 3.7.89
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -307,6 +307,17 @@ Please read the [documentation](https://webappick.com/docs/woo-invoice/installat
 = 💎 Translation Request 💎 =
 We are looking for people to help translate this plugin. If you can help we would love for you to jump in and do so.
 Help us & the WordPress community, translate the plugin [here](https://translate.wordpress.org/projects/wp-plugins/webappick-pdf-invoice-for-woocommerce/)
+
+= 3.7.89  ( October 13, 2026 ) =
+* Security: Sanitized the order, product and order item meta field settings before saving.
+* Security: Added ZIP entry validation for the mPDF library and font downloads, and enabled SSL verification for the mPDF library download.
+* Security: Removed the site-wide REST API CORS headers.
+* Security: Invoice template selection now accepts only available templates.
+* Fixed: Sending an order email no longer deletes the invoice PDFs of other orders.
+* Fixed: Fatal error "Call to undefined function get_user_id" on the settings page template preview.
+* Fixed: Upgrade buttons in the dashboard linked to an expired discount page.
+* Improved: Meta key lists on the settings page are cached and refreshed when settings are saved.
+* Improved: New invoice and font directories are created with 0755 permissions.
 
 = 3.7.88  ( October 01, 2026 ) =
 * Updated : Plugin description.

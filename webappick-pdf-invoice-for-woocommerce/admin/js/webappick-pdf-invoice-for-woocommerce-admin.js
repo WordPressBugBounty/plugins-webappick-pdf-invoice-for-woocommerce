@@ -203,6 +203,9 @@
                 template: template,
             },
             success: function (response) {
+                if (!response.success) {
+                    return;
+                }
                 $(".woo-invoice-template-preview").attr(
                     "src",
                     response.data.location +

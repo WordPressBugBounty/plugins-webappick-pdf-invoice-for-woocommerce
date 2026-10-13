@@ -29,7 +29,7 @@ if ( ! function_exists("challan_admin_ui_fonts_dir_setting") ) {
              */
             //Make dir like /uploads/WOO-INVOICE-ADMIN-UI-FONTS/
             if ( ! file_exists(rtrim(CHALLAN_ADMIN_UI_FONTS_DIR, "/")) ) {
-                mkdir(rtrim(CHALLAN_ADMIN_UI_FONTS_DIR, "/"), 0777, true);
+                mkdir(rtrim(CHALLAN_ADMIN_UI_FONTS_DIR, "/"), 0755, true);
             }
         }
     }

@@ -247,19 +247,10 @@ if ( ! class_exists("Challan_Font_Downloader_API") ) {
 			$response = $this->download_font(new WP_REST_Request(\WP_REST_Server::READABLE, $this->rest_base . '/download-font' ));
 			wp_send_json($response->get_data(), 200);
 			exit;
-			wp_die();
 		}
     } // end class definition
 
     add_action('rest_api_init', function () {
-		if ( ! headers_sent() ) {
-			header('Access-Control-Allow-Headers: Authorization, X-WP-Nonce,Content-Type, X-Requested-With');
-			// Security: Only allow requests from the same origin (WordPress site URL)
-			$allowed_origin = esc_url_raw( home_url() );
-			header('Access-Control-Allow-Origin: ' . $allowed_origin);
-			header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
-			header('Access-Control-Allow-Credentials: true');
-		}
         $apiFontDownloader = new Challan_Font_Downloader_API();
         $apiFontDownloader->register_routes();
     });
