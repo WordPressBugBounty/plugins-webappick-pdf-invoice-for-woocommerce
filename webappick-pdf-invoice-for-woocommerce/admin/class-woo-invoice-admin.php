@@ -138,6 +138,20 @@ class Woo_Invoice_Admin
     }
 
     /**
+     * Send the Pro plugin's settings URL (bookmarks, links from when Pro was active) to the
+     * free plugin's settings page instead of WordPress's "not allowed" page.
+     *
+     * @return void
+     */
+    public function redirect_pro_settings_slug() {
+        global $pagenow;
+        if ( 'admin.php' === $pagenow && isset( $_GET['page'] ) && 'webappick-woo-invoice-settings' === $_GET['page'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            wp_safe_redirect( admin_url( 'admin.php?page=webappick-woo-invoice' ), 301 );
+            exit;
+        }
+    }
+
+    /**
      * Register PDF Invoice Menu.
      */
     public function load_admin_menu() {

@@ -120,36 +120,32 @@ class Woo_Invoice_Activator
             }
         }
 
-	    $wpifw_delivery_address_buyer = <<<INFO
-{{billing_first_name}}	{{billing_last_name}}
-{{billing_company}}	{{billing_address_1}}
-{{billing_address_2}}	{{billing_city}}
-{{billing_state}}	{{billing_postcode}}
-{{billing_country}}	{{billing_phone}}
-{{billing_email}}	
-{{shipping_first_name}}	{{shipping_last_name}}
-{{shipping_company}}	{{shipping_address_1}}
-{{shipping_address_2}}	{{shipping_city}}
-{{shipping_state}}	{{shipping_postcode}}
-{{shipping_country}}	{{shipping_phone}}
-{{shipping_email}}
-INFO;
+	    $wpifw_delivery_address_buyer = "{{billing_first_name}}\t{{billing_last_name}}\n"
+			. "{{billing_company}}\t{{billing_address_1}}\n"
+			. "{{billing_address_2}}\t{{billing_city}}\n"
+			. "{{billing_state}}\t{{billing_postcode}}\n"
+			. "{{billing_country}}\t{{billing_phone}}\n"
+			. "{{billing_email}}\t\n"
+			. "{{shipping_first_name}}\t{{shipping_last_name}}\n"
+			. "{{shipping_company}}\t{{shipping_address_1}}\n"
+			. "{{shipping_address_2}}\t{{shipping_city}}\n"
+			. "{{shipping_state}}\t{{shipping_postcode}}\n"
+			. "{{shipping_country}}\t{{shipping_phone}}\n"
+			. "{{shipping_email}}";
 
 	    if ( ! get_option('wpifw_delivery_address_buyer') ) {
 		    update_option('wpifw_delivery_address_buyer', $wpifw_delivery_address_buyer);
 	    }
 
-        $customer_info = <<<INFO
-{{billing_first_name}} {{billing_last_name}}
-{{billing_company}}
-{{billing_address_1}}
-{{billing_address_2}}
-{{billing_city}} - {{billing_postcode}}
-{{billing_state}}
-{{billing_country}}
-P: {{billing_phone}}
-E: {{billing_email}}
-INFO;
+        $customer_info = "{{billing_first_name}} {{billing_last_name}}\n"
+            . "{{billing_company}}\n"
+            . "{{billing_address_1}}\n"
+            . "{{billing_address_2}}\n"
+            . "{{billing_city}} - {{billing_postcode}}\n"
+            . "{{billing_state}}\n"
+            . "{{billing_country}}\n"
+            . "P: {{billing_phone}}\n"
+            . "E: {{billing_email}}";
 
         if ( ! get_option('wpifw_buyer') ) {
             update_option('wpifw_buyer', $customer_info);

@@ -22,3 +22,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/classes/class-mpdf-lib-downloader.php';
 require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/classes/class-dropbox-font-downloader.php';
 require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/classes/class-plugin-default-font-downloader.php';
+require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/classes/class-woo-invoice-html-output.php';

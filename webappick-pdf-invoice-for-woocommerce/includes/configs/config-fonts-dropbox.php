@@ -117,9 +117,9 @@ return [
      * MPDF dictionary data
      */
     "data-files"         => [
-        "35vatl1sea53brq/linebrdictK.dat.zip",
-        "lmpck0nwukgu6ge/linebrdictL.dat.zip",
-        "tz8tyvurd61rom2/linebrdictT.dat.zip",
+        "linebrdictK.dat.zip",
+        "linebrdictL.dat.zip",
+        "linebrdictT.dat.zip",
     ],
     "mpdf-lib"           => "mpdf.zip",
 

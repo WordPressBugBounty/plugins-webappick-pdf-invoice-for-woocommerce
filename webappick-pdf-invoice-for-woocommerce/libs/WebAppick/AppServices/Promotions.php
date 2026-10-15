@@ -127,8 +127,9 @@ class Promotions {
 	 * @return void
 	 */
 	public function init() {
-		if ( is_null( $this->promotionSrc ) ) {
-			_doing_it_wrong( __METHOD__, esc_html__( 'Promotion Source URL Not Set. see Promotions::set_source( $URL )', 'webappick-pdf-invoice-for-woocommerce' ), '1.0.0' );
+		// No source URL: nothing to fetch or show.
+		if ( empty( $this->promotionSrc ) ) {
+			return;
 		}
 		add_action( 'admin_init', array( $this, '__init_internal' ), 10 );
 	}

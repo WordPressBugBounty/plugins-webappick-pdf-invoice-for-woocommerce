@@ -110,7 +110,7 @@ class Challan_FontMetadataReader
      */
     public function readFontMetadata() {
         /** @var resource $fontHandle */
-        $fontHandle = fopen($this->fileName, "rb");
+        $fontHandle = fopen($this->fileName, "rb"); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fopen -- Binary seek/read on a local TTF file; WP_Filesystem has no stream API.
 
         //  Read the file header
         $TT_OFFSET_TABLE = fread($fontHandle, 12); //phpcs:ignore
@@ -121,7 +121,7 @@ class Challan_FontMetadataReader
 
         //  Check is this is a true type font and the version is 1.0
         if ( 1 != $uMajorVersion || 0 != $uMinorVersion ) {
-            fclose($fontHandle);
+            fclose($fontHandle); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Closes the stream opened above.
             throw new Exception( esc_html($this->fileName . ' is not a Truetype font file'));
         }
 
@@ -138,7 +138,7 @@ class Challan_FontMetadataReader
         }
 
         if ( ! $nameTableFound ) {
-            fclose($fontHandle);
+            fclose($fontHandle); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Closes the stream opened above.
             throw new Exception( esc_html('Can\'t find name table in ' . $this->fileName) );
         }
 
@@ -170,7 +170,7 @@ class Challan_FontMetadataReader
             }
         }
 
-        fclose($fontHandle);
+        fclose($fontHandle); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_fclose -- Closes the stream opened above.
     }
 
     /**

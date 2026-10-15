@@ -24,18 +24,21 @@ class Challan_PluginDefaultFontDownloader {
         $fontConfig         = include CHALLAN_FREE_ROOT_FILE_PATH . "includes/configs/config-fonts-dropbox.php"; // phpcs:ignore
         $baseUrl            = implode("", $fontConfig['base-url']);
         $downloadCounter    = 0;
+        $allDownloaded      = true;
         foreach ( $fontConfig['default'] as $path ) {
             $source         = "{$baseUrl}{$path}";
             $fileSep        = explode('/', $source);
             $destination    = CHALLAN_FREE_FONT_DIR . $fileSep[ count($fileSep) - 1 ];
-            if ( ! file_exists(rtrim($destination, ".zip")) ) {
-                Challan_DropBoxFontDownloader::dispatchDownload("{$baseUrl}{$path}");
+            if ( ! file_exists(woo_invoice_strip_zip_suffix($destination)) ) {
+                if ( ! Challan_DropBoxFontDownloader::dispatchDownload("{$baseUrl}{$path}") ) {
+                    $allDownloaded = false;
+                }
                 ++$downloadCounter;
                 if ( 0 == $downloadCounter % 4 ) {
                     sleep(1);
                 }
             }
         }
-        return true;
+        return $allDownloaded;
     }
 }

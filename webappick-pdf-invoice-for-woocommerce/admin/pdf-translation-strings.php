@@ -1,5 +1,9 @@
 <?php
-$pdf_strings = [
+if ( ! defined( 'ABSPATH' ) ) {
+    exit; // Exit if accessed directly.
+}
+
+$woo_invoice_pdf_strings = [
     __( 'Billing', 'webappick-pdf-invoice-for-woocommerce' ),
     __( 'Shipping', 'webappick-pdf-invoice-for-woocommerce' ),
     __( 'Order Number', 'webappick-pdf-invoice-for-woocommerce' ),
@@ -48,4 +52,4 @@ $pdf_strings = [
     __( 'Items Subtotal', 'webappick-pdf-invoice-for-woocommerce' ),
 ];
 
-return apply_filters( 'challan_pdf_translation_strings', $pdf_strings );
+return apply_filters( 'challan_pdf_translation_strings', $woo_invoice_pdf_strings );

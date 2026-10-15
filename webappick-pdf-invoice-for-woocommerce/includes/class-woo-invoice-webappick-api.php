@@ -93,7 +93,9 @@ if ( ! class_exists( 'Woo_Invoice_WebAppickAPI' ) ) {
 			$this->promotion = $this->client->promotions(); // Promo offers.
 
 			// Setup.
-			$this->promotion->set_source( 'https://api.bitbucket.org/2.0/snippets/woofeed/RLbyop/files/woo-feed-notice.json' );
+			// The old promotions feed (Bitbucket snippet) returns 404, so no source is set by default
+			// and nothing is fetched. Set a JSON feed URL with this filter to show promotions again.
+			$this->promotion->set_source( (string) apply_filters( 'challan_promotions_source_url', '' ) );
 
 			// Initialize.
 			$this->insight_init();

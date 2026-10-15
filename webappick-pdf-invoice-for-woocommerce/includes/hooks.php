@@ -337,10 +337,10 @@ function challan_order_section_meta_data_callback( $order, $template , $current_
     }
 }
 
-$order_meta_place = ! empty( get_option( '_winvoice_order_meta_name_position' ) ) ? get_option( '_winvoice_order_meta_name_position' ) : array();
-if ( (isset($order_meta_place) && is_array($order_meta_place) && count($order_meta_place) > 0) ) {
-    foreach ( $order_meta_place as $key => $value ) {
-        add_action('woo_invoice_'.$value, 'challan_order_section_meta_data_callback', 10, 3);
+$woo_invoice_order_meta_place = ! empty( get_option( '_winvoice_order_meta_name_position' ) ) ? get_option( '_winvoice_order_meta_name_position' ) : array();
+if ( (isset($woo_invoice_order_meta_place) && is_array($woo_invoice_order_meta_place) && count($woo_invoice_order_meta_place) > 0) ) {
+    foreach ( $woo_invoice_order_meta_place as $woo_invoice_key => $woo_invoice_value ) {
+        add_action('woo_invoice_'.$woo_invoice_value, 'challan_order_section_meta_data_callback', 10, 3);
     }
 }
 

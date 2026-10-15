@@ -2,9 +2,9 @@
 Contributors: wahid0003,webappick
 Donate link: https://webappick.com
 Tags: woocommerce pdf invoice, woocommerce invoice, packing slip, pdf invoice, invoice generator
-Requires at least: 3.6
+Requires at least: 5.3
 Tested up to: 7.1
-Stable tag: 3.7.89
+Stable tag: 3.7.90
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -307,6 +307,19 @@ Please read the [documentation](https://webappick.com/docs/woo-invoice/installat
 = 💎 Translation Request 💎 =
 We are looking for people to help translate this plugin. If you can help we would love for you to jump in and do so.
 Help us & the WordPress community, translate the plugin [here](https://translate.wordpress.org/projects/wp-plugins/webappick-pdf-invoice-for-woocommerce/)
+
+= 3.7.90  ( October 15, 2026 ) =
+* Fixed: The settings page could keep loading while the PDF library and fonts were downloading. Downloads now time out, run one at a time and are not retried on every page load after a failure.
+* Fixed: A partly downloaded PDF library could break PDF generation; downloads are now installed only when complete.
+* Fixed: Font data files could not be downloaded (404).
+* Fixed: "Notice JSON file not found" error (a 404 request) when activating the plugin.
+* Fixed: With "Output as HTML" enabled, the invoice now looks the same as the PDF.
+* Fixed: The logo preview no longer pushes the settings card off screen; it now shows next to the upload button.
+* Fixed: Links to the Challan Pro settings page now open the Challan settings page.
+* Improved: Escaping, sanitizing and translation fixes reported by the WordPress Plugin Check.
+* Improved: Updated the Challan Pro offer card in the settings sidebar.
+* Tested: WooCommerce 11.2 compatibility.
+* Updated: Requires WordPress 5.3 or later.
 
 = 3.7.89  ( October 13, 2026 ) =
 * Security: Sanitized the order, product and order item meta field settings before saving.

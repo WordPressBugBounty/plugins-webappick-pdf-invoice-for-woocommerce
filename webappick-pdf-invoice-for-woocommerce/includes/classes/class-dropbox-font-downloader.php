@@ -42,19 +42,34 @@ class Challan_DropBoxFontDownloader
         //download font
         $downloadSuccess = self::downloadFont($source, $destination);
 
-        if ( $downloadSuccess ) {
-            if ( self::isZipArchiveFont($destination) ) {
-                //then extract zip file
-                if ( self::extractZipArchiveFont($destination, CHALLAN_FREE_FONT_DIR) ) {
-//                    self::maybeRequireRename($destination);
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-            return true;
+        if ( $downloadSuccess && self::isZipArchiveFont($destination) ) {
+            //then extract zip file
+            $downloadSuccess = self::extractZipArchiveFont($destination, CHALLAN_FREE_FONT_DIR);
+        }
+        self::rememberResult( basename( $destination ), (bool) $downloadSuccess );
+        return (bool) $downloadSuccess;
+    }
+
+    /**
+     * Remember a failed font download for a while, so the next page loads don't retry it
+     * right away (prepareConfigForDownloadFont() skips it until then).
+     *
+     * @param string $file    Downloaded file name.
+     * @param bool   $success Download result.
+     * @return void
+     */
+    static public function rememberResult( $file, $success ) {
+        $failed = get_transient( 'challan_font_download_failed' );
+        $failed = is_array( $failed ) ? $failed : array();
+        if ( $success ) {
+            unset( $failed[ $file ] );
         } else {
-            return false;
+            $failed[ $file ] = time();
+        }
+        if ( $failed ) {
+            set_transient( 'challan_font_download_failed', $failed, 15 * MINUTE_IN_SECONDS );
+        } else {
+            delete_transient( 'challan_font_download_failed' );
         }
     }
 
@@ -67,32 +82,11 @@ class Challan_DropBoxFontDownloader
      */
     static public function downloadFont( $source, $destination ) {
         if ( ! woo_invoice_is_uploads_folder_writable() ) {
-            return;
-        }
-
-        // Load WordPress Filesystem API
-        global $wp_filesystem;
-
-        if ( ! function_exists( 'WP_Filesystem' ) ) {
-            require_once ABSPATH . 'wp-admin/includes/file.php';
-        }
-
-        WP_Filesystem();
-        // Security: Enable SSL verification to prevent MITM attacks
-        $arrContextOptions = array(
-            "ssl" => array(
-                "verify_peer"      => true,
-                "verify_peer_name" => true,
-            ),
-        );
-        $data = file_get_contents( $source, false, stream_context_create( $arrContextOptions ) ); // phpcs:ignore
-
-        // Use the WordPress Filesystem API to write the data to the destination
-        if ( $wp_filesystem->put_contents( $destination, $data, FS_CHMOD_FILE ) ) {
-            return true;
-        } else {
             return false;
         }
+
+        // SSL verified, with a timeout; a failed download leaves no file behind.
+        return woo_invoice_download_remote_file( $source, $destination, 60 );
     }
 
     /**
@@ -113,44 +107,10 @@ class Challan_DropBoxFontDownloader
      * @return  bool    true|false
      */
     static public function extractZipArchiveFont( $zipFile, $extractTo ) {
-        $zip = new ZipArchive();
-        $res = $zip->open($zipFile);
-        if ( TRUE === $res ) {
-            if ( ! self::zipEntriesAreSafe( $zip ) ) {
-                $zip->close();
-                wp_delete_file( $zipFile );
-                return false;
-            }
-            $zip->extractTo($extractTo);
-            $zip->close();
-            if ( file_exists( $zipFile ) ) {
-                wp_delete_file( $zipFile );
-            }
-            return true;
-        } else {
-            return false;
-        }
+        // Each font file is moved into place complete, so a PDF being generated meanwhile never reads half a font.
+        return woo_invoice_extract_zip_atomically( $zipFile, $extractTo );
     }
 
-    /**
-     * Reject ZIP entries that would write outside the destination directory.
-     *
-     * @param ZipArchive $zip Open archive.
-     * @return bool
-     */
-    private static function zipEntriesAreSafe( $zip ) {
-        for ( $i = 0; $i < $zip->numFiles; $i++ ) {
-            $entry_name = $zip->getNameIndex( $i );
-            if ( ! is_string( $entry_name ) ) {
-                return false;
-            }
-            $entry_name = str_replace( '\\', '/', $entry_name );
-            if ( false !== strpos( $entry_name, '..' ) || ( isset( $entry_name[0] ) && '/' === $entry_name[0] ) ) {
-                return false;
-            }
-        }
-        return true;
-    }
 
     /**
      * Prepare download configuration for MPDF
@@ -163,12 +123,15 @@ class Challan_DropBoxFontDownloader
         $fonts      = $fontConfig["others"];
         $downloaded = [];
         $download   = [];
+        // Fonts whose download failed a moment ago wait before they are tried again.
+        $failed     = get_transient( 'challan_font_download_failed' );
+        $failed     = is_array( $failed ) ? $failed : array();
         foreach ( $fonts as $font ) {
             $fileSep = explode('/', $font);
             $destination = CHALLAN_FREE_FONT_DIR . $fileSep[ count($fileSep) - 1 ];
-            if ( file_exists(rtrim($destination, ".zip")) ) {
+            if ( file_exists(woo_invoice_strip_zip_suffix($destination)) ) {
                 $downloaded[] = $font;
-            } else {
+            } elseif ( ! isset( $failed[ basename( $destination ) ] ) ) {
                 $download[] = $font;
             }
         }

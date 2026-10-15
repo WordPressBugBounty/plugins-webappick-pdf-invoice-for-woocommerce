@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'CHALLAN_FREE_VERSION', '3.7.89' );
+define( 'CHALLAN_FREE_VERSION', '3.7.90' );
 
 if ( ! defined( 'CHALLAN_FREE_FONTS_COUNT' ) ) {
     /**
@@ -91,9 +91,9 @@ if ( ! defined( 'CHALLAN_FREE_FONT_DIR' ) ) {
      * @var string
      * @since 2.3.1
      */
-    $upload_dir = wp_upload_dir();
-    $base_dir = $upload_dir['basedir'];
-    $wpifw_invoice_font_dir = $base_dir . "/WOO-INVOICE/WOO-INVOICE-FONTS";
+    $woo_invoice_upload_dir = wp_upload_dir();
+    $woo_invoice_base_dir = $woo_invoice_upload_dir['basedir'];
+    $wpifw_invoice_font_dir = $woo_invoice_base_dir . "/WOO-INVOICE/WOO-INVOICE-FONTS";
     define('CHALLAN_FREE_FONT_DIR', trailingslashit($wpifw_invoice_font_dir));
 }
 

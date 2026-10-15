@@ -68,6 +68,7 @@ function woo_invoice_free_restore_language_callback() {
  * Reload text domain after switch language.
  */
 function woo_invoice_free_reload_text_domain() {
+    // phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound -- Loads the bundled /languages translations again after switching to the order's language.
     load_plugin_textdomain(
         'webappick-pdf-invoice-for-woocommerce',
         false,
@@ -133,6 +134,7 @@ if ( ! function_exists('challan_order_meta_query') ) {
 
             // Traditional CPT-based orders are in use, query the postmeta table
             // Note: $wpdb->postmeta and $wpdb->posts are trusted WordPress table name constants
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- No core API lists distinct meta keys; cached by challan_get_cached_meta_keys().
             return $wpdb->get_results( $wpdb->prepare(
                 "SELECT pm.meta_key FROM {$wpdb->postmeta} AS pm LEFT JOIN {$wpdb->posts} AS p ON pm.post_id = p.id WHERE p.post_type = %s GROUP BY pm.meta_key",
                 'shop_order'
@@ -150,6 +152,7 @@ if ( ! function_exists('challan_product_meta_query') ) {
             global $wpdb;
 
             // Note: $wpdb->postmeta and $wpdb->posts are trusted WordPress table name constants
+            // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- No core API lists distinct meta keys; cached by challan_get_cached_meta_keys().
             return $wpdb->get_results( $wpdb->prepare(
                 "SELECT pm.meta_key, pm.meta_id FROM {$wpdb->postmeta} AS pm LEFT JOIN {$wpdb->posts} AS p ON pm.post_id = p.id WHERE p.post_type = %s GROUP BY pm.meta_key",
                 'product'

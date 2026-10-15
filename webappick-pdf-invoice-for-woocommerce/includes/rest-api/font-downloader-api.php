@@ -89,7 +89,7 @@ if ( ! class_exists("Challan_Font_Downloader_API") ) {
             }
 
             //check font directory is writeable or not
-            if ( ( ! is_dir(CHALLAN_FREE_FONT_DIR) || ! file_exists(CHALLAN_FREE_FONT_DIR)) || ! is_writable(CHALLAN_FREE_FONT_DIR) ) {
+            if ( ( ! is_dir(CHALLAN_FREE_FONT_DIR) || ! file_exists(CHALLAN_FREE_FONT_DIR)) || ! wp_is_writable(CHALLAN_FREE_FONT_DIR) ) {
                 //font download impossible
                 return false;
             }
@@ -109,7 +109,7 @@ if ( ! class_exists("Challan_Font_Downloader_API") ) {
                 $source = "{$baseUrl}{$path}";
                 $fileSep = explode('/', $source);
                 $destination = CHALLAN_FREE_FONT_DIR . $fileSep[ count($fileSep) - 1 ];
-                if ( ! file_exists(rtrim($destination, ".zip")) ) {
+                if ( ! file_exists(woo_invoice_strip_zip_suffix($destination)) ) {
                     Challan_DropBoxFontDownloader::dispatchDownload("{$baseUrl}{$path}");
                 }
                 $downloaded[] = $path;
@@ -149,7 +149,7 @@ if ( ! class_exists("Challan_Font_Downloader_API") ) {
             }
 
             //check font directory is writeable or not
-            if ( ( ! is_dir(CHALLAN_FREE_FONT_DIR) || ! file_exists(CHALLAN_FREE_FONT_DIR)) || ! is_writable(CHALLAN_FREE_FONT_DIR) ) {
+            if ( ( ! is_dir(CHALLAN_FREE_FONT_DIR) || ! file_exists(CHALLAN_FREE_FONT_DIR)) || ! wp_is_writable(CHALLAN_FREE_FONT_DIR) ) {
                 //font download impossible
                 $response = [];
                 $response['status'] = true;
@@ -179,7 +179,7 @@ if ( ! class_exists("Challan_Font_Downloader_API") ) {
                 $source = "{$baseUrl}{$path}";
                 $fileSep = explode('/', $source);
                 $destination = CHALLAN_FREE_FONT_DIR . $fileSep[ count($fileSep) - 1 ];
-                if ( ! file_exists(rtrim($destination, ".zip")) ) {
+                if ( ! file_exists(woo_invoice_strip_zip_suffix($destination)) ) {
                     Challan_DropBoxFontDownloader::dispatchDownload("{$baseUrl}{$path}");
                 }
                 $downloaded[] = $path;

@@ -168,18 +168,21 @@ class Woo_Invoice_Hooks
 		}
 
 		// Security: Validate file upload
-		if ( ! isset( $_FILES['file'] ) || ! is_uploaded_file( $_FILES['file']['tmp_name'] ) ) {
+		// tmp_name is a server path checked by is_uploaded_file(); sanitizing it would change the path.
+		$font_tmp_name = isset( $_FILES['file']['tmp_name'] ) ? $_FILES['file']['tmp_name'] : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		if ( ! isset( $_FILES['file'] ) || '' === $font_tmp_name || ! is_uploaded_file( $font_tmp_name ) ) {
 			wp_send_json_error( 'Invalid file upload' );
 			wp_die();
 		}
 
-		$get_font_content = file_get_contents( $_FILES['file']['tmp_name'] ); //phpcs:ignore
+		$get_font_content = file_get_contents( $font_tmp_name ); //phpcs:ignore
 		// Security: Use basename() to prevent path traversal attacks
 		$file_name = basename( sanitize_file_name( wp_unslash( $_FILES['file']['name'] ) ) ); //phpcs:ignore
 
 		// Security: Validate file size (max 10MB)
 		$max_file_size = 10 * 1024 * 1024; // 10MB
-		if ( $_FILES['file']['size'] > $max_file_size ) {
+		$font_size     = isset( $_FILES['file']['size'] ) ? absint( $_FILES['file']['size'] ) : 0;
+		if ( $font_size > $max_file_size ) {
 			wp_send_json_error( 'File size exceeds maximum allowed size' );
 			wp_die();
 		}
@@ -779,10 +782,9 @@ class Woo_Invoice_Hooks
 
                         var attachment = file_frame.state().get('selection').first().toJSON();
 
-                        console.log(attachment);
-
-                        $('#wpifw_logo-preview').attr('src', attachment.url).css('width', 'auto');
+                        $('#wpifw_logo-preview').attr('src', attachment.url);
                         $('#wpifw_logo_attachment_id').val(attachment.id);
+                        $('#logo_assets').show('fast');
 
                     });
 
@@ -790,13 +792,14 @@ class Woo_Invoice_Hooks
                     file_frame.open();
                 });
 
-                // Remove Logo Button
-                jQuery(document).on("click", "#wpifw_remove_logo_button", function (e) {
+                // Remove logo (close icon on the preview).
+                jQuery(document).on("click", ".wpifw_close_logo", function (e) {
                     e.preventDefault();
 
-                    // Clear the logo preview and reset the hidden input field
-                    $('#wpifw_logo-preview').attr('src', '').css('width', 'auto');
                     $('#wpifw_logo_attachment_id').val('');
+                    $('#logo_assets').hide('fast', function () {
+                        $('#wpifw_logo-preview').attr('src', '');
+                    });
                 });
             });
         </script>

@@ -247,6 +247,17 @@ class Woo_Invoice_PDF
     }
 
     /**
+     * Settings the HTML output needs to look like this PDF (paper, fonts, background image).
+     *
+     * @return array
+     */
+    public function get_html_output_config() {
+        $config              = $this->config;
+        $config['watermark'] = $this->get_watermark();
+        return $config;
+    }
+
+    /**
      * Add water mark to PDF
      *
      * @return array|bool

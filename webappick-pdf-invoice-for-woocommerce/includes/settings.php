@@ -35,18 +35,18 @@ if ( defined('CHALLAN_FREE_INVOICE_DIR') ) {
      * @var string.
      * @since 2.3.1
      */
-    $base_dir = wp_upload_dir()['basedir'];
-    $invoice_dir_without_trailing_slash = rtrim(CHALLAN_FREE_INVOICE_DIR, '/');
+    $woo_invoice_base_dir = wp_upload_dir()['basedir'];
+    $woo_invoice_invoice_dir_without_trailing_slash = rtrim(CHALLAN_FREE_INVOICE_DIR, '/');
 
-    if ( ! file_exists($invoice_dir_without_trailing_slash) && is_writable($base_dir) ) {
-        mkdir($invoice_dir_without_trailing_slash, 0755, true);
+    if ( ! file_exists($woo_invoice_invoice_dir_without_trailing_slash) && is_writable($woo_invoice_base_dir) ) {
+        mkdir($woo_invoice_invoice_dir_without_trailing_slash, 0755, true);
         // Protect files from public access.
         touch(CHALLAN_FREE_INVOICE_DIR . '.htaccess');
-        $content = 'deny from all';
-        $fp = fopen(CHALLAN_FREE_INVOICE_DIR . '.htaccess', 'wb');
-        fwrite($fp, $content);
-        fclose($fp);
-    } elseif ( ! is_writable($base_dir) ) {
+        $woo_invoice_content = 'deny from all';
+        $woo_invoice_fp = fopen(CHALLAN_FREE_INVOICE_DIR . '.htaccess', 'wb');
+        fwrite($woo_invoice_fp, $woo_invoice_content);
+        fclose($woo_invoice_fp);
+    } elseif ( ! is_writable($woo_invoice_base_dir) ) {
         add_action('admin_notices', 'challan_font_dir_notice');
     }
 }
@@ -58,17 +58,17 @@ if ( defined('CHALLAN_FREE_FONT_DIR') ) {
      * @var string
      * @since 2.3.1
      */
-    $base_dir = wp_upload_dir()['basedir'];
+    $woo_invoice_base_dir = wp_upload_dir()['basedir'];
     $wpifw_invoice_font_dir = rtrim(CHALLAN_FREE_FONT_DIR, '/');
 
-    if ( ! file_exists($wpifw_invoice_font_dir) && is_writable($base_dir) ) {
+    if ( ! file_exists($wpifw_invoice_font_dir) && is_writable($woo_invoice_base_dir) ) {
         mkdir($wpifw_invoice_font_dir, 0755, true);
 
         // Protect files from public access.
         touch(CHALLAN_FREE_FONT_DIR . '.htaccess');
-        $content = 'deny from all';
-        $fp = fopen(CHALLAN_FREE_FONT_DIR . '.htaccess', 'wb');
-        fwrite($fp, $content);
-        fclose($fp);
+        $woo_invoice_content = 'deny from all';
+        $woo_invoice_fp = fopen(CHALLAN_FREE_FONT_DIR . '.htaccess', 'wb');
+        fwrite($woo_invoice_fp, $woo_invoice_content);
+        fclose($woo_invoice_fp);
     }
 }

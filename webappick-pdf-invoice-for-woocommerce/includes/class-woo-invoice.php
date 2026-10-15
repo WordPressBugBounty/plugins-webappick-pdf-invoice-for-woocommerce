@@ -160,9 +160,19 @@ class Woo_Invoice
             }
         }
 
+        // Downloads below run inside this request: woo_invoice_run_asset_download() lets only one
+        // request download at a time and waits 15 minutes after a failure instead of retrying
+        // (and holding up) every page load.
+        $woo_invoice_generating = isset( $_GET['action'] )
+            && in_array( $_GET['action'], array( 'wpifw_generate_invoice', 'wpifw_generate_invoice_packing_slip', 'wpifw_generate_delivery_address' ), true );
+
         // if mpdf library is missing then downlaod mpdf.
         if ( woo_invoice_is_uploads_folder_writable() && ! file_exists(CHALLAN_FREE_INVOICE_DIR . "mpdf/vendor/autoload.php") ) {
-            Challan_MpdfLibDownloader::downloadLib();
+            woo_invoice_run_asset_download( 'mpdf', array( 'Challan_MpdfLibDownloader', 'downloadLib' ) );
+            challan_load_mpdf_lib();
+            if ( $woo_invoice_generating && ! file_exists(CHALLAN_FREE_INVOICE_DIR . "mpdf/vendor/autoload.php") ) {
+                die( esc_html__( 'The PDF library (mPDF) is not ready yet: it is being downloaded, or the last download failed. Please try again in a few minutes.', 'webappick-pdf-invoice-for-woocommerce' ) );
+            }
         }
 
         // default fonts are missing then download the defaults fonts.
@@ -171,13 +181,15 @@ class Woo_Invoice
                 require_once CHALLAN_FREE_ROOT_FILE_PATH . "includes/classes/class-plugin-default-font-downloader.php";
             }
 
-            Challan_PluginDefaultFontDownloader::downloadDefaultFonts();
-            flush_rewrite_rules();
-            if ( isset( $_GET['action'] )
-                && ( 'wpifw_generate_invoice' === $_GET['action']
-                    || 'wpifw_generate_invoice_packing_slip' === $_GET['action']
-                    || 'wpifw_generate_delivery_address' === $_GET['action'] ) ) {
-                $message = __( '<strong>Mpdf</strong> and <strong>fonts</strong> were missing. Now it is downloaded. <strong>Please reload again</strong> ', 'webappick-pdf-invoice-for-woocommerce' );
+            if ( woo_invoice_run_asset_download( 'default_fonts', array( 'Challan_PluginDefaultFontDownloader', 'downloadDefaultFonts' ) ) ) {
+                flush_rewrite_rules();
+            }
+            if ( $woo_invoice_generating ) {
+                if ( file_exists(CHALLAN_FREE_FONT_DIR . "currencies.ttf") ) {
+                    $message = __( '<strong>Mpdf</strong> and <strong>fonts</strong> were missing. Now it is downloaded. <strong>Please reload again</strong> ', 'webappick-pdf-invoice-for-woocommerce' );
+                } else {
+                    $message = __( 'The PDF fonts are not ready yet: they are being downloaded, or the last download failed. Please try again in a few minutes.', 'webappick-pdf-invoice-for-woocommerce' );
+                }
                 die( $message );//phpcs:ignore
             } //phpcs:enable
         }
@@ -213,6 +225,7 @@ class Woo_Invoice
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_base_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_common_scripts');
         $this->loader->add_action('admin_menu', $plugin_admin, 'load_admin_menu');
+        $this->loader->add_action('admin_page_access_denied', $plugin_admin, 'redirect_pro_settings_slug');
 
     }
 

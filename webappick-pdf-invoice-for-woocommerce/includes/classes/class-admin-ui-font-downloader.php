@@ -28,48 +28,9 @@ class Challan_AdminUIFontDownloader
      * @return  bool true|false
      */
     static public function downloadFont() {
-        //has already been downloaded
-        if ( self::hasDownloaded() ) {
-            return true;
-        }
-        if ( ! woo_invoice_is_uploads_folder_writable() ) {
-            return;
-        }
-        // default font downloader
-        $fontConfig     = self::getConfig();
-        $baseUrl        = implode("", $fontConfig['base-url']);
-        $path           = $fontConfig['admin-ui-fonts'];
-        $source         = "{$baseUrl}{$path}";
-        $fileSep        = explode('/', $source);
-        $destination    = CHALLAN_ADMIN_UI_FONTS_DIR . $fileSep[ count($fileSep) - 1 ];
-        // Security: Enable SSL verification to prevent MITM attacks
-        $arrContextOptions = array(
-            "ssl" => array(
-                "verify_peer"      => true,
-                "verify_peer_name" => true,
-            ),
-        );
-        //download file
-        if ( file_put_contents($destination, file_get_contents( $source, false, stream_context_create( $arrContextOptions ) ) ) ) { //phpcs:ignore
-            $extractTo  = CHALLAN_ADMIN_UI_FONTS_DIR;
-            $zipFile    = $destination;
-            $zip        = new ZipArchive();
-            $res        = $zip->open($zipFile);
-            if ( TRUE === $res ) {
-                if ( ! self::zipEntriesAreSafe( $zip ) ) {
-                    $zip->close();
-                    wp_delete_file( $zipFile );
-                    return false;
-                }
-                $zip->extractTo($extractTo);
-                $zip->close();
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
+        // The admin UI font is no longer downloaded: its archive is not published any more
+        // (the request always failed) and the admin CSS does not load it from this folder.
+        return false;
     }
 
     /**
@@ -99,23 +60,4 @@ class Challan_AdminUIFontDownloader
         return self::$fontConfig;
     }
 
-    /**
-     * Reject ZIP entries that would write outside the destination directory.
-     *
-     * @param ZipArchive $zip Open archive.
-     * @return bool
-     */
-    private static function zipEntriesAreSafe( $zip ) {
-        for ( $i = 0; $i < $zip->numFiles; $i++ ) {
-            $entry_name = $zip->getNameIndex( $i );
-            if ( ! is_string( $entry_name ) ) {
-                return false;
-            }
-            $entry_name = str_replace( '\\', '/', $entry_name );
-            if ( false !== strpos( $entry_name, '..' ) || ( isset( $entry_name[0] ) && '/' === $entry_name[0] ) ) {
-                return false;
-            }
-        }
-        return true;
-    }
 }

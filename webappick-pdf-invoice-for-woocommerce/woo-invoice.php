@@ -6,7 +6,7 @@
  * Plugin Name:  Challan - PDF Invoice & Packing Slip for WooCommerce
  * Plugin URI:   https://webappick.com
  * Description:  Automatic Generate PDF Invoice and attach  with order email for WooCommerce.
- * Version:      3.7.89
+ * Version:      3.7.90
  * Author:       WebAppick
  * Author URI:   https://webappick.com
  * License:      GPLv2
@@ -15,11 +15,11 @@
  * Domain Path:  /languages
  * Requires Plugins: woocommerce
  * WP Requirement & Test
- * Requires at least: 4.4
+ * Requires at least: 5.3
  * Tested up to: 7.1
  * Requires PHP: 7.4
  * WC requires at least: 3.2
- * WC tested up to: 10.3
+ * WC tested up to: 11.2
  **/
 
 // If this file is called directly, abort.
@@ -57,18 +57,18 @@ if ( ! defined( 'CHALLAN_FREE_INVOICE_DIR' ) ) {
      * @var string.
      * @since 2.3.1
      */
-    $upload_dir        = wp_upload_dir();
-    $base_dir          = $upload_dir['basedir'];
-    $wpifw_invoice_dir = $base_dir."/WOO-INVOICE";
+    $woo_invoice_upload_dir        = wp_upload_dir();
+    $woo_invoice_base_dir          = $woo_invoice_upload_dir['basedir'];
+    $wpifw_invoice_dir = $woo_invoice_base_dir."/WOO-INVOICE";
     define( 'CHALLAN_FREE_INVOICE_DIR', $wpifw_invoice_dir . '/' );
     if ( woo_invoice_is_uploads_folder_writable() ) {
         if ( ! file_exists(CHALLAN_FREE_INVOICE_DIR.'.htaccess' ) ) {
             mkdir( CHALLAN_FREE_INVOICE_DIR, 0755, true );
             // Protect files from public access.
-            $content = 'deny from all';
-            $fp = fopen(CHALLAN_FREE_INVOICE_DIR . '.htaccess', 'wb');
-            fwrite($fp, $content);
-            fclose($fp);
+            $woo_invoice_content = 'deny from all';
+            $woo_invoice_fp = fopen(CHALLAN_FREE_INVOICE_DIR . '.htaccess', 'wb');
+            fwrite($woo_invoice_fp, $woo_invoice_content);
+            fclose($woo_invoice_fp);
         }
     }
 }
@@ -80,18 +80,18 @@ if ( ! defined( 'CHALLAN_FREE_FONT_DIR' ) ) {
 	 * @var string
 	 * @since 2.3.1
 	 */
-	$upload_dir             = wp_upload_dir();
-	$base_dir               = $upload_dir['basedir'];
+	$woo_invoice_upload_dir             = wp_upload_dir();
+	$woo_invoice_base_dir               = $woo_invoice_upload_dir['basedir'];
 	$wpifw_invoice_font_dir = CHALLAN_FREE_INVOICE_DIR."WOO-INVOICE-FONTS";
 	define( 'CHALLAN_FREE_FONT_DIR', $wpifw_invoice_font_dir . '/' );
 	if ( woo_invoice_is_uploads_folder_writable() ) {
         if ( ! file_exists(CHALLAN_FREE_FONT_DIR ) ) {
             mkdir( $wpifw_invoice_font_dir, 0755, true );
             // Protect files from public access.
-            $content = 'deny from all';
-            $fp      = fopen( CHALLAN_FREE_FONT_DIR . '.htaccess', 'wb' );
-            fwrite( $fp, $content );
-            fclose( $fp );
+            $woo_invoice_content = 'deny from all';
+            $woo_invoice_fp      = fopen( CHALLAN_FREE_FONT_DIR . '.htaccess', 'wb' );
+            fwrite( $woo_invoice_fp, $woo_invoice_content );
+            fclose( $woo_invoice_fp );
         }
 	}
 }

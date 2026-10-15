@@ -44,7 +44,7 @@ class Woo_Invoice_Engine
             $url_components = wp_parse_url(esc_url_raw(wp_unslash($_SERVER['REQUEST_URI'])));
             $url_components = parse_str($url_components['query'], $params);
             if ( isset($params['output']) && 'html' === $params['output'] ) {
-                echo $template->get_invoice_template(); //phpcs:ignore
+                woo_invoice_print_html_output( array( $template, 'get_invoice_template' ), $order_ids, 'invoice' );
                 die;
             }
         }
@@ -77,7 +77,7 @@ class Woo_Invoice_Engine
             $url_components = wp_parse_url(esc_url_raw(wp_unslash($_SERVER['REQUEST_URI'])));
             $url_components = parse_str($url_components['query'], $params);
             if ( isset($params['output']) && 'html' === $params['output'] ) {
-                echo $template->get_packing_template(); //phpcs:ignore
+                woo_invoice_print_html_output( array( $template, 'get_packing_template' ), $order_ids, 'packing_slip' );
                 die;
             }
         }
@@ -112,7 +112,7 @@ class Woo_Invoice_Engine
             $url_components = wp_parse_url(esc_url_raw(wp_unslash($_SERVER['REQUEST_URI'])));
             $url_components = parse_str($url_components['query'], $params);
             if ( isset($params['output']) && 'html' === $params['output'] ) {
-                echo $template->get_delivery_address_template(); //phpcs:ignore
+                woo_invoice_print_html_output( array( $template, 'get_delivery_address_template' ), $order_ids, 'label' );
                 die;
             }
         }

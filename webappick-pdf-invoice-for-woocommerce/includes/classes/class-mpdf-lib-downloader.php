@@ -29,7 +29,7 @@ class Challan_MpdfLibDownloader {
         }
 
         if ( ! woo_invoice_is_uploads_folder_writable() ) {
-            return;
+            return false;
         }
         // default font downloader
         $fontConfig     = include CHALLAN_FREE_ROOT_FILE_PATH . "includes/configs/config-fonts-dropbox.php"; // phpcs:ignore
@@ -38,53 +38,12 @@ class Challan_MpdfLibDownloader {
         $source         = "{$baseUrl}{$path}";
         $fileSep        = explode('/', $source);
         $destination    = CHALLAN_FREE_INVOICE_DIR . $fileSep[ count($fileSep) - 1 ];
-        $arrContextOptions = array(
-            "ssl" => array(
-                "verify_peer"      => true,
-                "verify_peer_name" => true,
-            ),
-        );
-        //download file
-        if ( file_put_contents($destination, file_get_contents( $source, false, stream_context_create( $arrContextOptions ) ) ) ) { //phpcs:ignore
-            $extractTo  = CHALLAN_FREE_INVOICE_DIR;
-            $zipFile    = $destination;
-            $zip        = new ZipArchive();
-            $res        = $zip->open($zipFile);
-            if ( TRUE === $res ) {
-                if ( ! self::zipEntriesAreSafe( $zip ) ) {
-                    $zip->close();
-                    wp_delete_file( $zipFile );
-                    return false;
-                }
-                $zip->extractTo($extractTo);
-                $zip->close();
-                wp_delete_file( $zipFile );
-                return true;
-            } else {
-                return false;
-            }
-        } else {
+        //download file (SSL verified, with a timeout; a failed download leaves no file behind)
+        if ( ! woo_invoice_download_remote_file( $source, $destination, 120 ) ) {
             return false;
         }
+        // Extracted so that mpdf/vendor/autoload.php only appears once the whole library is in place.
+        return woo_invoice_extract_zip_atomically( $destination, CHALLAN_FREE_INVOICE_DIR ) && self::hasDownloaded();
     }
 
-    /**
-     * Reject ZIP entries that would write outside the destination directory.
-     *
-     * @param ZipArchive $zip Open archive.
-     * @return bool
-     */
-    private static function zipEntriesAreSafe( $zip ) {
-        for ( $i = 0; $i < $zip->numFiles; $i++ ) {
-            $entry_name = $zip->getNameIndex( $i );
-            if ( ! is_string( $entry_name ) ) {
-                return false;
-            }
-            $entry_name = str_replace( '\\', '/', $entry_name );
-            if ( false !== strpos( $entry_name, '..' ) || ( isset( $entry_name[0] ) && '/' === $entry_name[0] ) ) {
-                return false;
-            }
-        }
-        return true;
-    }
 }

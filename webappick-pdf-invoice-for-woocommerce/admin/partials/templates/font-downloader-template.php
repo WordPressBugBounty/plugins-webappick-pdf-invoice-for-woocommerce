@@ -18,10 +18,10 @@ if ( ! woo_invoice_is_uploads_folder_writable() ) {
 if ( ! class_exists("Challan_DropBoxFontDownloader") ) {
     require_once CHALLAN_FREE_ROOT_FILE_PATH . "includes/classes/class-dropbox-font-downloader.php";
 }
-$fontConfig = Challan_DropBoxFontDownloader::prepareConfigForDownloadFont();
+$woo_invoice_fontConfig = Challan_DropBoxFontDownloader::prepareConfigForDownloadFont();
 //if font download is not remain then disable download features
-if ( isset($fontConfig["font_remaining"]) ) {
-    if ( $fontConfig["font_remaining"] <= 0 ) {
+if ( isset($woo_invoice_fontConfig["font_remaining"]) ) {
+    if ( $woo_invoice_fontConfig["font_remaining"] <= 0 ) {
         return '';
     }
 }

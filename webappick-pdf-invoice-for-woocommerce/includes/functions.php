@@ -16,4 +16,5 @@ if ( ! defined('ABSPATH') ) {
 /**
  * Load all the scripts those require as global functions
  */
+require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/functions/asset-download.php';
 require_once CHALLAN_FREE_ROOT_FILE_PATH . 'includes/functions/load-mpdf-lib.php';

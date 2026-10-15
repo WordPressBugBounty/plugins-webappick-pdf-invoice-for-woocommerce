@@ -32,6 +32,7 @@ class Woo_Invoice_I18n
      * @since 1.0.0
      */
     public function load_plugin_textdomain() {
+        // phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound -- Loads the bundled /languages translations (not only translate.wordpress.org ones).
         load_plugin_textdomain(
             'webappick-pdf-invoice-for-woocommerce',
             false,
