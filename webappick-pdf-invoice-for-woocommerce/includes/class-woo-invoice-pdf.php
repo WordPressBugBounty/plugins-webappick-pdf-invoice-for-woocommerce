@@ -180,8 +180,12 @@ class Woo_Invoice_PDF
             // E_WARNING suppressed to handle mPDF's unserialize() warnings from _getObjAttr()
             error_reporting( $original_error_reporting & ~E_DEPRECATED & ~E_WARNING );
 
+            // With debug mode on, mPDF aborts the PDF if error_get_last() holds a warning, even one
+            // raised earlier in the request by another plugin. Start from a clean slate.
+            error_clear_last();
+
             // Entire MPDF interaction block
-            $mpdf                   = new \Mpdf\Mpdf($this->config);
+            $mpdf                   = woo_invoice_mpdf($this->config);
             $mpdf->autoScriptToLang = true;// phpcs:ignore
             $mpdf->baseScript       = 1;// phpcs:ignore
             $mpdf->autoVietnamese   = true; // phpcs:ignore

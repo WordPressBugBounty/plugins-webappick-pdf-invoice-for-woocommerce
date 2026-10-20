@@ -14,11 +14,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( class_exists( '\Mpdf\Mpdf' ) && ! class_exists( 'Woo_Invoice_Html_Output_Mpdf' ) ) {
+// Same base as the PDFs, so the measuring pass also gets the mPDF "unserialize(): Extra data" fix.
+require_once __DIR__ . '/class-challan-free-mpdf.php';
+
+if ( class_exists( 'Challan_Free_Mpdf' ) && ! class_exists( 'Woo_Invoice_Html_Output_Mpdf' ) ) {
 	/**
 	 * Class Woo_Invoice_Html_Output_Mpdf
 	 */
-	class Woo_Invoice_Html_Output_Mpdf extends \Mpdf\Mpdf {
+	class Woo_Invoice_Html_Output_Mpdf extends Challan_Free_Mpdf {
 
 		/**
 		 * One entry per top-level table, in document order: [ level => [ table number => [ 'wc' => column widths, 'hr' => row heights (mm) ] ] ].

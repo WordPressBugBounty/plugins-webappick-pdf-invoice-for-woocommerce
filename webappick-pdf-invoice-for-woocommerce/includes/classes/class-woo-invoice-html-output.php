@@ -273,8 +273,13 @@ if ( ! class_exists( 'Woo_Invoice_Html_Output' ) ) {
 				return $html;
 			}
 
-			// Running footers are laid out separately by mPDF; they are not measured.
-			$measure = preg_replace( '#<htmlpagefooter\b.*?</htmlpagefooter\s*>#is', '', $html );
+			// Running footers are laid out separately by mPDF; they are not measured. Their
+			// <sethtmlpagefooter> tags go too, or mPDF looks up a footer that was removed.
+			$measure = preg_replace(
+				array( '#<htmlpagefooter\b.*?</htmlpagefooter\s*>#is', '#<sethtmlpagefooter\b[^>]*>(\s*</sethtmlpagefooter\s*>)?#i' ),
+				'',
+				$html
+			);
 			$config  = $this->config;
 			unset( $config['watermark'] );
 
