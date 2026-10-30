@@ -215,7 +215,10 @@ class Woo_Invoice_PDF
             $invoice_no = woo_invoice_get_invoice_number($order_id);
             if ( 'save' === $this->template ) { // Save Invoice before email.
                 $filename = 'Invoice-' . $invoice_no;
-                $filename = apply_filters('woo_invoice_file_name', $filename, $template, $order_id);
+                // Same filter arguments as the email attachment
+                // (Woo_Invoice_Hooks::attach_invoice_to_order_email), so the
+                // file the email attaches is the file saved here.
+                $filename = apply_filters('woo_invoice_file_name', $filename, 'invoice', $this->order_id);
                 return $mpdf->Output(CHALLAN_FREE_INVOICE_DIR . $filename . '.pdf', 'F');
             } else {
                 $filename = $template . $order_id;

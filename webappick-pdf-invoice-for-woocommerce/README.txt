@@ -4,7 +4,7 @@ Donate link: https://webappick.com
 Tags: woocommerce pdf invoice, woocommerce invoice, packing slip, pdf invoice, invoice generator
 Requires at least: 5.3
 Tested up to: 7.1
-Stable tag: 3.7.91
+Stable tag: 3.7.92
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -307,6 +307,9 @@ Please read the [documentation](https://webappick.com/docs/woo-invoice/installat
 = 💎 Translation Request 💎 =
 We are looking for people to help translate this plugin. If you can help we would love for you to jump in and do so.
 Help us & the WordPress community, translate the plugin [here](https://translate.wordpress.org/projects/wp-plugins/webappick-pdf-invoice-for-woocommerce/)
+
+= 3.7.92  ( October 30, 2026 ) =
+* Fixed: Order emails could be sent without the invoice PDF when the PDF file name is customized with the woo_invoice_file_name filter.
 
 = 3.7.91  ( October 20, 2026 ) =
 * Fixed: "Error detected. PDF file generation aborted: unserialize(): Extra data" on PHP 8.3 and later when PDF debug mode is on.
