@@ -3,10 +3,10 @@
  * Automatic Generate PDF Invoice and attach  with order email for WooCommerce.
  *
  * @package  Woo_Invoice
- * Plugin Name:  Challan - PDF Invoice & Packing Slip for WooCommerce
+ * Plugin Name:  PDF Invoices & Packing Slips for WooCommerce – Challan Invoice Plugin
  * Plugin URI:   https://webappick.com
- * Description:  Automatic Generate PDF Invoice and attach  with order email for WooCommerce.
- * Version:      3.7.92
+ * Description:  WooCommerce PDF invoice generator with automatic invoice email attachment. Create packing slips, shipping labels, credit notes, multilingual.
+ * Version:      3.7.93
  * Author:       WebAppick
  * Author URI:   https://webappick.com
  * License:      GPLv2
