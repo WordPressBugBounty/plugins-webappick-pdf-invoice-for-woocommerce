@@ -818,7 +818,8 @@ $challan_item_meta_query = challan_item_meta_query();
 
                 $woo_invoice_order_id      = woo_invoice_get_last_order_id();
                 $woo_invoice_preview_order = absint( $woo_invoice_order_id ) ? wc_get_order( absint( $woo_invoice_order_id ) ) : false;
-                if ( $woo_invoice_preview_order ) :
+                // The preview needs an order and the invoice handler, which is only registered while invoicing is enabled.
+                if ( $woo_invoice_preview_order && ! empty( get_option( 'wpifw_invoicing' ) ) ) :
                     ?>
                 <div class="woo-invoice-card">
                     <div class="woo-invoice-card-header">

@@ -4,7 +4,7 @@ Donate link: https://webappick.com
 Tags: woocommerce pdf invoice, woocommerce invoice, packing slip, pdf invoice, invoice generator
 Requires at least: 5.3
 Tested up to: 7.1
-Stable tag: 3.7.93
+Stable tag: 3.7.94
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -307,6 +307,10 @@ Please read the [documentation](https://webappick.com/docs/woo-invoice/installat
 = 💎 Translation Request 💎 =
 We are looking for people to help translate this plugin. If you can help we would love for you to jump in and do so.
 Help us & the WordPress community, translate the plugin [here](https://translate.wordpress.org/projects/wp-plugins/webappick-pdf-invoice-for-woocommerce/)
+
+= 3.7.94  ( November 16, 2026 ) =
+* Fixed: The "Selected Template" preview on the settings page showed "0" when invoicing was turned off; the preview is now hidden until invoicing is enabled.
+* Updated: Sidebar promotional banner for the Black Friday & Cyber Monday deal.
 
 = 3.7.93  ( November 3, 2026 ) =
 * Updated: Plugin name and short description.
