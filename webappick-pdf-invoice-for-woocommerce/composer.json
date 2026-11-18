@@ -1,0 +1,21 @@
+{
+    "name": "webappick/challan",
+    "description": "Challan – PDF Invoice & Packing Slip for WooCommerce",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "authors": [
+        {
+            "name": "Ohidul Islam",
+            "email": "wahid0003@gmail.com"
+        }
+    ],
+    "require": {
+        "mpdf/mpdf": "^8.3",
+        "mpdf/qrcode": "^1.2"
+    },
+    "config": {
+        "platform": {
+            "php": "7.4.33"
+        }
+    }
+}

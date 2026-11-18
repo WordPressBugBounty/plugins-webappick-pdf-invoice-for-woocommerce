@@ -1,0 +1,114 @@
+/*
+ * Template — Simple (free).
+ *
+ * Quiet type, no rules or fills: a single dark rule under the column
+ * headings, hairlines between items, the total set apart by one rule.
+ * Reads well on plain paper.
+ */
+@page {
+	margin: 40px 42px;
+}
+
+body {
+	color: #141c26;
+}
+
+/* Header: no boxes, generous air below. */
+table.header-table td.header-cell {
+	padding-bottom: 6px;
+}
+
+.seller-info b {
+	font-size: 15px;
+	color: #141c26;
+}
+
+/* Billing / shipping / order data: plain columns. */
+.order-table td.billing-td,
+.order-table td.shipping-td,
+.order-table td.order-data-td {
+	padding: 0 18px 18px 0;
+	color: #465768;
+}
+
+.order-table b {
+	color: #141c26;
+}
+
+.order-data-label {
+	color: #74839a;
+}
+
+.order-data-value {
+	color: #141c26;
+}
+
+/* Items: one dark rule under the headings, hairlines between rows. */
+table.product-table tr th {
+	height: 26px;
+	font-size: 9px;
+	font-weight: normal;
+	color: #74839a;
+	letter-spacing: .7px;
+	text-transform: uppercase;
+	background: none;
+	border-bottom: 1px solid #141c26;
+	padding: 0 6px 6px 0;
+}
+
+table.product-table tr th:nth-child(1) {
+	text-align: left;
+}
+
+table.product-table tr td {
+	border-bottom: 1px solid #eef2f8;
+	padding-top: 9px;
+	padding-bottom: 9px;
+}
+
+.product-meta {
+	color: #a7b2bf;
+}
+
+/* Totals: label/value pairs, the order total above a single rule. */
+.order-total-label {
+	font-weight: normal;
+	color: #465768;
+}
+
+.order-total-value {
+	color: #141c26;
+}
+
+.grand-total-label,
+.grand-total-label-value {
+	font-weight: bold;
+	color: #141c26;
+	border-top: 1px solid #dbe2ec;
+	padding-top: 6px;
+}
+
+.total-last-td-label,
+.total-last-td-value {
+	border: 0;
+	height: 1px;
+}
+
+/* Footer: a hairline and muted small print. */
+.invoice-footer-hr {
+	color: #eef2f8;
+	margin-bottom: 0;
+	width: 100%;
+}
+
+.invoice-footer-table {
+	width: 100%;
+	padding: 0;
+	color: #a7b2bf;
+}
+
+/* The currency font has no bold face — keep the symbol regular so it
+   renders inside the bold order total. */
+.woocommerce-Price-currencySymbol {
+	font-weight: normal !important;
+}

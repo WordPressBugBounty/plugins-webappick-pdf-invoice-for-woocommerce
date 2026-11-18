@@ -2,9 +2,9 @@
 Contributors: wahid0003,webappick
 Donate link: https://webappick.com
 Tags: woocommerce pdf invoice, woocommerce invoice, packing slip, pdf invoice, invoice generator
-Requires at least: 5.3
+Requires at least: 6.6
 Tested up to: 7.1
-Stable tag: 3.7.94
+Stable tag: 4.0.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -145,11 +145,11 @@ Compatible with:
 
 **Pro Version – Additional Features:**
 
-🚀 10+ Premium invoice templates
+🚀 Three more invoice designs: Modern, Classic and an 80 mm POS receipt
 🚀 **Invoice in order language** (WPML, Polylang, Weglot)
 🚀 Credit notes for refunds
 🚀 Proforma invoices
-🚀 **ZATCA e-invoicing** (Saudi Arabia)
+🚀 **ZATCA e-invoicing** (Saudi Arabia): phase 1 QR codes and phase 2 integration with ZATCA's Fatoora platform
 🚀 **GST invoice format** (India)
 🚀 Add custom fields to invoice
 🚀 Product images on invoices
@@ -167,7 +167,7 @@ Compatible with:
 * **WooCommerce Store Owners** – Automate PDF invoice generation
 * **Dropshipping Businesses** – Packing slips without prices
 * **Indian E-commerce Stores** – GST compliant invoicing
-* **Saudi Arabian Stores** – ZATCA e-invoicing ready
+* **Saudi Arabian Stores** – ZATCA e-invoicing: phase 1 QR codes, and phase 2 signed XML invoices reported to and cleared by ZATCA (Pro)
 * **European Sellers** – VAT invoice support
 * **Multi-language Stores (Pro)** – Invoice in customer's order language
 * **Wholesale Businesses** – Bulk operations
@@ -218,7 +218,7 @@ Yes! Challan is a fully automatic WooCommerce invoice generator. Once configured
 
 = How do I customize WooCommerce PDF invoice template? =
 
-Go to **Challan > Settings > Invoice > Template**. You can add your logo, change paper size, modify header/footer text, and write custom CSS. Pro users get 10+ premium templates and visual customization.
+Go to **Challan > Invoice > Template**. You can add your logo, change paper size, modify header/footer text, and write custom CSS. The free version includes the Simple design; Pro adds Modern, Classic and an 80 mm POS receipt.
 
 = Can I add custom field to WooCommerce PDF invoice? =
 
@@ -246,7 +246,12 @@ Yes, customers can download their PDF invoices from **My Account > Orders**. A d
 
 = Is Challan ZATCA compliant for Saudi Arabia e-invoicing? =
 
-Challan Pro is compatible with ZATCA (Zakat, Tax and Customs Authority) requirements. It supports QR code generation and required fields for Saudi Arabian e-invoicing compliance.
+Challan Pro covers both phases of ZATCA (Zakat, Tax and Customs Authority) e-invoicing.
+
+* **Phase 1:** the QR code with the seller name, VAT number, timestamp, total and VAT, and the bilingual "Simplified Tax Invoice" / "Tax Invoice" / "Credit Note" headings.
+* **Phase 2 (integration):** your store connects directly to ZATCA's Fatoora platform with a one-time password from the Fatoora portal. It gets its own certificate, signs every invoice, credit note and debit note as XML, reports simplified (B2C) invoices and has standard (B2B) invoices cleared by ZATCA before the customer receives them. No third-party service is involved. A document list and the order screen show each document's status and ZATCA's messages, with retry and reissue.
+
+Phase 2 needs a VAT-registered business with access to the Fatoora portal, and documents are issued for orders in SAR. Start in ZATCA's simulation environment, then move to production.
 
 = Does this WordPress invoice plugin support GST for India? =
 
@@ -284,7 +289,7 @@ Basic subscription orders work with the free version. Challan Pro includes full 
 
 = How is Challan different from WP Overnight PDF Invoices? =
 
-Challan includes shipping labels and delivery notes in the free version (WP Overnight charges extra). Challan Pro offers native ZATCA and GST compliance, order-language invoicing for multilingual stores, and is built by WebAppick (80,000+ users trust our plugins).
+Challan includes shipping labels and delivery notes in the free version (WP Overnight charges extra). Challan Pro offers ZATCA e-invoicing (phase 1 QR codes and phase 2 integration with Fatoora) and GST invoices, order-language invoicing for multilingual stores, and is built by WebAppick (80,000+ users trust our plugins).
 
 = How to install fonts? =
 Please read the [documentation](https://webappick.com/docs/woo-invoice/installation-setup/font-installation) on our website to install fonts.
@@ -300,13 +305,33 @@ Please read the [documentation](https://webappick.com/docs/woo-invoice/installat
 7. Bulk Download
 8. Invoice, Packing slip, Shipping label button
 9. Download PDF from my account
-10. Saudi Arab law ZATCA implementation in Challan Pro
+10. ZATCA (Saudi Arabia) invoice in Challan Pro
+
+== Upgrade Notice ==
+
+= 4.0.0 =
+Major update: new admin app and document engine. Settings and invoice numbers carry over. Invoices switch to the new Simple design (Pro: Modern, Classic, POS receipt). Requires WordPress 6.6+. Pro users: update Challan first, then Challan Pro to 5.0.
 
 == Changelog ==
 
 = 💎 Translation Request 💎 =
 We are looking for people to help translate this plugin. If you can help we would love for you to jump in and do so.
 Help us & the WordPress community, translate the plugin [here](https://translate.wordpress.org/projects/wp-plugins/webappick-pdf-invoice-for-woocommerce/)
+
+= 4.0.0  ( November 18, 2026 ) =
+* New: Rebuilt admin app — every setting on one save bar, a live document preview, a template gallery and a System status screen. Available in your language through WordPress.org translations.
+* New: Four new invoice designs (Simple in Free; Modern, Classic and POS receipt in Pro). They replace the earlier designs: upgraded stores print with Simple until they choose another design.
+* New: Secure REST API (challan/v1) for settings, documents and bulk downloads.
+* New: The PDF library ships inside the plugin; extra language fonts download in the background, and documents print with the bundled font until they arrive.
+* New: HPOS (High-Performance Order Storage) support.
+* Improved: Your settings, invoice-number sequences, custom meta fields, hooks, filters and old document links keep working after the update.
+* Improved: Errors in other plugins no longer stop PDFs or order emails.
+* Security: Capability and nonce checks on every action, protected document folders, and stricter settings validation.
+* Security: On update, files that don't belong in the old fonts folder (uploads/WOO-INVOICE/WOO-INVOICE-FONTS) are removed and web access to the folder is blocked.
+* Improved: Challan Pro 5 sets up this plugin for you — it installs and activates it when needed, and no longer switches it on behind your back.
+* Improved: Installing a 3.x version from Version control brings back your earlier invoice design.
+* New (Pro): ZATCA e-invoicing phase 2 for Saudi Arabia: connect the store to ZATCA's Fatoora platform, and every invoice, credit note and debit note is signed as XML, then reported or cleared. Includes a document list, order-screen status and actions, certificate renewal, and a ZATCA section in System status.
+* Fixed (Pro): The ZATCA phase 1 QR code now uses Saudi time, encodes only the phase 1 fields, shows the refund's amounts on credit notes and always uses two decimals; choosing "Saudi Arabia (ZATCA)" turns the QR code on.
 
 = 3.7.94  ( November 16, 2026 ) =
 * Fixed: The "Selected Template" preview on the settings page showed "0" when invoicing was turned off; the preview is now hidden until invoicing is enabled.

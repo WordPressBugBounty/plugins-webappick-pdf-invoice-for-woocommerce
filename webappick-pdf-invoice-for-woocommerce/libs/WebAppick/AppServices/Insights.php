@@ -1,6 +1,7 @@
 <?php
 namespace Challan\AppServices;
 
+use mysql_xdevapi\Exception;
 use WP_Theme;
 use WP_User;
 if ( ! defined( 'ABSPATH' ) ) {
@@ -251,10 +252,10 @@ class Insights {
 		 * @see strtotime()
 		 * @link https://www.php.net/manual/en/function.strtotime.php
 		 */
-		$trackingInterval = apply_filters( $this->client->getSlug() . '_tracking_interval', '-1 week' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- Prefixed with the plugin slug at runtime.
+		$trackingInterval = apply_filters( $this->client->getSlug() . '_tracking_interval', '-1 week' );
 		try {
 			$intervalCheck = strtotime( $trackingInterval );
-		} catch ( \Exception $e ) {
+		} catch ( Exception $e ) {
 			// fallback to default 1 week if filter returned unusable data
 			$intervalCheck = strtotime( '-1 week' );
 		}
@@ -298,7 +299,7 @@ class Insights {
 			$data['extra'] = $extra;
 		}
 
-		return apply_filters( $this->client->getSlug() . '_tracker_data', $data ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- Prefixed with the plugin slug at runtime.
+		return apply_filters( $this->client->getSlug() . '_tracker_data', $data );
 	}
 
 	/**
@@ -319,7 +320,7 @@ class Insights {
 		$data = array(
 			esc_html__( 'Server environment details (php, mysql, server, WordPress versions).', 'webappick-pdf-invoice-for-woocommerce' ),
 		);
-		$data = apply_filters( $this->client->getSlug() . '_what_tracked', $data ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- Prefixed with the plugin slug at runtime.
+		$data = apply_filters( $this->client->getSlug() . '_what_tracked', $data );
 
 		return $data;
 	}
@@ -439,7 +440,7 @@ class Insights {
 			if ( empty( $this->notice ) ) {
 				$notice = sprintf(
 					apply_filters(
-						$this->client->getSlug() . '_tracking_default_notice_message', // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- Prefixed with the plugin slug at runtime.
+						$this->client->getSlug() . '_tracking_default_notice_message',
                         // Translators: %1$s is the name of the plugin.
 						esc_html__(
 							'Want to help make %1$s even more awesome? Allow %1$s to collect non-sensitive diagnostic data and usage information.',
@@ -492,7 +493,7 @@ class Insights {
 	 * @return string
 	 */
 	public function get_opt_in_url() {
-		return add_query_arg( $this->client->getSlug() . '_tracker_optIn', 'true' );
+		return wp_nonce_url( add_query_arg( $this->client->getSlug() . '_tracker_optIn', 'true' ), $this->client->getSlug() . '_tracker_toggle', $this->client->getSlug() . '_tracker_nonce' );
 	}
 
 	/**
@@ -501,7 +502,7 @@ class Insights {
 	 * @return string
 	 */
 	public function get_opt_out_url() {
-		return add_query_arg( $this->client->getSlug() . '_tracker_optOut', 'true' );
+		return wp_nonce_url( add_query_arg( $this->client->getSlug() . '_tracker_optOut', 'true' ), $this->client->getSlug() . '_tracker_toggle', $this->client->getSlug() . '_tracker_nonce' );
 	}
 
 	/**
@@ -510,15 +511,24 @@ class Insights {
 	 * @return void
 	 */
 	public function handle_optIn_optOut() {
+		$slug = $this->client->getSlug();
+		if ( ! isset( $_GET[ $slug . '_tracker_optIn' ] ) && ! isset( $_GET[ $slug . '_tracker_optOut' ] ) ) {
+			return;
+		}
+		// Only an admin, and only from the plugin's own opt-in / opt-out link.
+		$nonce = isset( $_GET[ $slug . '_tracker_nonce' ] ) ? sanitize_key( wp_unslash( $_GET[ $slug . '_tracker_nonce' ] ) ) : '';
+		if ( ! current_user_can( 'manage_options' ) || ! wp_verify_nonce( $nonce, $slug . '_tracker_toggle' ) ) {
+			return;
+		}
 
 		if ( isset( $_GET[ $this->client->getSlug() . '_tracker_optIn' ] ) && $_GET[ $this->client->getSlug() . '_tracker_optIn' ] == 'true' ) {
 			$this->optIn();
-			wp_redirect( remove_query_arg( $this->client->getSlug() . '_tracker_optIn' ) );
+			wp_redirect( remove_query_arg( array( $this->client->getSlug() . '_tracker_optIn', $this->client->getSlug() . '_tracker_nonce' ) ) );
 			exit;
 		}
 		if ( isset( $_GET[ $this->client->getSlug() . '_tracker_optOut' ] ) && $_GET[ $this->client->getSlug() . '_tracker_optOut' ] == 'true' ) {
 			$this->optOut();
-			wp_redirect( remove_query_arg( $this->client->getSlug() . '_tracker_optOut' ) );
+			wp_redirect( remove_query_arg( array( $this->client->getSlug() . '_tracker_optOut', $this->client->getSlug() . '_tracker_nonce' ) ) );
 			exit;
 		}
 	}
@@ -533,7 +543,7 @@ class Insights {
 	public function add_removable_query_args( $removable_query_args ) {
 		return array_merge(
 			$removable_query_args,
-			array( $this->client->getSlug() . '_tracker_optIn', $this->client->getSlug() . '_tracker_optOut' )
+			array( $this->client->getSlug() . '_tracker_optIn', $this->client->getSlug() . '_tracker_optOut', $this->client->getSlug() . '_tracker_nonce' )
 		);
 	}
 
@@ -598,7 +608,7 @@ class Insights {
 	private function __get_server_info() {
 		global $wpdb;
 		$server_data = array(
-			'software'             => ( isset( $_SERVER['SERVER_SOFTWARE'] ) && ! empty( $_SERVER['SERVER_SOFTWARE'] ) ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ) : 'N/A',
+			'software'             => ( isset( $_SERVER['SERVER_SOFTWARE'] ) && ! empty( $_SERVER['SERVER_SOFTWARE'] ) ) ? $_SERVER['SERVER_SOFTWARE'] : 'N/A',
 			'php_version'          => ( function_exists( 'phpversion' ) ) ? phpversion() : 'N/A',
 			'mysql_version'        => $wpdb->db_version(),
 			'php_execution_time'   => @ini_get( 'max_execution_time' ),
@@ -814,7 +824,7 @@ class Insights {
 				'placeholder' => esc_html__( 'Could you tell us a bit more?', 'webappick-pdf-invoice-for-woocommerce' ),
 			),
 		);
-		$extra   = apply_filters( $this->client->getSlug() . '_extra_uninstall_reasons', array(), $reasons ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound -- Prefixed with the plugin slug at runtime.
+		$extra   = apply_filters( $this->client->getSlug() . '_extra_uninstall_reasons', array(), $reasons );
 		if ( is_array( $extra ) && ! empty( $extra ) ) {
 			// extract the last (other) reason and add after extras
 			$other   = array_pop( $reasons );
@@ -851,9 +861,9 @@ class Insights {
 		// @TODO remove deprecated data after server update
 		$data = array(
 			'hash'          => $this->client->getHash(),
-			'reason_id'     => isset( $_REQUEST['reason_id'] ) && ! empty( $_REQUEST['reason_id'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['reason_id'] ) ) : '',
+			'reason_id'     => isset( $_REQUEST['reason_id'] ) && ! empty( $_REQUEST['reason_id'] ) ? sanitize_text_field( $_REQUEST['reason_id'] ) : '',
 			// WPCS: CSRF ok, Input var ok.
-			'reason_info'   => isset( $_REQUEST['reason_info'] ) ? trim( sanitize_textarea_field( wp_unslash( $_REQUEST['reason_info'] ) ) ) : '',
+			'reason_info'   => isset( $_REQUEST['reason_info'] ) ? trim( sanitize_textarea_field( $_REQUEST['reason_info'] ) ) : '',
 			// WPCS: CSRF ok, Input var ok.
 			'plugin'        => $this->client->getName(),
 			'site'          => $this->__get_site_name(),
@@ -865,7 +875,7 @@ class Insights {
 			'first_name'    => ( ! empty( $current_user->first_name ) ) ? $current_user->first_name : $current_user->display_name,
 			'last_name'     => $current_user->last_name,
 			'server'        => $this->__get_server_info(),
-			'software'      => isset( $_SERVER['SERVER_SOFTWARE'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ) : 'N/A',
+			'software'      => $_SERVER['SERVER_SOFTWARE'],
 			// deprecated, using $data['server'] for wp info
 			'php_version'   => phpversion(),
 			// deprecated, using $data['server'] for wp info
@@ -910,24 +920,24 @@ class Insights {
 		if (
 			isset( $_REQUEST['name'], $_REQUEST['email'], $_REQUEST['subject'], $_REQUEST['website'], $_REQUEST['message'] ) &&
 			(
-				! empty( sanitize_text_field( wp_unslash( $_REQUEST['name'] ) ) ) &&
-				! empty( sanitize_email( wp_unslash( $_REQUEST['email'] ) ) ) &&
-				! empty( sanitize_text_field( wp_unslash( $_REQUEST['subject'] ) ) ) &&
-				! empty( sanitize_text_field( wp_unslash( $_REQUEST['website'] ) ) ) &&
-				! empty( sanitize_text_field( wp_unslash( $_REQUEST['message'] ) ) )
+				! empty( sanitize_text_field( $_REQUEST['name'] ) ) &&
+				! empty( sanitize_email( $_REQUEST['email'] ) ) &&
+				! empty( sanitize_text_field( $_REQUEST['subject'] ) ) &&
+				! empty( sanitize_text_field( $_REQUEST['website'] ) ) &&
+				! empty( sanitize_text_field( $_REQUEST['message'] ) )
 			)
 		) {
 			$headers = array(
 				'Content-Type: text/html; charset=UTF-8',
 				sprintf(
 					'From: %s <%s>',
-					sanitize_text_field( wp_unslash( $_REQUEST['name'] ) ),
-					sanitize_email( wp_unslash( $_REQUEST['email'] ) )
+					sanitize_text_field( $_REQUEST['name'] ),
+					sanitize_email( $_REQUEST['email'] )
 				),
 				sprintf(
 					'Reply-To: %s <%s>',
-					sanitize_text_field( wp_unslash( $_REQUEST['name'] ) ),
-					sanitize_text_field( wp_unslash( $_REQUEST['email'] ) )
+					sanitize_text_field( $_REQUEST['name'] ),
+					sanitize_text_field( $_REQUEST['email'] )
 				),
 			);
 
@@ -945,7 +955,7 @@ class Insights {
 				$this->ticketTemplate = str_replace( array( $k ), array( $v ), $this->ticketTemplate );
 			}
 			$projectSlug = $this->client->getSlug();
-			if ( wp_mail( $this->ticketRecipient, sanitize_text_field( wp_unslash( $_REQUEST['subject'] ) ), sprintf( '<div>%s</div>', $this->ticketTemplate ), $headers ) ) {
+			if ( wp_mail( $this->ticketRecipient, sanitize_text_field( $_REQUEST['subject'] ), sprintf( '<div>%s</div>', $this->ticketTemplate ), $headers ) ) {
 				/**
 				 * Set Ajax Success Response for Support Ticket Submission
 				 *

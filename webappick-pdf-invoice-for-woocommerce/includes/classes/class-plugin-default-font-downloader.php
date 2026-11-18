@@ -1,44 +1,37 @@
 <?php
 /**
- * Plugin default Font downloader for MPDF from DropBox
+ * Update shim for Challan 3.3–3.7 (v1). Not used by this version.
  *
- * @since      3.3.25
- * @package    Challan_Free
- * @subpackage Challan_Free/library
- * @author     Anwar <anwar.webappick@gmail.com>
- * @link       https://webappick.com
+ * When WordPress updates Challan 3.x to this version, the old 3.x code is
+ * still loaded for the rest of that request. One of its
+ * `upgrader_process_complete` hooks loads this path (its default font download) after the new
+ * files are in place, unless the class was already loaded. Without the file
+ * the update request stops with a fatal error, so the update is reported as
+ * failed (and a background update can leave the site in maintenance mode).
+ *
+ * The class does nothing, and loading the file stops the remaining v1
+ * update hooks (see v1-update-guard.php): fonts and the PDF library are
+ * handled by this version itself.
+ *
+ * @package Challan
  */
 
-class Challan_PluginDefaultFontDownloader {
+defined( 'ABSPATH' ) || exit;
 
-    /**
-     * Dispatch font download
-     *
-     * @return  bool true|false
-     */
-    static public function downloadDefaultFonts(){
-        if ( ! class_exists("Challan_DropBoxFontDownloader") ) {
-            require_once CHALLAN_FREE_ROOT_FILE_PATH . "includes/classes/class-dropbox-font-downloader.php";
-        }
-        // default font downloader
-        $fontConfig         = include CHALLAN_FREE_ROOT_FILE_PATH . "includes/configs/config-fonts-dropbox.php"; // phpcs:ignore
-        $baseUrl            = implode("", $fontConfig['base-url']);
-        $downloadCounter    = 0;
-        $allDownloaded      = true;
-        foreach ( $fontConfig['default'] as $path ) {
-            $source         = "{$baseUrl}{$path}";
-            $fileSep        = explode('/', $source);
-            $destination    = CHALLAN_FREE_FONT_DIR . $fileSep[ count($fileSep) - 1 ];
-            if ( ! file_exists(woo_invoice_strip_zip_suffix($destination)) ) {
-                if ( ! Challan_DropBoxFontDownloader::dispatchDownload("{$baseUrl}{$path}") ) {
-                    $allDownloaded = false;
-                }
-                ++$downloadCounter;
-                if ( 0 == $downloadCounter % 4 ) {
-                    sleep(1);
-                }
-            }
-        }
-        return $allDownloaded;
-    }
+require_once __DIR__ . '/v1-update-guard.php';
+
+// phpcs:disable Generic.Files.OneObjectStructurePerFile, PEAR.NamingConventions.ValidClassName, WordPress.NamingConventions.ValidFunctionName -- v1's class and method names.
+if ( ! class_exists( 'Challan_PluginDefaultFontDownloader', false ) ) {
+	/**
+	 * Stand-in for the v1 class of the same name.
+	 */
+	class Challan_PluginDefaultFontDownloader {
+
+		/**
+		 * Does nothing (v1 downloaded files here).
+		 *
+		 * @return void
+		 */
+		public static function downloadDefaultFonts() {}
+	}
 }

@@ -1,63 +1,37 @@
 <?php
 /**
- * Fonts downloader for admin ui from DropBox
+ * Update shim for Challan 3.3–3.7 (v1). Not used by this version.
  *
- * @since      3.3.25
- * @package    Challan_Free
- * @subpackage Challan_Free/library
- * @author     Anwar <anwar.webappick@gmail.com>
- * @link       https://webappick.com
+ * When WordPress updates Challan 3.x to this version, the old 3.x code is
+ * still loaded for the rest of that request. One of its
+ * `upgrader_process_complete` hooks loads this path (its admin-screen font download) after the new
+ * files are in place, unless the class was already loaded. Without the file
+ * the update request stops with a fatal error, so the update is reported as
+ * failed (and a background update can leave the site in maintenance mode).
+ *
+ * The class does nothing, and loading the file stops the remaining v1
+ * update hooks (see v1-update-guard.php): fonts and the PDF library are
+ * handled by this version itself.
+ *
+ * @package Challan
  */
 
-/**
- * Admin UI font downloader
- */
-class Challan_AdminUIFontDownloader
-{
+defined( 'ABSPATH' ) || exit;
 
-    /**
-     * Font configuration form config file
-     *
-     * @var array
-     */
-    static public $fontConfig = [];
+require_once __DIR__ . '/v1-update-guard.php';
 
-    /**
-     * Download data files for MPDF
-     *
-     * @return  bool true|false
-     */
-    static public function downloadFont() {
-        // The admin UI font is no longer downloaded: its archive is not published any more
-        // (the request always failed) and the admin CSS does not load it from this folder.
-        return false;
-    }
+// phpcs:disable Generic.Files.OneObjectStructurePerFile, PEAR.NamingConventions.ValidClassName, WordPress.NamingConventions.ValidFunctionName -- v1's class and method names.
+if ( ! class_exists( 'Challan_AdminUIFontDownloader', false ) ) {
+	/**
+	 * Stand-in for the v1 class of the same name.
+	 */
+	class Challan_AdminUIFontDownloader {
 
-    /**
-     * Check fonts already downloaded or not
-     *
-     * @return bool
-     */
-    static public function hasDownloaded() {
-        $fontConfig = self::getConfig();
-        foreach ( $fontConfig['admin-ui-font-list'] as $fontpath ) {
-            if ( file_exists(CHALLAN_ADMIN_UI_FONTS_DIR . $fontpath) ) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Load and get default config
-     *
-     * @return array|mixed
-     */
-    static public function getConfig() {
-        if ( empty(self::$fontConfig) ) {
-            self::$fontConfig = include CHALLAN_FREE_ROOT_FILE_PATH . "includes/configs/config-fonts-dropbox.php"; // phpcs:ignore
-        }
-        return self::$fontConfig;
-    }
-
+		/**
+		 * Does nothing (v1 downloaded files here).
+		 *
+		 * @return void
+		 */
+		public static function downloadFont() {}
+	}
 }
