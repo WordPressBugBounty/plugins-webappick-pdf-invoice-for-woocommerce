@@ -126,21 +126,16 @@ class PackingSlipRenderer extends InvoiceRenderer {
 			$product  = $item->get_product();
 			$quantity = (int) $item->get_quantity();
 
-			$full = $this->item_title( $order, $item );
-			$name = $full;
-			if ( $title_length > 0 && function_exists( 'mb_substr' ) ) {
-				$name = mb_substr( $name, 0, $title_length );
-			}
+			list( $name_html, $truncated ) = $this->item_title_html( $this->item_title( $order, $item ), $title_length );
 
 			$cell = '';
 			$img  = $show_images ? $this->item_image( $product, $item ) : '';
 			if ( '' !== $img ) {
 				$cell .= $img . ' ';
 			}
-			$truncated = $title_length > 0 && function_exists( 'mb_strlen' ) && mb_strlen( $full ) > $title_length;
-			$cell     .= '<p><b>' . esc_html( $name ) . '</b>' . ( $truncated ? '...' : '' );
-			$cell     .= $this->item_lines( 'title', $order, $item );
-			$cell     .= "<span class='product-meta'>";
+			$cell .= '<p><b>' . $name_html . '</b>' . ( $truncated ? '...' : '' );
+			$cell .= $this->item_lines( 'title', $order, $item );
+			$cell .= "<span class='product-meta'>";
 
 			ob_start();
 			do_action( 'woo_invoice_before_item_meta', $product, $order, $this->type() );

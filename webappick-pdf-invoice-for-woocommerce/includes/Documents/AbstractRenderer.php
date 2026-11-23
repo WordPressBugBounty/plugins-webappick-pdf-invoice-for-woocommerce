@@ -165,6 +165,64 @@ abstract class AbstractRenderer {
 	}
 
 	/**
+	 * Line item title as safe HTML for the products table.
+	 *
+	 * Version 1 printed titles raw, so inline markup that stores keep in product
+	 * or line-item names (e.g. "Name<span> - </span>Variant") rendered.
+	 * v2 escaped them, which printed the tags as text. This keeps a small
+	 * inline allowlist and escapes everything else.
+	 *
+	 * With a title length limit the tags are dropped first and the plain
+	 * text is cut, so a tag or an entity is never cut in half.
+	 *
+	 * @param string $title  Item title (may contain HTML).
+	 * @param int    $length Maximum characters; 0 = no limit.
+	 * @return array{0: string, 1: bool} Safe HTML, and whether it was truncated.
+	 */
+	protected function item_title_html( $title, $length = 0 ) {
+		$title  = (string) $title;
+		$length = (int) $length;
+
+		if ( $length > 0 && function_exists( 'mb_substr' ) ) {
+			$plain = html_entity_decode( wp_strip_all_tags( $title ), ENT_QUOTES, 'UTF-8' );
+			if ( mb_strlen( $plain ) > $length ) {
+				return array( esc_html( mb_substr( $plain, 0, $length ) ), true );
+			}
+		}
+
+		$inline = array(
+			'class' => true,
+			'style' => true,
+		);
+
+		/**
+		 * Filters the HTML tags allowed in item titles on documents.
+		 *
+		 * @since 4.0.1
+		 *
+		 * @param array  $allowed wp_kses() allowlist.
+		 * @param string $type    Document type.
+		 */
+		$allowed = (array) apply_filters(
+			'challan_item_title_allowed_html',
+			array(
+				'span'   => $inline,
+				'br'     => array(),
+				'b'      => $inline,
+				'strong' => $inline,
+				'i'      => $inline,
+				'em'     => $inline,
+				'small'  => $inline,
+				'sub'    => array(),
+				'sup'    => array(),
+			),
+			$this->type()
+		);
+
+		return array( wp_kses( $title, $allowed ), false );
+	}
+
+	/**
 	 * Line item title as printed in the products table.
 	 *
 	 * The v1 "Remove Invalid Characters" (remove_invalid_characters_from_title)

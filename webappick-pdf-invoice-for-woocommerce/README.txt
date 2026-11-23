@@ -4,7 +4,7 @@ Donate link: https://webappick.com
 Tags: woocommerce pdf invoice, woocommerce invoice, packing slip, pdf invoice, invoice generator
 Requires at least: 6.6
 Tested up to: 7.1
-Stable tag: 4.0.0
+Stable tag: 4.0.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -309,6 +309,9 @@ Please read the [documentation](https://webappick.com/docs/woo-invoice/installat
 
 == Upgrade Notice ==
 
+= 4.0.1 =
+Fixes product names with HTML formatting showing their tags on invoices and packing slips.
+
 = 4.0.0 =
 Major update: new admin app and document engine. Settings and invoice numbers carry over. Invoices switch to the new Simple design (Pro: Modern, Classic, POS receipt). Requires WordPress 6.6+. Pro users: update Challan first, then Challan Pro to 5.0.
 
@@ -317,6 +320,9 @@ Major update: new admin app and document engine. Settings and invoice numbers ca
 = 💎 Translation Request 💎 =
 We are looking for people to help translate this plugin. If you can help we would love for you to jump in and do so.
 Help us & the WordPress community, translate the plugin [here](https://translate.wordpress.org/projects/wp-plugins/webappick-pdf-invoice-for-woocommerce/)
+
+= 4.0.1  ( November 23, 2026 ) =
+* Fixed: Product names that contain HTML formatting print correctly on invoices and packing slips again, instead of showing the tags. Unsafe markup is still removed. Challan Pro's invoice designs get this fix in the next Challan Pro update.
 
 = 4.0.0  ( November 18, 2026 ) =
 * New: Rebuilt admin app — every setting on one save bar, a live document preview, a template gallery and a System status screen. Available in your language through WordPress.org translations.
