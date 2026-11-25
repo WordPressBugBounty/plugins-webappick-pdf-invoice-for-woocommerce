@@ -258,9 +258,13 @@ class EmailAttachments {
 		 * @param string    $email_id WooCommerce email id.
 		 * @param \WC_Order $order    Order.
 		 */
-		$type      = (string) apply_filters( 'challan_email_attachment_type', 'invoice', $email_id, $order );
-		$renderers = 'invoice' === $type ? array() : \Challan\Plugin::instance()->renderers();
-		if ( 'invoice' !== $type && ! isset( $renderers[ $type ] ) ) {
+		$type = (string) apply_filters( 'challan_email_attachment_type', 'invoice', $email_id, $order );
+
+		// Same renderer map as downloads, previews and Dropbox: Challan Pro
+		// swaps the invoice entry for its own renderer (challan_document_renderers),
+		// and the emailed invoice must match the downloaded one.
+		$renderers = \Challan\Plugin::instance()->renderers();
+		if ( 'invoice' !== $type && ! ( isset( $renderers[ $type ] ) && $renderers[ $type ] instanceof AbstractRenderer ) ) {
 			$type = 'invoice';
 		}
 
@@ -281,7 +285,8 @@ class EmailAttachments {
 		/** Preserved v1 filter (name, document type, order id). */
 		$filename = sanitize_file_name( (string) apply_filters( 'woo_invoice_file_name', $filename, $type, $order->get_id() ) );
 
-		$renderer = 'invoice' === $type ? $this->renderer : $renderers[ $type ];
+		// The free renderer stays the fallback when the map has no usable invoice entry.
+		$renderer = isset( $renderers[ $type ] ) && $renderers[ $type ] instanceof AbstractRenderer ? $renderers[ $type ] : $this->renderer;
 		return self::store( $order, $filename, $this->engine->render( $renderer->render( $order ), $type ) );
 	}
 
