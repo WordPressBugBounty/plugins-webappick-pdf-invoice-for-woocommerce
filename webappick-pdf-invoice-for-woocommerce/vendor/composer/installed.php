@@ -3,7 +3,7 @@
         'name' => 'webappick/challan',
         'pretty_version' => '2.x-dev',
         'version' => '2.9999999.9999999.9999999-dev',
-        'reference' => '65432568381d5d7e2efac457ffe2d387d8db6280',
+        'reference' => '8ec1d61b9e93c1b19a3edf5a1ed0e38909f7e791',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -94,7 +94,7 @@
         'webappick/challan' => array(
             'pretty_version' => '2.x-dev',
             'version' => '2.9999999.9999999.9999999-dev',
-            'reference' => '65432568381d5d7e2efac457ffe2d387d8db6280',
+            'reference' => '8ec1d61b9e93c1b19a3edf5a1ed0e38909f7e791',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

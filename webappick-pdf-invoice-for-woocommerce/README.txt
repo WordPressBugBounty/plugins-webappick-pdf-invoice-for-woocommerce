@@ -3,8 +3,8 @@ Contributors: wahid0003,webappick
 Donate link: https://webappick.com
 Tags: woocommerce pdf invoice, woocommerce invoice, packing slip, pdf invoice, invoice generator
 Requires at least: 6.6
-Tested up to: 7.1
-Stable tag: 4.0.2
+Tested up to: 7.2
+Stable tag: 4.0.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -309,6 +309,9 @@ Please read the [documentation](https://webappick.com/docs/woo-invoice/installat
 
 == Upgrade Notice ==
 
+= 4.0.3 =
+WordPress 7.2 compatibility tested.
+
 = 4.0.2 =
 With Challan Pro: invoices attached to order emails use your Pro invoice design and content again, the same as the downloaded invoice.
 
@@ -323,6 +326,9 @@ Major update: new admin app and document engine. Settings and invoice numbers ca
 = 💎 Translation Request 💎 =
 We are looking for people to help translate this plugin. If you can help we would love for you to jump in and do so.
 Help us & the WordPress community, translate the plugin [here](https://translate.wordpress.org/projects/wp-plugins/webappick-pdf-invoice-for-woocommerce/)
+
+= 4.0.3  ( November 26, 2026 ) =
+* WordPress 7.2 Compatibility Tested
 
 = 4.0.2  ( November 25, 2026 ) =
 * Fixed: With Challan Pro, the invoice attached to order emails (New Order, Completed Order, Customer Invoice and the others you selected) was built with the basic layout and left out your Pro columns, product details and totals. It now matches the invoice you download from the order.

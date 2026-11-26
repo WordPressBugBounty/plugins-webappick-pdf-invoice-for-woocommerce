@@ -6,7 +6,7 @@
  * Plugin Name:  PDF Invoices & Packing Slips for WooCommerce – Challan Invoice Plugin
  * Plugin URI:   https://webappick.com
  * Description:  WooCommerce PDF invoice generator with automatic invoice email attachment. Create packing slips, shipping labels, credit notes, multilingual.
- * Version:      4.0.2
+ * Version:      4.0.3
  * Author:       WebAppick
  * Author URI:   https://webappick.com
  * License:      GPLv2
@@ -16,7 +16,7 @@
  * Requires Plugins: woocommerce
  * WP Requirement & Test
  * Requires at least: 6.6
- * Tested up to: 7.1
+ * Tested up to: 7.2
  * Requires PHP: 7.4
  * WC requires at least: 3.2
  * WC tested up to: 11.2
@@ -28,7 +28,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 if ( ! defined( 'CHALLAN_VERSION' ) ) {
-	define( 'CHALLAN_VERSION', '4.0.2' );
+	define( 'CHALLAN_VERSION', '4.0.3' );
 }
 
 if ( ! defined( 'CHALLAN_ROOT_FILE' ) ) {
